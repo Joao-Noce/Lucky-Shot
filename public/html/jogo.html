@@ -12,6 +12,38 @@
 </head>
 
 <style>
+        .flip-container {
+  width: 300px;
+  height: 200px;
+  perspective: 1000px;
+}
+.flipper{
+	width: 100%;
+	height: 100%;
+	transition: transform 0.8s;
+	transform-style: preserve-3d;
+    position: relative;
+}
+
+.flip-container:hover .flipper{
+	transform: rotateY(180deg);
+}
+
+.front, .back{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.back{
+	transform: rotateY(180deg);
+}
+.front, .back{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
     body {
         background-image: url(../Assets/idea.jpg);
         background-size: cover;
@@ -30,10 +62,9 @@
     }
 
     .dados {
-        /* background-color: #1D1D1D; */
-        background-image: url(../Assets/caixa.jpeg);
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
+        background-color: #1D1D1D;
+        margin-left: 1%;
+        border-radius: 15px;
         color: #FFF;
         position: fixed;
         bottom: 0;
@@ -47,7 +78,6 @@
             align-items: center;
 
             img {
-                border: solid #FFF 1px;
                 width: 100%;
                 border-radius: 10px;
             }
@@ -410,7 +440,7 @@
             console.log(soma_pontos_banca);
             div_banca.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
 
-            if (soma_pontos_banca > soma_pontos_jogador && soma_pontos_banca <= 7.5) {
+            if (soma_pontos_banca > soma_pontos_jogador && soma_pontos_banca <= 7.5 && soma_pontos_banca >= 6.5) {
                 ganhou = 0;
                 deumaximo = 0;
                 caixa_atual -= aposta;

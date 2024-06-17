@@ -3,7 +3,7 @@ var database = require("../database/config");
 function autenticar(email_log, senha_log) {
     console.log("Autenticando usuário:", email_log);
     var instrucaoSql = `
-        SELECT idUsuario, nomeUsuario, emailUsuario, avatarUsuario, caixaUsuario FROM usuario WHERE emailUsuario = '${email_log}' AND senhaUsuario = '${senha_log}';
+        SELECT idUsuario, nomeUsuario, emailUsuario, avatarUsuario, DATE_FORMAT(inicio, '%d/%m/%Y') AS inicio, caixaUsuario FROM usuario WHERE emailUsuario = '${email_log}' AND senhaUsuario = '${senha_log}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

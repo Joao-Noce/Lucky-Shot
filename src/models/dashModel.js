@@ -21,7 +21,27 @@ function lucro(idUsuario) {
     return database.executar(instrucaoSql1);
 }
 
+function total_rodadas(idUsuario) {
+    console.log("ACESSEI O DASH MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pergunta1()");
+    var instrucaoSql1 = `
+    SELECT COUNT(idRegistro) as total_rodadas FROM registro WHERE fkUsuario = ${idUsuario};`;
+
+    console.log("Executando as instrução SQL: \n" + instrucaoSql1);
+    return database.executar(instrucaoSql1);
+}
+
+function total_sete(idUsuario) {
+    console.log("ACESSEI O DASH MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pergunta1()");
+    var instrucaoSql1 = `
+    SELECT COUNT(deu_maximo) AS total_sete FROM registro WHERE fkUsuario = ${idUsuario} AND deu_maximo = 1;`;
+
+    console.log("Executando as instrução SQL: \n" + instrucaoSql1);
+    return database.executar(instrucaoSql1);
+}
+
 module.exports = {
     porcentagem,
-    lucro
+    lucro,
+    total_rodadas,
+    total_sete
 }

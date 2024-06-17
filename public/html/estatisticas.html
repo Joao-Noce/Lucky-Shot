@@ -13,17 +13,19 @@
         padding: 0;
         margin: 0;
         color: #FFF;
-        background-image: url(../Assets/idea.jpg);
-        background-size: cover;
+        background-color: #FFF;
+        background-image: url(../Assets/ideia5.jpg);
+        /* background-size: cover; */
+        background-position: right;
         background-repeat: no-repeat;
         overflow-x: hidden;
     }
 
     .Cartao_pai {
         width: 100vw;
-        height: 85vh;
+        height: 90vh;
         display: flex;
-        justify-content: center;
+        justify-content: start;
     }
 
     .Cartao_filho {
@@ -31,15 +33,18 @@
         background-color: #1D1D1D;
         border-radius: 15px;
         padding: 1%;
+        margin-left: 10%;
     }
 
     .inicio {
         display: flex;
         color: #FFF;
         justify-content: space-around;
+        border-bottom: solid #FFF 1px;
 
         .imagem {
-            width: 30%;
+            width: 25%;
+
             img {
                 width: 80%;
             }
@@ -49,42 +54,57 @@
             display: flex;
             flex-direction: column;
             text-align: center;
+            justify-content: center;
+            width: 25%;
+            font-size: 50px;
         }
 
         .grafico_donut {
-            width: 30%;
+            width: 25%;
         }
+    }
+
+    .meio {
+        border-bottom: solid #FFF 1px;
+
     }
 
     .dashboard {
         display: flex;
+        justify-content: center;
     }
 
-    .grafico {
-        background-color: #1D1D1D;
-        width: 100%;
-        height: 100%;
+    .grafico_barra {
+        display: flex;
+        width: 88%;
+    }
+
+    .caixa_resposta {
+        display: flex;
+        justify-content: space-between;
     }
 
     .tres_barras {
         background-color: transparent;
         border: transparent;
         cursor: pointer;
+        width: 5vw;
+
+        img {
+            width: 50%;
+        }
     }
 </style>
 
 <body>
-    <button class="tres_barras"><a href="menu.html"><img src="/Assets/barras.png"></a></button>
+    <button class="tres_barras"><a href="menu.html"><img src="/Assets/barras2.png"></a></button>
     <div class="Cartao_pai">
         <div class="Cartao_filho">
             <div class="inicio">
-                <div class="imagem">
-                    <img src="../Assets/copas_icon.png">
+                <div class="imagem" id="avatar">
                 </div>
                 <div class="div_texto">
-                    <p>Nome: JP</p>
-                    <p>Caixa Atual: R$200</p>
-                    <p>Você está conosco desde: data</p>
+                    <p id="Nome"></p>
                 </div>
                 <div class="grafico_donut">
                     <canvas id="myChartCanvasPorcentagem" style="height: 10%;"></canvas>
@@ -92,12 +112,25 @@
             </div>
 
             <div class="meio">
-                <p>Total de Rodadas: </p>
-                <p>Total de SETE E MEIO: </p>
+                <div class="caixa_resposta">
+                    <p>Total de Rodadas: </p>
+                    <p id="total_rodadas"></p>
+                </div>
+                <div class="caixa_resposta">
+                    <p>Total de SETE E MEIO: </p>
+                    <p id="total_sete"></p>
+                </div>
+                <div class="caixa_resposta">
+                    <p>Caixa Atual:</p>
+                    <p id="Caixa"></p>
+                </div>
+                <div class="caixa_resposta">
+                    <p>Data de Início:</p>
+                    <p id="Dia"></p>
+                </div>
             </div>
-
             <div class="dashboard">
-                <div class="grafico">
+                <div class="grafico_barra">
                     <canvas id="myChartCanvasLucro"></canvas>
                 </div>
             </div>
@@ -109,9 +142,43 @@
 
 <script>
     let idUsuario = sessionStorage.ID_USUARIO;
+    avatar.innerHTML = `<img src="..${sessionStorage.AVATAR}">`;
+    Nome.innerHTML = `${sessionStorage.NOME_USUARIO}`;
+    Caixa.innerHTML = `R$${sessionStorage.CAIXA}`;
+    Dia.innerHTML = `${sessionStorage.INICIO}`;
     obterDadosGrafico();
 
     function obterDadosGrafico() {
+        fetch(`/dash/total_rodadas/${idUsuario}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        console.table(dados);
+                        total_rodadas.innerHTML = `${dados[0].total_rodadas} rodadas.`;
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado da porcentagem ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+
+        fetch(`/dash/total_sete/${idUsuario}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        console.table(dados);
+                        total_sete.innerHTML = `${dados[0].total_sete} vezes!`
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado da porcentagem ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+
         fetch(`/dash/porcentagem/${idUsuario}`)
             .then(function (resposta) {
                 if (resposta.ok) {
@@ -202,17 +269,13 @@
             datasets: [{
                 label: ['Ganhos'],
                 data: [dados[0].Ganhos],
-                // backgroundColor: '#B0CDDA',
                 borderWidth: 2,
-                // borderColor: 'transparent'
                 borderColor: '#B0CDDA',
             },
             {
                 label: 'Perdas',
                 data: [dados[0].Perdas],
-                // backgroundColor: '#EE675C',
                 borderWidth: 2,
-                // borderColor: 'transparent'
                 borderColor: '#EE675C',
             }
             ]
@@ -233,7 +296,7 @@
                 },
                 plugins: {
                     legend: {
-                        position: 'top',
+                        position: 'bottom',
                     },
                     title: {
                         display: true,

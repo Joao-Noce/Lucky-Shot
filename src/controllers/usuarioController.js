@@ -1,5 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
-let usuarioGlobal;
+
 function autenticar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
