@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Shot | 21 | Jogar</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../../Assets/icone.png" type="image/x-icon">
+</head>
+
+<style>
+    body {
+        background-image: url(../../Assets/fundo_azul.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    ::placeholder {
+        color: #FFF;
+    }
+
+    button {
+
+        img {
+            width: 80%;
+        }
+    }
+
+    .dados {
+        background-color: #1D1D1D;
+        margin-left: 1%;
+        border-radius: 15px;
+        color: #FFF;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        width: 13vw;
+        text-align: center;
+
+        #imagem_usuario {
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 100%;
+                border-radius: 10px;
+            }
+        }
+
+        .div_texto {
+            margin-left: 20%;
+            width: 10%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 30px;
+        }
+    }
+
+    .jogador {
+        position: fixed;
+        left: 45%;
+        bottom: 17%;
+        display: flex;
+        width: 700px;
+
+        img {
+            width: 20%;
+            margin-right: -15%;
+        }
+    }
+
+    .banca {
+        display: flex;
+        position: fixed;
+        top: 20vh;
+        width: 100vw;
+        justify-content: center;
+
+        .caixa {
+            display: flex;
+            justify-content: space-evenly;
+
+            img {
+                width: 7vw;
+            }
+        }
+    }
+
+    img {
+        width: 100px;
+    }
+
+    .div_buttons {
+        width: 13vw;
+        height: 25vh;
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+
+        input {
+            width: 80%;
+            height: 30%;
+            font-size: 15px;
+            color: #1D1D1D;
+            background-color: #B0CDDA;
+            border-radius: 15px;
+            border: transparent;
+            text-align: center;
+
+        }
+
+        ::placeholder {
+            color: #1D1D1D;
+        }
+
+        button {
+            font-weight: bold;
+            width: 80%;
+            height: 30%;
+            font-size: 15px;
+            color: #FFF;
+            background-color: #EE675C;
+            border: transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.8s;
+        }
+
+        button:hover {
+            background-color: #FFF;
+            color: #000;
+        }
+    }
+
+    .total_soma {
+        position: fixed;
+        left: 39%;
+        bottom: 10%;
+        color: #FFF;
+        font-size: 30px;
+        width: 20%;
+        height: 5%;
+        text-align: center;
+    }
+
+    .tres_barras {
+        background-color: transparent;
+        border: transparent;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <button class="tres_barras"><a href="pause.html"><img src="../../Assets/barras.png"></a></button>
+    <div class="banca">
+        <div id="div_banca" class="caixa"></div>
+    </div>
+    <div id="div_jogador" class="jogador"></div>
+    <div id="total_soma" class="total_soma"></div>
+    <div class="dados" id="dados">
+        <div id="imagem_usuario"></div>
+        <div class="div_texto">
+            <h2 id="nomeUsuarioH2"></h2>
+            <h2 id="caixa_aposta"></h2>
+        </div>
+    </div>
+    <div class="div_buttons">
+        <input type="number" placeholder="Fazer Aposta" id="input_aposta">
+        <button onclick="pedir_outra()">Comprar</button>
+        <button onclick="passar_vez()">Parar</button>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const cartas = [
+        { nome: 'Às', nipe: 'Paus', ponto: 11, imagem: "https://deckofcardsapi.com/static/img/AC.png" },
+        { nome: 'Às', nipe: 'Ouros', ponto: 11, imagem: "https://deckofcardsapi.com/static/img/AD.png" },
+        { nome: 'Às', nipe: 'Espadas', ponto: 11, imagem: "https://deckofcardsapi.com/static/img/AS.png" },
+        { nome: 'Às', nipe: 'Copas', ponto: 11, imagem: "https://deckofcardsapi.com/static/img/AH.png" },
+
+        { nome: '2', nipe: 'Paus', ponto: 2, imagem: "https://deckofcardsapi.com/static/img/2C.png" },
+        { nome: '2', nipe: 'Ouros', ponto: 2, imagem: "https://deckofcardsapi.com/static/img/2D.png" },
+        { nome: '2', nipe: 'Espadas', ponto: 2, imagem: "https://deckofcardsapi.com/static/img/2S.png" },
+        { nome: '2', nipe: 'Copas', ponto: 2, imagem: "https://deckofcardsapi.com/static/img/2H.png" },
+
+        { nome: '3', nipe: 'Paus', ponto: 3, imagem: "https://deckofcardsapi.com/static/img/3C.png" },
+        { nome: '3', nipe: 'Ouros', ponto: 3, imagem: "https://deckofcardsapi.com/static/img/3D.png" },
+        { nome: '3', nipe: 'Espadas', ponto: 3, imagem: "https://deckofcardsapi.com/static/img/3S.png" },
+        { nome: '3', nipe: 'Copas', ponto: 3, imagem: "https://deckofcardsapi.com/static/img/3H.png" },
+
+        { nome: '4', nipe: 'Paus', ponto: 4, imagem: "https://deckofcardsapi.com/static/img/4C.png" },
+        { nome: '4', nipe: 'Ouros', ponto: 4, imagem: "https://deckofcardsapi.com/static/img/4D.png" },
+        { nome: '4', nipe: 'Espadas', ponto: 4, imagem: "https://deckofcardsapi.com/static/img/4S.png" },
+        { nome: '4', nipe: 'Copas', ponto: 4, imagem: "https://deckofcardsapi.com/static/img/4H.png" },
+
+        { nome: '5', nipe: 'Paus', ponto: 5, imagem: "https://deckofcardsapi.com/static/img/5C.png" },
+        { nome: '5', nipe: 'Ouros', ponto: 5, imagem: "https://deckofcardsapi.com/static/img/5D.png" },
+        { nome: '5', nipe: 'Espadas', ponto: 5, imagem: "https://deckofcardsapi.com/static/img/5S.png" },
+        { nome: '5', nipe: 'Copas', ponto: 5, imagem: "https://deckofcardsapi.com/static/img/5H.png" },
+
+        { nome: '6', nipe: 'Paus', ponto: 6, imagem: "https://deckofcardsapi.com/static/img/6C.png" },
+        { nome: '6', nipe: 'Ouros', ponto: 6, imagem: "https://deckofcardsapi.com/static/img/6D.png" },
+        { nome: '6', nipe: 'Espadas', ponto: 6, imagem: "https://deckofcardsapi.com/static/img/6S.png" },
+        { nome: '6', nipe: 'Copas', ponto: 6, imagem: "https://deckofcardsapi.com/static/img/6H.png" },
+
+        { nome: '7', nipe: 'Paus', ponto: 7, imagem: "https://deckofcardsapi.com/static/img/7C.png" },
+        { nome: '7', nipe: 'Ouros', ponto: 7, imagem: "https://deckofcardsapi.com/static/img/7D.png" },
+        { nome: '7', nipe: 'Espadas', ponto: 7, imagem: "https://deckofcardsapi.com/static/img/7S.png" },
+        { nome: '7', nipe: 'Copas', ponto: 7, imagem: "https://deckofcardsapi.com/static/img/7H.png" },
+
+        { nome: '8', nipe: 'Paus', ponto: 8, imagem: "https://deckofcardsapi.com/static/img/8C.png" },
+        { nome: '8', nipe: 'Ouros', ponto: 8, imagem: "https://deckofcardsapi.com/static/img/8D.png" },
+        { nome: '8', nipe: 'Espadas', ponto: 8, imagem: "https://deckofcardsapi.com/static/img/8S.png" },
+        { nome: '8', nipe: 'Copas', ponto: 8, imagem: "https://deckofcardsapi.com/static/img/8H.png" },
+
+        { nome: '9', nipe: 'Paus', ponto: 9, imagem: "https://deckofcardsapi.com/static/img/9C.png" },
+        { nome: '9', nipe: 'Ouros', ponto: 9, imagem: "https://deckofcardsapi.com/static/img/9D.png" },
+        { nome: '9', nipe: 'Espadas', ponto: 9, imagem: "https://deckofcardsapi.com/static/img/9S.png" },
+        { nome: '9', nipe: 'Copas', ponto: 9, imagem: "https://deckofcardsapi.com/static/img/9H.png" },
+
+        { nome: '10', nipe: 'Paus', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/10C.png" },
+        { nome: '10', nipe: 'Ouros', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/10D.png" },
+        { nome: '10', nipe: 'Espadas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/10S.png" },
+        { nome: '10', nipe: 'Copas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/10H.png" },
+
+        { nome: 'Valete', nipe: 'Paus', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/JC.png" },
+        { nome: 'Valete', nipe: 'Ouros', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/JD.png" },
+        { nome: 'Valete', nipe: 'Espadas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/JS.png" },
+        { nome: 'Valete', nipe: 'Copas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/JH.png" },
+
+        { nome: 'Rainha', nipe: 'Paus', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/QC.png" },
+        { nome: 'Rainha', nipe: 'Ouros', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/QD.png" },
+        { nome: 'Rainha', nipe: 'Espadas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/QS.png" },
+        { nome: 'Rainha', nipe: 'Copas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/QH.png" },
+
+        { nome: 'Rei', nipe: 'Paus', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/KC.png" },
+        { nome: 'Rei', nipe: 'Ouros', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/KD.png" },
+        { nome: 'Rei', nipe: 'Espadas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/KS.png" },
+        { nome: 'Rei', nipe: 'Copas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/KH.png" },
+    ]
+
+    let soma_pontos_jogador = 0;
+    let soma_pontos_banca = 0;
+    let ganhou;
+    let deumaximo;
+    let caixa_atual = Number(sessionStorage.CAIXA_BLACKJACK);
+    let idUsuario = sessionStorage.ID_USUARIO;
+    let nomeUsuario = sessionStorage.NOME_USUARIO;
+    let avatar = sessionStorage.AVATAR;
+    imagem_usuario.innerHTML = `<img src = "../..${avatar}">`;
+
+    caixa_aposta.innerHTML = `R$${caixa_atual}`;
+    nomeUsuarioH2.innerHTML = nomeUsuario;
+    let cartas_jogadas = [];
+    let cartas_jogadas_banca = [];
+    function pedir_outra() {
+        let aposta = Number(input_aposta.value);
+
+        let carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
+        if (carta_escolhida == 0 && soma_pontos_jogador > 10) {
+            carta_escolhida.ponto = 1;
+        }
+        cartas_jogadas.push(carta_escolhida);
+        if (soma_pontos_jogador < 21) {
+            for (cont = 0; cont < cartas_jogadas.length; cont++) {
+                if (carta_escolhida == cartas_jogadas[cont]) {
+                    carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
+                }
+            }
+
+            if (aposta <= caixa_atual && aposta != '' && aposta > 0) {
+
+                soma_pontos_jogador += cartas[carta_escolhida].ponto;
+                console.table(cartas[carta_escolhida]);
+                console.log(soma_pontos_jogador);
+                div_jogador.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
+                total_soma.innerHTML = soma_pontos_jogador;
+
+                if (soma_pontos_jogador == 21) {
+                    ganhou = 1;
+                    deumaximo = 1;
+                    caixa_atual += aposta;
+                    sessionStorage.CAIXA_BLACKJACK = caixa_atual;
+
+                    fetch("/blackjack/registro", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            idUsuario,
+                            aposta,
+                            ganhou,
+                            deumaximo
+                        }),
+                    })
+                        .then(function (resposta) {
+                            if (resposta.ok) {
+                                console.table(resposta);
+                            }
+                        });
+
+                    fetch("/blackjack/atualizar_caixa", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            idUsuario,
+                            caixa_atual
+                        }),
+                    })
+                        .then(function (resposta) {
+                            if (resposta.ok) {
+                                Swal.fire({
+                                    title: "BLACKJACK!",
+                                    text: "Será que consegue essa proeza de novo",
+                                    background: '#1D1D1D',
+                                    icon: "success",
+                                    color: '#FFF',
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                                    caixa_aposta.innerHTML = `R$${caixa_atual}`;
+                                    input_aposta.innerHTML = '';
+                                    cartas_jogadas = [];
+                                    cartas_jogadas_banca = [];
+                                })
+                            }
+                        })
+
+                } else if (soma_pontos_jogador > 21) {
+                    ganhou = 0;
+                    deumaximo = 0;
+                    caixa_atual -= aposta;
+                    sessionStorage.CAIXA_BLACKJACK = caixa_atual;
+
+                    fetch("/blackjack/registro", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            idUsuario,
+                            aposta,
+                            ganhou,
+                            deumaximo
+                        }),
+                    })
+                        .then(function (resposta) {
+                            if (resposta.ok) {
+                                console.table(resposta);
+                            }
+                        });
+
+                    fetch("/blackjack/atualizar_caixa", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            idUsuario,
+                            caixa_atual
+                        }),
+                    })
+                        .then(function (resposta) {
+                            if (resposta.ok) {
+                                Swal.fire({
+                                    title: `ESTOUROU COM ${soma_pontos_jogador} PONTOS!`,
+                                    text: "Tá sem sorte, em?",
+                                    icon: "error",
+                                    background: '#1D1D1D',
+                                    color: '#FFF',
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                                    caixa_aposta.innerHTML = `R$${caixa_atual}`;
+                                    cartas_jogadas = [];
+                                    cartas_jogadas_banca = [];
+                                });
+                                input_aposta.value = '';
+                            }
+                        })
+                }
+            }
+        } else {
+            Swal.fire({
+                title: `APOSTA INVÁLIDA!`,
+                text: `Voce não tem R$${aposta} em seu caixa.`,
+                icon: "error",
+                background: '#1D1D1D',
+                color: '#FFF',
+                showCancelButton: false,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
+    }
+
+
+    function passar_vez() {
+        let aposta = Number(input_aposta.value);
+
+        while (soma_pontos_banca <= 21) {
+
+            let carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
+            if (carta_escolhida == 0 && soma_pontos_jogador > 10) {
+                carta_escolhida.ponto = 1;
+            }
+            for (cont = 0; cont < cartas_jogadas_banca.length; cont++) {
+                if (carta_escolhida == cartas_jogadas_banca[cont]) {
+                    carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
+                }
+            }
+            soma_pontos_banca += cartas[carta_escolhida].ponto;
+            console.table(cartas[carta_escolhida]);
+            console.log(soma_pontos_banca);
+            setTimeout(() => {
+                div_banca.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
+            }, 1500);
+
+            if (soma_pontos_banca > soma_pontos_jogador && soma_pontos_banca <= 21 && soma_pontos_banca >= 16) {
+                ganhou = 0;
+                deumaximo = 0;
+                caixa_atual -= aposta;
+                sessionStorage.CAIXA_BLACKJACK = caixa_atual;
+
+                fetch("/blackjack/registro", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        idUsuario,
+                        aposta,
+                        ganhou,
+                        deumaximo
+                    }),
+                })
+                    .then(function (resposta) {
+                        if (resposta.ok) {
+                            console.table(resposta);
+                        }
+                    });
+
+                fetch("/blackjack/atualizar_caixa", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        idUsuario,
+                        caixa_atual
+                    }),
+                })
+                    .then(function (resposta) {
+                        if (resposta.ok) {
+                            setTimeout(() => {
+                                Swal.fire({
+                                    title: `A BANCA VENCEU COM ${soma_pontos_banca} PONTOS!`,
+                                    text: "Por poouco!",
+                                    icon: "error",
+                                    background: '#1D1D1D',
+                                    color: '#FFF',
+                                    showConfirmButton: false,
+                                    showCancelButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    cartas_jogadas = [];
+                                    cartas_jogadas_banca = [];
+                                });
+                            }, 800);
+                            input_aposta.value = '';
+                            imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                            console.log('OIII');
+                            caixa_aposta.innerHTML = `R$${caixa_atual}`;
+                        }
+                    })
+                break;
+            }
+
+            if (soma_pontos_banca > 21) {
+                ganhou = 1;
+                deumaximo = 0;
+                caixa_atual += aposta;
+                sessionStorage.CAIXA_BLACKJACK = caixa_atual;
+
+                fetch("/blackjack/registro", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        idUsuario,
+                        aposta,
+                        ganhou,
+                        deumaximo
+                    }),
+                })
+                    .then(function (resposta) {
+                        if (resposta.ok) {
+                            console.table(resposta);
+                        }
+                    });
+
+                fetch("/blackjack/atualizar_caixa", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        idUsuario,
+                        caixa_atual
+                    }),
+                })
+                    .then(function (resposta) {
+                        if (resposta.ok) {
+                            setTimeout(() => {
+                                Swal.fire({
+                                    title: `VOCÊ VENCEU COM ${soma_pontos_jogador} PONTOS!`,
+                                    text: "Ganhoou!!",
+                                    background: '#1D1D1D',
+                                    icon: "success",
+                                    color: '#FFF',
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    cartas_jogadas = [];
+                                    cartas_jogadas_banca = [];
+                                });
+                            }, 800);
+                            input_aposta.value = '';
+                            imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                            caixa_aposta.innerHTML = `R$${caixa_atual}`;
+                        } else {
+                            console.log('ERRO');
+                        }
+                    })
+            }
+        }
+    }
+</script>

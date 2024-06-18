@@ -1,4 +1,4 @@
-// var ambiente_processo = 'producao'; 
+// var ambiente_processo = 'producao';
 var ambiente_processo = 'desenvolvimento';
 
 var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
@@ -15,10 +15,13 @@ var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
-// var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
-// var avisosRouter = require("./src/routes/avisos");
-var dashRouter = require("./src/routes/dash");
+var rankingSeteRouter = require("./src/routes/rankingSete");
+var rankingBlackjackRouter = require("./src/routes/rankingBlackjack");
+var dashBlackjackRouter = require("./src/routes/dashBlackjack");
+var dashSeteRouter = require("./src/routes/dashSete");
+var blackjackRouter = require("./src/routes/blackjack");
+var seteRouter = require("./src/routes/sete");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,10 +29,13 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 
-// app.use("/Site_Login", indexRouter);
 app.use("/usuarios", usuarioRouter);
-// app.use("/avisos", avisosRouter);
-app.use("/dash", dashRouter);
+app.use("/rankingSete", rankingSeteRouter);
+app.use("/rankingBlackjack", rankingBlackjackRouter);
+app.use("/dashBlackjack", dashBlackjackRouter);
+app.use("/dashSete", dashSeteRouter);
+app.use("/blackjack", blackjackRouter);
+app.use("/sete", seteRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

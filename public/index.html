@@ -4,18 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Shot</title>
+    <title>Lucky Shot | Login</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="./Assets/icone.png" type="image/x-icon">
 </head>
 
 <style>
     body {
         margin: 0;
         padding: 0;
-        background-image: url(/Assets/login.webp);
+        background-image: url(./Assets/ideia2.jpg);
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: 70vw;
+        background-position: 14vw 1%;
         overflow: hidden;
         position: absolute;
         color: #FFF;
@@ -32,7 +34,7 @@
     .screen {
         width: 50vw;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.85);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -58,6 +60,7 @@
         img {
             width: 50%;
             border-radius: 10px;
+            border: solid #FFF 1px;
         }
     }
 
@@ -270,7 +273,7 @@
                     <div class="senhas">
                         <input type="password" id="input_senha_log" class="input_senhas">
                         <div id="botao_ocultar1" class="olho" onclick="ocultar1()">
-                            <img id="olho_ocultar" src="../Assets/closed_eye.png">
+                            <img id="olho_ocultar" src="./Assets/closed_eye.png">
                         </div>
                     </div>
                 </div>
@@ -300,22 +303,22 @@
                     <div class="senhas">
                         <input type="password" id="input_senha_cadastro" class="input_senhas">
                         <div id="botao_ocultar2" class="olho" onclick="ocultar2()">
-                            <img id="olho_ocultar" src="/Assets/closed_eye.png">
+                            <img id="olho_ocultar" src="./Assets/closed_eye.png">
                         </div>
                     </div>
                     <p>Confirmar Senha:</p>
                     <div class="senhas">
                         <input type="password" id="input_confirm_senha" class="input_senhas">
                         <div id="botao_ocultar3" class="olho" onclick="ocultar3()">
-                            <img id="olho_ocultar" src="/Assets/closed_eye.png">
+                            <img id="olho_ocultar" src="./Assets/closed_eye.png">
                         </div>
                     </div>
                     <p>Avatar:</p>
                     <div class="div_avatares">
-                        <button onclick="avatar_espadas()"><img src="/Assets/espadas_icon.png" id="espadas"></button>
-                        <button onclick="avatar_copas()"><img src="/Assets/copas_icon.png" id="copas"></button>
-                        <button onclick="avatar_ouros()"><img src="/Assets/ouros_icon.png" id="ouros"></button>
-                        <button onclick="avatar_paus()"><img src="/Assets/paus_icon.png" id="paus"></button>
+                        <button onclick="avatar_espadas()"><img src="./Assets/espadas_icon.png" id="espadas"></button>
+                        <button onclick="avatar_copas()"><img src="./Assets/copas_icon.png" id="copas"></button>
+                        <button onclick="avatar_ouros()"><img src="./Assets/ouros_icon.png" id="ouros"></button>
+                        <button onclick="avatar_paus()"><img src="./Assets/paus_icon.png" id="paus"></button>
                     </div>
                 </div>
 
@@ -326,8 +329,6 @@
     </div>
 </body>
 
-</body>
-
 </html>
 
 <script>
@@ -335,29 +336,29 @@
     function ocultar1() {
         if (input_senha_log.type == "password") {
             input_senha_log.type = "text";
-            botao_ocultar1.innerHTML = '<img id="img_ocultar" src="/Assets/eye_opened.png">';
+            botao_ocultar1.innerHTML = '<img id="img_ocultar" src="./Assets/eye_opened.png">';
         } else {
             input_senha_log.type = "password";
-            botao_ocultar1.innerHTML = '<img id="img_ocultar" src="/Assets/closed_eye.png">';
+            botao_ocultar1.innerHTML = '<img id="img_ocultar" src="./Assets/closed_eye.png">';
         }
     }
     function ocultar2() {
         if (input_senha_cadastro.type == "password") {
             input_senha_cadastro.type = "text";
-            botao_ocultar2.innerHTML = '<img id="img_ocultar" src="/Assets/eye_opened.png">';
+            botao_ocultar2.innerHTML = '<img id="img_ocultar" src="./Assets/eye_opened.png">';
         } else {
             input_senha_cadastro.type = "password";
-            botao_ocultar2.innerHTML = '<img id="img_ocultar" src="/Assets/closed_eye.png">';
+            botao_ocultar2.innerHTML = '<img id="img_ocultar" src="./Assets/closed_eye.png">';
         }
     }
 
     function ocultar3() {
         if (input_confirm_senha.type == "password") {
             input_confirm_senha.type = "text";
-            botao_ocultar3.innerHTML = '<img id="img_ocultar" src="/Assets/eye_opened.png">';
+            botao_ocultar3.innerHTML = '<img id="img_ocultar" src="./Assets/eye_opened.png">';
         } else {
             input_confirm_senha.type = "password";
-            botao_ocultar3.innerHTML = '<img id="img_ocultar" src="/Assets/closed_eye.png">';
+            botao_ocultar3.innerHTML = '<img id="img_ocultar" src="./Assets/closed_eye.png">';
         }
     }
     let avatar;
@@ -396,7 +397,7 @@
 
     function new_account() {
         input_senha_log.type = "password";
-        botao_ocultar1.innerHTML = '<img id="img_ocultar" src="/Assets/closed_eye.png">';
+        botao_ocultar1.innerHTML = '<img id="img_ocultar" src="./Assets/closed_eye.png">';
         document.title = 'Lucky Shot | Cadastro';
         container.style.left = "-50vw";
         input_name.value = ``;
@@ -546,7 +547,8 @@
                     sessionStorage.NOME_USUARIO = json.nomeUsuario;
                     sessionStorage.ID_USUARIO = json.idUsuario;
                     sessionStorage.AVATAR = json.avatarUsuario;
-                    sessionStorage.CAIXA = json.caixaUsuario;
+                    sessionStorage.CAIXA_SETE = json.caixaSete;
+                    sessionStorage.CAIXA_BLACKJACK = json.caixaBlackjack;
                     sessionStorage.INICIO = json.inicio;
                     Swal.fire({
                         title: "SUCESSO",
@@ -556,7 +558,7 @@
                         color: '#FFF',
                         showConfirmButton: false
                     });
-                    setTimeout(() => { window.location = "../html/jogo.html" }, "1500");
+                    setTimeout(() => { window.location = "../html/menu.html" }, "1500");
                 });
             } else {
 

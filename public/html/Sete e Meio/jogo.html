@@ -4,48 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SETE E MEIO</title>
-    <!-- <link rel="stylesheet" href="/public/css/jogo.css"> -->
-    <!-- <script src="/public/js/jogo.js"></script> -->
+    <title>Lucky Shot | 7.5 | Jogar</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../../Assets/icone.png" type="image/x-icon">
 </head>
 
 <style>
-        .flip-container {
-  width: 300px;
-  height: 200px;
-  perspective: 1000px;
-}
-.flipper{
-	width: 100%;
-	height: 100%;
-	transition: transform 0.8s;
-	transform-style: preserve-3d;
-    position: relative;
-}
-
-.flip-container:hover .flipper{
-	transform: rotateY(180deg);
-}
-
-.front, .back{
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
-
-.back{
-	transform: rotateY(180deg);
-}
-.front, .back{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
     body {
-        background-image: url(../Assets/idea.jpg);
+        background-image: url(../../Assets/fundo_vermelho.jpg);
         background-size: cover;
         background-repeat: no-repeat;
     }
@@ -176,6 +143,17 @@
         }
     }
 
+    .total_soma {
+        position: fixed;
+        left: 39%;
+        bottom: 10%;
+        color: #FFF;
+        font-size: 30px;
+        width: 20%;
+        height: 5%;
+        text-align: center;
+    }
+
     .tres_barras {
         background-color: transparent;
         border: transparent;
@@ -184,11 +162,12 @@
 </style>
 
 <body>
-    <button class="tres_barras"><a href="menu.html"><img src="/Assets/barras.png"></a></button>
+    <button class="tres_barras"><a href="pause.html"><img src="../../Assets/barras.png"></a></button>
     <div class="banca">
         <div id="div_banca" class="caixa"></div>
     </div>
     <div id="div_jogador" class="jogador"></div>
+    <div id="total_soma" class="total_soma"></div>
     <div class="dados" id="dados">
         <div id="imagem_usuario"></div>
         <div class="div_texto">
@@ -262,34 +241,42 @@
     let soma_pontos_banca = 0;
     let ganhou;
     let deumaximo;
-    let caixa_atual = Number(sessionStorage.CAIXA);
+    let caixa_atual = Number(sessionStorage.CAIXA_SETE);
     let idUsuario = sessionStorage.ID_USUARIO;
     let nomeUsuario = sessionStorage.NOME_USUARIO;
     let avatar = sessionStorage.AVATAR;
-    imagem_usuario.innerHTML = `<img src = "${avatar}">`;
+    imagem_usuario.innerHTML = `<img src = "../..${avatar}">`;
     caixa_aposta.innerHTML = `R$${caixa_atual}`;
     nomeUsuarioH2.innerHTML = nomeUsuario;
+    let cartas_jogadas = [];
 
     function pedir_outra() {
         let aposta = Number(input_aposta.value);
 
         let carta_escolhida = (Number((Math.random() * 40).toFixed(0)));
+        cartas_jogadas.push(carta_escolhida);
+        if (soma_pontos_jogador < 7.5) {
+            for (cont = 0; cont < cartas_jogadas.length; cont++) {
+                if (carta_escolhida == cartas_jogadas[cont]) {
+                    carta_escolhida = (Number((Math.random() * 40).toFixed(0)));
+                }
+            }
 
-        if (aposta <= caixa_atual && aposta != '' && aposta > 0) {
+            if (aposta <= caixa_atual && aposta != '' && aposta > 0) {
 
-            if (soma_pontos_jogador < 7.5) {
                 soma_pontos_jogador += cartas[carta_escolhida].ponto;
                 console.table(cartas[carta_escolhida]);
                 console.log(soma_pontos_jogador);
                 div_jogador.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
+                total_soma.innerHTML = soma_pontos_jogador;
 
                 if (soma_pontos_jogador == 7.5) {
                     ganhou = 1;
                     deumaximo = 1;
                     caixa_atual += aposta;
-                    sessionStorage.CAIXA = caixa_atual;
+                    sessionStorage.CAIXA_SETE = caixa_atual;
 
-                    fetch("/usuarios/registro", {
+                    fetch("/sete/registro", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -307,7 +294,7 @@
                             }
                         });
 
-                    fetch("/usuarios/atualizar_caixa", {
+                    fetch("/sete/atualizar_caixa", {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json",
@@ -321,28 +308,22 @@
                             if (resposta.ok) {
                                 Swal.fire({
                                     title: "SETE E MEIO!",
-                                    text: "Deseja jogar novamente?",
+                                    text: "Será que consegue essa proeza de novo",
                                     background: '#1D1D1D',
                                     icon: "success",
                                     color: '#FFF',
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#3085d6",
-                                    cancelButtonColor: "#d33",
-                                    confirmButtonText: "Continuar",
-                                    cancelButtonText: "Sair",
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        soma_pontos_banca = 0;
-                                        soma_pontos_jogador = 0;
-                                        div_jogador.innerHTML = '';
-                                        div_banca.innerHTML = '';
-                                        imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                                        console.log('OIII');
-                                        caixa_aposta.innerHTML = `R$${caixa_atual}`;
-                                        input_aposta.innerHTML = '';
-                                    } else {
-                                        window.location = '../index.html';
-                                    }
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                                    caixa_aposta.innerHTML = `R$${caixa_atual}`;
+                                    input_aposta.innerHTML = '';
                                 })
                             }
                         })
@@ -351,9 +332,9 @@
                     ganhou = 0;
                     deumaximo = 0;
                     caixa_atual -= aposta;
-                    sessionStorage.CAIXA = caixa_atual;
+                    sessionStorage.CAIXA_SETE = caixa_atual;
 
-                    fetch("/usuarios/registro", {
+                    fetch("/sete/registro", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -371,7 +352,7 @@
                             }
                         });
 
-                    fetch("/usuarios/atualizar_caixa", {
+                    fetch("/sete/atualizar_caixa", {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json",
@@ -385,28 +366,21 @@
                             if (resposta.ok) {
                                 Swal.fire({
                                     title: `ESTOUROU COM ${soma_pontos_jogador} PONTOS!`,
-                                    text: "Deseja jogar novamente?",
+                                    text: "Tá sem sorte, em?",
                                     icon: "error",
                                     background: '#1D1D1D',
                                     color: '#FFF',
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#3085d6",
-                                    cancelButtonColor: "#d33",
-                                    confirmButtonText: "Continuar",
-                                    cancelButtonText: "Sair",
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        soma_pontos_banca = 0;
-                                        soma_pontos_jogador = 0;
-                                        div_jogador.innerHTML = '';
-                                        div_banca.innerHTML = '';
-                                        imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                                        console.log('OIII');
-                                        caixa_aposta.innerHTML = `R$${caixa_atual}`;
-                                    } else {
-                                        sessionStorage.clear();
-                                        window.location = '../index.html';
-                                    }
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                                    caixa_aposta.innerHTML = `R$${caixa_atual}`;
                                 });
                                 input_aposta.value = '';
                             }
@@ -431,7 +405,8 @@
     function passar_vez() {
         let aposta = Number(input_aposta.value);
 
-        while (soma_pontos_banca <= soma_pontos_jogador) {
+        // while (soma_pontos_banca <= soma_pontos_jogador) {
+        while (soma_pontos_banca <= 7.5) {
 
             let carta_escolhida = (Number((Math.random() * 40).toFixed(0)));
 
@@ -440,13 +415,14 @@
             console.log(soma_pontos_banca);
             div_banca.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
 
-            if (soma_pontos_banca > soma_pontos_jogador && soma_pontos_banca <= 7.5 && soma_pontos_banca >= 6.5) {
+            // if (soma_pontos_banca > soma_pontos_jogador && soma_pontos_banca <= 7.5 && soma_pontos_banca >= 6.5) {
+            if (soma_pontos_banca == 7.5) {
                 ganhou = 0;
                 deumaximo = 0;
                 caixa_atual -= aposta;
-                sessionStorage.CAIXA = caixa_atual;
+                sessionStorage.CAIXA_SETE = caixa_atual;
 
-                fetch("/usuarios/registro", {
+                fetch("/sete/registro", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -464,7 +440,7 @@
                         }
                     });
 
-                fetch("/usuarios/atualizar_caixa", {
+                fetch("/sete/atualizar_caixa", {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -479,25 +455,20 @@
                             setTimeout(() => {
                                 Swal.fire({
                                     title: `A BANCA VENCEU COM ${soma_pontos_banca} PONTOS!`,
-                                    text: "Deseja jogar novamente?",
+                                    text: "Por poouco!",
                                     icon: "error",
                                     background: '#1D1D1D',
                                     color: '#FFF',
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#3085d6",
-                                    cancelButtonColor: "#d33",
-                                    confirmButtonText: "Continuar",
-                                    cancelButtonText: "Sair",
+                                    showConfirmButton: false,
+                                    showCancelButton: false,
+                                    timer: 1500
                                 }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        soma_pontos_banca = 0;
-                                        soma_pontos_jogador = 0;
-                                        div_jogador.innerHTML = '';
-                                        div_banca.innerHTML = '';
-                                    } else {
-                                        sessionStorage.clear();
-                                        window.location = '../index.html';
-                                    }
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    // Apagar lista
                                 });
                             }, 800);
                             input_aposta.value = '';
@@ -513,9 +484,9 @@
                 ganhou = 1;
                 deumaximo = 0;
                 caixa_atual += aposta;
-                sessionStorage.CAIXA = caixa_atual;
+                sessionStorage.CAIXA_SETE = caixa_atual;
 
-                fetch("/usuarios/registro", {
+                fetch("/sete/registro", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -533,7 +504,7 @@
                         }
                     });
 
-                fetch("/usuarios/atualizar_caixa", {
+                fetch("/sete/atualizar_caixa", {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -548,25 +519,20 @@
                             setTimeout(() => {
                                 Swal.fire({
                                     title: `VOCÊ VENCEU COM ${soma_pontos_jogador} PONTOS!`,
-                                    text: "Deseja jogar novamente?",
+                                    text: "Ganhoou!!",
                                     background: '#1D1D1D',
                                     icon: "success",
                                     color: '#FFF',
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#3085d6",
-                                    cancelButtonColor: "#d33",
-                                    confirmButtonText: "Continuar",
-                                    cancelButtonText: "Sair",
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        soma_pontos_banca = 0;
-                                        soma_pontos_jogador = 0;
-                                        div_jogador.innerHTML = '';
-                                        div_banca.innerHTML = '';
-                                    } else {
-                                        sessionStorage.clear();
-                                        window.location = '../index.html';
-                                    }
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    // Apagar lista
                                 });
                             }, 800);
                             input_aposta.value = '';

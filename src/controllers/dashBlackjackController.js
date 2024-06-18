@@ -1,9 +1,9 @@
-var dashModel = require("../models/dashModel");
+var dashBlackjackModel = require("../models/dashBlackjackModel");
 
 function porcentagem(req, res) {
     idUsuario = req.params.idUsuario;
 
-    dashModel.porcentagem(idUsuario)
+    dashBlackjackModel.porcentagem(idUsuario)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -20,7 +20,7 @@ function porcentagem(req, res) {
 function lucro(req, res) {
     idUsuario = req.params.idUsuario;
 
-    dashModel.lucro(idUsuario)
+    dashBlackjackModel.lucro(idUsuario)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -37,7 +37,7 @@ function lucro(req, res) {
 function total_rodadas(req, res) {
     idUsuario = req.params.idUsuario;
 
-    dashModel.total_rodadas(idUsuario)
+    dashBlackjackModel.total_rodadas(idUsuario)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -51,10 +51,10 @@ function total_rodadas(req, res) {
         });
 }
 
-function total_sete(req, res) {
+function total_blackjack(req, res) {
     idUsuario = req.params.idUsuario;
 
-    dashModel.total_sete(idUsuario)
+    dashBlackjackModel.total_blackjack(idUsuario)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -72,5 +72,5 @@ module.exports = {
     porcentagem,
     lucro,
     total_rodadas,
-    total_sete
+    total_blackjack
 }

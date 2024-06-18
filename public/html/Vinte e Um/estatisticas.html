@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Shot | 21 | Estatísticas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="../../Assets/icone.png" type="image/x-icon">
+</head>
+
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+        color: #FFF;
+        background-color: #FFF;
+        background-image: url(../../Assets/ideia5.jpg);
+        background-position: right;
+        background-repeat: no-repeat;
+        overflow-x: hidden;
+    }
+
+    .Cartao_pai {
+        width: 100vw;
+        height: 90vh;
+        display: flex;
+        justify-content: start;
+    }
+
+    .Cartao_filho {
+        width: 40%;
+        background-color: #1D1D1D;
+        border-radius: 15px;
+        padding: 1%;
+        margin-left: 10%;
+    }
+
+    .inicio {
+        display: flex;
+        color: #FFF;
+        justify-content: space-around;
+        border-bottom: solid #FFF 1px;
+
+        .imagem {
+            width: 25%;
+
+            img {
+                width: 80%;
+            }
+        }
+
+        .div_texto {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+            width: 25%;
+            font-size: 50px;
+        }
+
+        .grafico_donut {
+            width: 25%;
+        }
+    }
+
+    .meio {
+        border-bottom: solid #FFF 1px;
+
+    }
+
+    .dashboard {
+        display: flex;
+        justify-content: center;
+    }
+
+    .grafico_barra {
+        display: flex;
+        width: 88%;
+    }
+
+    .caixa_resposta {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .tres_barras {
+        background-color: transparent;
+        border: transparent;
+        cursor: pointer;
+        width: 5vw;
+
+        img {
+            width: 50%;
+        }
+    }
+</style>
+
+<body>
+    <button class="tres_barras"><a href="pause.html"><img src="../../Assets/barras2.png"></a></button>
+    <div class="Cartao_pai">
+        <div class="Cartao_filho">
+            <div class="inicio">
+                <div class="imagem" id="avatar">
+                </div>
+                <div class="div_texto">
+                    <p id="Nome"></p>
+                </div>
+                <div class="grafico_donut">
+                    <canvas id="myChartCanvasPorcentagem" style="height: 10%;"></canvas>
+                </div>
+            </div>
+
+            <div class="meio">
+                <div class="caixa_resposta">
+                    <p>Total de Rodadas: </p>
+                    <p id="total_rodadas"></p>
+                </div>
+                <div class="caixa_resposta">
+                    <p>Total de BLACKJACK's: </p>
+                    <p id="total_blackjack"></p>
+                </div>
+                <div class="caixa_resposta">
+                    <p>Caixa Atual:</p>
+                    <p id="Caixa"></p>
+                </div>
+                <div class="caixa_resposta">
+                    <p>Data de Início:</p>
+                    <p id="Dia"></p>
+                </div>
+            </div>
+            <div class="dashboard">
+                <div class="grafico_barra">
+                    <canvas id="myChartCanvasLucro"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    let idUsuario = sessionStorage.ID_USUARIO;
+    avatar.innerHTML = `<img src="../..${sessionStorage.AVATAR}">`;
+    Nome.innerHTML = `${sessionStorage.NOME_USUARIO}`;
+    Caixa.innerHTML = `R$${sessionStorage.CAIXA_BLACKJACK}`;
+    Dia.innerHTML = `${sessionStorage.INICIO}`;
+    obterDadosGrafico();
+
+    function obterDadosGrafico() {
+        fetch(`/dashBlackjack/total_rodadas/${idUsuario}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        console.table(dados);
+                        total_rodadas.innerHTML = `${dados[0].total_rodadas} rodadas.`;
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado da porcentagem ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+
+        fetch(`/dashBlackjack/total_blackjack/${idUsuario}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        console.table(dados);
+                        total_blackjack.innerHTML = `${dados[0].total_blackjack} vezes!`
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado da porcentagem ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+
+        fetch(`/dashBlackjack/porcentagem/${idUsuario}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        console.table(dados);
+                        plotarGrafico_Porcentagem(dados);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado da porcentagem ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+
+        fetch(`/dashBlackjack/lucro/${idUsuario}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+
+                        plotarGrafico_Lucro(dados);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado da pergunta1 ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarGrafico_Porcentagem(dados) {
+
+        // Criando estrutura para plotar gráfico - labels e data
+        let labels = ['Vitórias', 'Derrotas'];
+
+        Chart.defaults.color = '#ffffff';
+        Chart.defaults.font.size = 15;
+
+        let chartData = {
+            labels: labels,
+            datasets: [{
+                label: '',
+                data: [dados[0].Vitórias, dados[0].Derrotas],
+                backgroundColor: ['#B0CDDA', '#EE675C'],
+                borderWidth: 2,
+                borderColor: 'transparent'
+            }
+            ]
+        };
+
+        // Criando estrutura para plotar gráfico - config
+        const config = {
+            type: 'doughnut',
+            data: chartData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Total de Vitórias e Derrotas'
+                    }
+                }
+            },
+        };
+
+        let myChart = new Chart(
+            document.getElementById('myChartCanvasPorcentagem'),
+            config
+        );
+    }
+
+    function plotarGrafico_Lucro(dados) {
+        console.log("Dados recebidos no plotar lucro:");
+        console.table(dados);
+
+        // Criando estrutura para plotar gráfico - labels e data
+        let labels = [''];
+
+        Chart.defaults.color = '#FFFFFF';
+        Chart.defaults.font.size = 15;
+
+        let chartData = {
+            labels: labels,
+            datasets: [{
+                label: ['Ganhos'],
+                data: [dados[0].Ganhos],
+                borderWidth: 2,
+                borderColor: '#B0CDDA',
+            },
+            {
+                label: 'Perdas',
+                data: [dados[0].Perdas],
+                borderWidth: 2,
+                borderColor: '#EE675C',
+            }
+            ]
+        };
+
+        // Criando estrutura para plotar gráfico - config
+        const config = {
+            type: 'bar',
+            data: chartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 5
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Controle de Ganhos e Perdas'
+                    }
+                }
+            }
+        };
+
+        // Adicionando gráfico criado em div na tela
+        let myChart = new Chart(
+            document.getElementById('myChartCanvasLucro'),
+            config
+        );
+    }
+</script>

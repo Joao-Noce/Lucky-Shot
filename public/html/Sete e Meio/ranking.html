@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Shot | 7.5 | Ranking</title>
+    <link rel="shortcut icon" href="../../Assets/icone.png" type="image/x-icon">
+</head>
+
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+        color: #FFF;
+        background-color: #FFF;
+        background-image: url(../../Assets/ideia5.jpg);
+        background-position: right;
+        background-repeat: no-repeat;
+        /* background-size: cover; */
+        overflow-x: hidden;
+    }
+
+    .Cartao_pai {
+
+        height: 90vh;
+        display: flex;
+        justify-content: start;
+    }
+
+    .Cartao_filho {
+        margin-left: 5%;
+        width: 60vw;
+        background-color: #1D1D1D;
+        border-radius: 15px;
+        padding: 1%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .line {
+        height: 100%;
+        border: solid #FFF 2px;
+    }
+
+    .line_column {
+        width: 100%;
+        border: solid #FFF 1px;
+        margin-bottom: 7%;
+    }
+
+    .painel_caixa {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .painel_vitoria {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .resultado {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .coluna {
+        text-align: center;
+        width: 33.3%;
+
+        p {
+            font-weight: bold;
+            color: #EE675C;
+        }
+    }
+
+    .legenda {
+        display: flex;
+        justify-content: space-between;
+        font-size: 25px;
+    }
+
+    .tres_barras {
+        background-color: transparent;
+        border: transparent;
+        cursor: pointer;
+        width: 5vw;
+
+        img {
+            width: 50%;
+        }
+    }
+</style>
+
+<body>
+    <button class="tres_barras"><a href="pause.html"><img src="../../Assets/barras2.png"></a></button>
+    <div class="Cartao_pai">
+        <div class="Cartao_filho">
+            <div class="painel_caixa">
+                <div class="legenda">
+                    <div class="coluna">
+                        <p>Colocação</p>
+                        <div class="line_column"></div>
+                        
+                        <div id="caixa_numero"></div>
+                    </div>
+                    <div class="coluna">
+                        <p>Usuário</p>
+                        <div class="line_column"></div>
+                        <div id="caixa_nome"></div>
+                    </div>
+                    <div class="coluna">
+                        <p>Caixa</p>
+                        <div class="line_column"></div>
+                        <div id="caixa_contagem"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="painel_vitoria">
+                <div class="legenda">
+                    <div class="coluna">
+                        <p>Colocação</p>
+                        <div class="line_column"></div>
+                        <div id="vitoria_numero"></div>
+                    </div>
+                    <div class="coluna">
+                        <p>Usuário</p>
+                        <div class="line_column"></div>
+                        <div id="vitoria_nome"></div>
+                    </div>
+                    <div class="coluna">
+                        <p>Vitórias</p>
+                        <div class="line_column"></div>
+                        <div id="vitoria_contagem"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    obterDadosRanking();
+    function obterDadosRanking() {
+        fetch(`/rankingSete/ranking_caixa`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        console.table(dados);
+                        for (i = 0; i < dados.length; i++) {
+                            var registro = dados[i];
+                            caixa_numero.innerHTML += `${i + 1}° <br><br>`;
+                            caixa_nome.innerHTML += `${registro.nomeUsuario} <br><br>`;
+                            caixa_contagem.innerHTML += `${registro.caixaSete} <br><br>`;
+                        }
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado do ranking de caixa ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+
+        fetch(`/rankingSete/ranking_vitoria`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        console.table(dados);
+                        for (i = 0; i < dados.length; i++) {
+                            var registro = dados[i];
+                            vitoria_numero.innerHTML += `${i + 1}° <br><br>`;
+                            vitoria_nome.innerHTML += `${registro.nomeUsuario} <br><br>`;
+                            vitoria_contagem.innerHTML += `${registro.Quantidade} <br><br>`;
+                        }
+                    })
+                } else {
+                    console.error('Nenhum dado encontrado do ranking de vitórias ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+</script>

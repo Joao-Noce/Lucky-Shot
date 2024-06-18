@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estatísticas</title>
+    <title>Lucky Shot | 7.5 | Estatísticas</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="../../Assets/icone.png" type="image/x-icon">
 </head>
 
 <style>
@@ -14,8 +15,7 @@
         margin: 0;
         color: #FFF;
         background-color: #FFF;
-        background-image: url(../Assets/ideia5.jpg);
-        /* background-size: cover; */
+        background-image: url(../../Assets/ideia5.jpg);
         background-position: right;
         background-repeat: no-repeat;
         overflow-x: hidden;
@@ -97,7 +97,7 @@
 </style>
 
 <body>
-    <button class="tres_barras"><a href="menu.html"><img src="/Assets/barras2.png"></a></button>
+    <button class="tres_barras"><a href="pause.html"><img src="../../Assets/barras2.png"></a></button>
     <div class="Cartao_pai">
         <div class="Cartao_filho">
             <div class="inicio">
@@ -142,14 +142,14 @@
 
 <script>
     let idUsuario = sessionStorage.ID_USUARIO;
-    avatar.innerHTML = `<img src="..${sessionStorage.AVATAR}">`;
+    avatar.innerHTML = `<img src="../..${sessionStorage.AVATAR}">`;
     Nome.innerHTML = `${sessionStorage.NOME_USUARIO}`;
-    Caixa.innerHTML = `R$${sessionStorage.CAIXA}`;
+    Caixa.innerHTML = `R$${sessionStorage.CAIXA_SETE}`;
     Dia.innerHTML = `${sessionStorage.INICIO}`;
     obterDadosGrafico();
 
     function obterDadosGrafico() {
-        fetch(`/dash/total_rodadas/${idUsuario}`)
+        fetch(`/dashSete/total_rodadas/${idUsuario}`)
             .then(function (resposta) {
                 if (resposta.ok) {
                     resposta.json().then(function (dados) {
@@ -164,7 +164,7 @@
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
 
-        fetch(`/dash/total_sete/${idUsuario}`)
+        fetch(`/dashSete/total_sete/${idUsuario}`)
             .then(function (resposta) {
                 if (resposta.ok) {
                     resposta.json().then(function (dados) {
@@ -179,7 +179,7 @@
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
 
-        fetch(`/dash/porcentagem/${idUsuario}`)
+        fetch(`/dashSete/porcentagem/${idUsuario}`)
             .then(function (resposta) {
                 if (resposta.ok) {
                     resposta.json().then(function (dados) {
@@ -194,7 +194,7 @@
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
 
-        fetch(`/dash/lucro/${idUsuario}`)
+        fetch(`/dashSete/lucro/${idUsuario}`)
             .then(function (resposta) {
                 if (resposta.ok) {
                     resposta.json().then(function (dados) {
