@@ -98,8 +98,9 @@
     }
 
     .div_buttons {
+        background-color: #1D1D1D;
         width: 13vw;
-        height: 25vh;
+        height: 100vh;
         position: fixed;
         right: 0;
         bottom: 0;
@@ -108,26 +109,54 @@
         align-items: center;
         justify-content: space-evenly;
 
-        input {
+        .container_fichas {
+            display: flex;
+            justify-content: space-around;
+            height: 60vh;
+
+            .fichas {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+            }
+
+            .valor_fichas {
+                display: flex;
+                flex-direction: column;
+                color: #FFF;
+                font-size: 25px;
+                height: 100%;
+                justify-content: space-evenly;
+                align-items: center;
+            }
+        }
+
+        img {
+            cursor: pointer;
+            transition: 0.8s;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        .input {
             width: 80%;
-            height: 30%;
-            font-size: 15px;
+            height: 7%;
+            font-size: 30px;
             color: #1D1D1D;
             background-color: #B0CDDA;
             border-radius: 15px;
             border: transparent;
-            text-align: center;
-
-        }
-
-        ::placeholder {
-            color: #1D1D1D;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         button {
             font-weight: bold;
             width: 80%;
-            height: 30%;
+            height: 7%;
             font-size: 15px;
             color: #FFF;
             background-color: #EE675C;
@@ -176,7 +205,22 @@
         </div>
     </div>
     <div class="div_buttons">
-        <input type="number" placeholder="Fazer Aposta" id="input_aposta">
+        <div class="container_fichas">
+            <div class="fichas">
+                <img src="../../Assets/ficha_vermelha.png" onclick="ficha_vermelha()">
+                <img src="../../Assets/ficha_azul.png" onclick="ficha_azul()">
+                <img src="../../Assets/ficha_verde.png" onclick="ficha_verde()">
+                <img src="../../Assets/ficha_preta.png" onclick="ficha_preta()">
+            </div>
+            <div class="valor_fichas">
+                <p>5£</p>
+                <p>10£</p>
+                <p>25£</p>
+                <p>100£</p>
+            </div>
+        </div>
+        <button onclick="limpar_aposta()">Limpar Aposta</button>
+        <div class="input" id="input_aposta">0£</div>
         <button onclick="pedir_outra()">Comprar</button>
         <button onclick="passar_vez()">Parar</button>
     </div>
@@ -252,6 +296,30 @@
         { nome: 'Rei', nipe: 'Copas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/KH.png" },
     ]
 
+    let aposta = 0;
+
+    function ficha_vermelha() {
+        aposta += 5;
+        input_aposta.innerHTML = `${aposta}£`;
+    }
+    function ficha_azul() {
+        aposta += 10;
+        input_aposta.innerHTML = `${aposta}£`;
+    }
+    function ficha_verde() {
+        aposta += 25;
+        input_aposta.innerHTML = `${aposta}£`;
+    }
+    function ficha_preta() {
+        aposta += 100;
+        input_aposta.innerHTML = `${aposta}£`;
+    }
+
+    function limpar_aposta() {
+        aposta = 0;
+        input_aposta.innerHTML = `${aposta}£`;
+    }
+
     let soma_pontos_jogador = 0;
     let soma_pontos_banca = 0;
     let ganhou;
@@ -262,13 +330,12 @@
     let avatar = sessionStorage.AVATAR;
     imagem_usuario.innerHTML = `<img src = "../..${avatar}">`;
 
-    caixa_aposta.innerHTML = `R$${caixa_atual}`;
+    caixa_aposta.innerHTML = `${caixa_atual}£`;
     nomeUsuarioH2.innerHTML = nomeUsuario;
     let cartas_jogadas = [];
     let cartas_jogadas_banca = [];
     function pedir_outra() {
-        let aposta = Number(input_aposta.value);
-
+if (caixa_aposta > 0) {
         let carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
         if (carta_escolhida == 0 && soma_pontos_jogador > 10) {
             carta_escolhida.ponto = 1;
@@ -341,8 +408,8 @@
                                     total_soma.innerHTML = '';
                                     div_banca.innerHTML = '';
                                     imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                                    caixa_aposta.innerHTML = `R$${caixa_atual}`;
-                                    input_aposta.innerHTML = '';
+                                    caixa_aposta.innerHTML = `${caixa_atual}£`;
+                                    input_aposta.innerHTML = '0£';
                                     cartas_jogadas = [];
                                     cartas_jogadas_banca = [];
                                 })
@@ -401,19 +468,19 @@
                                     total_soma.innerHTML = '';
                                     div_banca.innerHTML = '';
                                     imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                                    caixa_aposta.innerHTML = `R$${caixa_atual}`;
+                                    caixa_aposta.innerHTML = `${caixa_atual}£`;
                                     cartas_jogadas = [];
                                     cartas_jogadas_banca = [];
                                 });
-                                input_aposta.value = '';
+                                input_aposta.innerHTML = '0£';
                             }
                         })
                 }
             }
+        }
         } else {
             Swal.fire({
                 title: `APOSTA INVÁLIDA!`,
-                text: `Voce não tem R$${aposta} em seu caixa.`,
                 icon: "error",
                 background: '#1D1D1D',
                 color: '#FFF',
@@ -426,23 +493,22 @@
 
 
     function passar_vez() {
-        let aposta = Number(input_aposta.value);
 
         while (soma_pontos_banca <= 21) {
-
-            let carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
-            if (carta_escolhida == 0 && soma_pontos_jogador > 10) {
-                carta_escolhida.ponto = 1;
-            }
-            for (cont = 0; cont < cartas_jogadas_banca.length; cont++) {
-                if (carta_escolhida == cartas_jogadas_banca[cont]) {
-                    carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
-                }
-            }
-            soma_pontos_banca += cartas[carta_escolhida].ponto;
-            console.table(cartas[carta_escolhida]);
-            console.log(soma_pontos_banca);
             setTimeout(() => {
+
+                let carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
+                if (carta_escolhida == 0 && soma_pontos_jogador > 10) {
+                    carta_escolhida.ponto = 1;
+                }
+                for (cont = 0; cont < cartas_jogadas_banca.length; cont++) {
+                    if (carta_escolhida == cartas_jogadas_banca[cont]) {
+                        carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
+                    }
+                }
+                soma_pontos_banca += cartas[carta_escolhida].ponto;
+                console.table(cartas[carta_escolhida]);
+                console.log(soma_pontos_banca);
                 div_banca.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
             }, 1500);
 
@@ -502,10 +568,9 @@
                                     cartas_jogadas_banca = [];
                                 });
                             }, 800);
-                            input_aposta.value = '';
+                            input_aposta.value = '0£';
                             imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                            console.log('OIII');
-                            caixa_aposta.innerHTML = `R$${caixa_atual}`;
+                            caixa_aposta.innerHTML = `${caixa_atual}£`;
                         }
                     })
                 break;
@@ -569,7 +634,7 @@
                             }, 800);
                             input_aposta.value = '';
                             imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                            caixa_aposta.innerHTML = `R$${caixa_atual}`;
+                            caixa_aposta.innerHTML = `${caixa_atual}£`;
                         } else {
                             console.log('ERRO');
                         }
