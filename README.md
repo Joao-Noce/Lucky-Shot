@@ -6,7 +6,7 @@ Este repositório contém o projeto desenvolvido para a disciplina de Algoritmo 
 
 ## Ferramentas
 
-Este projeto foi desenvolvido utilizando HTML, JavaScript e CSS, integrado com as ferramentas do Chart.js e Node.js
+Este projeto foi desenvolvido utilizando HTML, JavaScript e CSS, integrado com as ferramentas do Chart.js e Node.js. Banco de Dados criado com MySQl.
 
 
 ## Autor
