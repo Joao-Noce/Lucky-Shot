@@ -275,10 +275,10 @@
         { nome: '9', nipe: 'Espadas', ponto: 9, imagem: "https://deckofcardsapi.com/static/img/9S.png" },
         { nome: '9', nipe: 'Copas', ponto: 9, imagem: "https://deckofcardsapi.com/static/img/9H.png" },
 
-        { nome: '10', nipe: 'Paus', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/10C.png" },
-        { nome: '10', nipe: 'Ouros', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/10D.png" },
-        { nome: '10', nipe: 'Espadas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/10S.png" },
-        { nome: '10', nipe: 'Copas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/10H.png" },
+        { nome: '10', nipe: 'Paus', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/0C.png" },
+        { nome: '10', nipe: 'Ouros', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/0D.png" },
+        { nome: '10', nipe: 'Espadas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/0S.png" },
+        { nome: '10', nipe: 'Copas', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/0H.png" },
 
         { nome: 'Valete', nipe: 'Paus', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/JC.png" },
         { nome: 'Valete', nipe: 'Ouros', ponto: 10, imagem: "https://deckofcardsapi.com/static/img/JD.png" },
@@ -334,21 +334,42 @@
     nomeUsuarioH2.innerHTML = nomeUsuario;
     let cartas_jogadas = [];
     let cartas_jogadas_banca = [];
-    function pedir_outra() {
-if (caixa_aposta > 0) {
-        let carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
-        if (carta_escolhida == 0 && soma_pontos_jogador > 10) {
-            carta_escolhida.ponto = 1;
-        }
-        cartas_jogadas.push(carta_escolhida);
-        if (soma_pontos_jogador < 21) {
-            for (cont = 0; cont < cartas_jogadas.length; cont++) {
-                if (carta_escolhida == cartas_jogadas[cont]) {
-                    carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
-                }
-            }
+    let ja_tem = false;
+    let tem_as_jogador = false;
 
-            if (aposta <= caixa_atual && aposta != '' && aposta > 0) {
+    function pedir_outra() {
+        if ((soma_pontos_jogador > 10)) {
+            cartas[0].ponto = 1;
+            cartas[1].ponto = 1;
+            cartas[2].ponto = 1;
+            cartas[3].ponto = 1;
+        } else {
+            cartas[0].ponto = 11;
+            cartas[1].ponto = 11;
+            cartas[2].ponto = 11;
+            cartas[3].ponto = 11;
+        }
+        let carta_escolhida = (Number((Math.random() * 51).toFixed(0)));
+        for (cont = 0; cont < cartas_jogadas.length; cont++) {
+            if (carta_escolhida == cartas_jogadas[cont]) {
+                ja_tem = true;
+            }
+        }
+        if (!ja_tem) {
+            cartas_jogadas.push(carta_escolhida);
+        } else {
+            carta_escolhida = (Number((Math.random() * 51).toFixed(0)));
+        }
+
+        for (as = 0; as < cartas_jogadas.length; as++) {
+            if (cartas_jogadas[as] == 0 || cartas_jogadas[as] == 1 || cartas_jogadas[as] == 2 || cartas_jogadas[as] == 3) {
+                tem_as_jogador = true;
+            }
+        }
+
+        if (aposta <= caixa_atual && aposta > 0) {
+
+            if (soma_pontos_jogador <= 21) {
 
                 soma_pontos_jogador += cartas[carta_escolhida].ponto;
                 console.table(cartas[carta_escolhida]);
@@ -409,13 +430,12 @@ if (caixa_aposta > 0) {
                                     div_banca.innerHTML = '';
                                     imagem_usuario.innerHTML = `<img src ="${avatar}">`;
                                     caixa_aposta.innerHTML = `${caixa_atual}£`;
-                                    input_aposta.innerHTML = '0£';
                                     cartas_jogadas = [];
                                     cartas_jogadas_banca = [];
+                                    console.clear();
                                 })
                             }
                         })
-
                 } else if (soma_pontos_jogador > 21) {
                     ganhou = 0;
                     deumaximo = 0;
@@ -471,13 +491,12 @@ if (caixa_aposta > 0) {
                                     caixa_aposta.innerHTML = `${caixa_atual}£`;
                                     cartas_jogadas = [];
                                     cartas_jogadas_banca = [];
+                                    console.clear();
                                 });
-                                input_aposta.innerHTML = '0£';
                             }
                         })
                 }
             }
-        }
         } else {
             Swal.fire({
                 title: `APOSTA INVÁLIDA!`,
@@ -491,26 +510,46 @@ if (caixa_aposta > 0) {
         }
     }
 
+    let ja_tem_banca = false;
+    let tem_as = false;
 
     function passar_vez() {
-
         while (soma_pontos_banca <= 21) {
-            setTimeout(() => {
 
-                let carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
-                if (carta_escolhida == 0 && soma_pontos_jogador > 10) {
-                    carta_escolhida.ponto = 1;
+            let carta_escolhida = (Number((Math.random() * 51).toFixed(0)));
+
+            for (cont = 0; cont < cartas_jogadas_banca.length; cont++) {
+                if (carta_escolhida == cartas_jogadas_banca[cont]) {
+                    ja_tem_banca = true;
                 }
-                for (cont = 0; cont < cartas_jogadas_banca.length; cont++) {
-                    if (carta_escolhida == cartas_jogadas_banca[cont]) {
-                        carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
-                    }
+            }
+            if (!ja_tem_banca) {
+                cartas_jogadas_banca.push(carta_escolhida);
+            } else {
+                carta_escolhida = (Number((Math.random() * 51).toFixed(0)));
+            }
+            for (as = 0; as < cartas_jogadas_banca.length; as++) {
+                if (cartas_jogadas_banca[as] == 0 || cartas_jogadas_banca[as] == 1 || cartas_jogadas_banca[as] == 2 || cartas_jogadas_banca[as] == 3) {
+                    tem_as = true;
                 }
-                soma_pontos_banca += cartas[carta_escolhida].ponto;
-                console.table(cartas[carta_escolhida]);
-                console.log(soma_pontos_banca);
-                div_banca.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
-            }, 1500);
+            }
+            if ((soma_pontos_banca > 10 && tem_as) || soma_pontos_banca > 10) {
+                cartas[0].ponto = 1;
+                cartas[1].ponto = 1;
+                cartas[2].ponto = 1;
+                cartas[3].ponto = 1;
+            } else {
+                cartas[0].ponto = 11;
+                cartas[1].ponto = 11;
+                cartas[2].ponto = 11;
+                cartas[3].ponto = 11;
+            }
+
+            soma_pontos_banca += cartas[carta_escolhida].ponto;
+            console.table(cartas[carta_escolhida]);
+            console.log(soma_pontos_banca);
+            div_banca.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
+
 
             if (soma_pontos_banca > soma_pontos_jogador && soma_pontos_banca <= 21 && soma_pontos_banca >= 16) {
                 ganhou = 0;
@@ -566,9 +605,9 @@ if (caixa_aposta > 0) {
                                     div_banca.innerHTML = '';
                                     cartas_jogadas = [];
                                     cartas_jogadas_banca = [];
+                                    console.clear();
                                 });
                             }, 800);
-                            input_aposta.value = '0£';
                             imagem_usuario.innerHTML = `<img src ="${avatar}">`;
                             caixa_aposta.innerHTML = `${caixa_atual}£`;
                         }
@@ -630,9 +669,9 @@ if (caixa_aposta > 0) {
                                     div_banca.innerHTML = '';
                                     cartas_jogadas = [];
                                     cartas_jogadas_banca = [];
+                                    console.clear();
                                 });
                             }, 800);
-                            input_aposta.value = '';
                             imagem_usuario.innerHTML = `<img src ="${avatar}">`;
                             caixa_aposta.innerHTML = `${caixa_atual}£`;
                         } else {

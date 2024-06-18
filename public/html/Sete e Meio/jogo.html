@@ -318,143 +318,143 @@
     nomeUsuarioH2.innerHTML = nomeUsuario;
     let cartas_jogadas = [];
     let cartas_jogadas_banca = [];
+    let ja_tem = false;
 
     function pedir_outra() {
 
-        let carta_escolhida = (Number((Math.random() * 40).toFixed(0)));
-        cartas_jogadas.push(carta_escolhida);
-        if (aposta > 0) {
-            if (soma_pontos_jogador < 7.5) {
-                for (cont = 0; cont < cartas_jogadas.length; cont++) {
-                    if (carta_escolhida == cartas_jogadas[cont]) {
-                        carta_escolhida = (Number((Math.random() * 40).toFixed(0)));
-                    }
+        if (aposta <= caixa_atual && aposta > 0) {
+            let carta_escolhida = (Number((Math.random() * 39).toFixed(0)));
+            for (cont = 0; cont < cartas_jogadas.length; cont++) {
+                if (carta_escolhida == cartas_jogadas[cont]) {
+                    ja_tem = true;
                 }
+            }
+            if (!ja_tem) {
+                cartas_jogadas.push(carta_escolhida);
+            } else {
+                pedir_outra();
+            }
+            if (soma_pontos_jogador <= 7.5) {
 
-                if (aposta <= caixa_atual && aposta != '' && aposta > 0) {
+                soma_pontos_jogador += cartas[carta_escolhida].ponto;
+                console.table(cartas[carta_escolhida]);
+                console.log(soma_pontos_jogador);
+                div_jogador.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
+                total_soma.innerHTML = soma_pontos_jogador;
 
-                    soma_pontos_jogador += cartas[carta_escolhida].ponto;
-                    console.table(cartas[carta_escolhida]);
-                    console.log(soma_pontos_jogador);
-                    div_jogador.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
-                    total_soma.innerHTML = soma_pontos_jogador;
+                if (soma_pontos_jogador == 7.5) {
+                    ganhou = 1;
+                    deumaximo = 1;
+                    caixa_atual += aposta;
+                    sessionStorage.CAIXA_SETE = caixa_atual;
 
-                    if (soma_pontos_jogador == 7.5) {
-                        ganhou = 1;
-                        deumaximo = 1;
-                        caixa_atual += aposta;
-                        sessionStorage.CAIXA_SETE = caixa_atual;
+                    fetch("/sete/registro", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            idUsuario,
+                            aposta,
+                            ganhou,
+                            deumaximo
+                        }),
+                    })
+                        .then(function (resposta) {
+                            if (resposta.ok) {
+                                console.table(resposta);
+                            }
+                        });
 
-                        fetch("/sete/registro", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                idUsuario,
-                                aposta,
-                                ganhou,
-                                deumaximo
-                            }),
+                    fetch("/sete/atualizar_caixa", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            idUsuario,
+                            caixa_atual
+                        }),
+                    })
+                        .then(function (resposta) {
+                            if (resposta.ok) {
+                                Swal.fire({
+                                    title: "SETE E MEIO!",
+                                    text: "Será que consegue essa proeza de novo",
+                                    background: '#1D1D1D',
+                                    icon: "success",
+                                    color: '#FFF',
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                                    caixa_aposta.innerHTML = `${caixa_atual}£`;
+                                })
+                            }
                         })
-                            .then(function (resposta) {
-                                if (resposta.ok) {
-                                    console.table(resposta);
-                                }
-                            });
 
-                        fetch("/sete/atualizar_caixa", {
-                            method: "PUT",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                idUsuario,
-                                caixa_atual
-                            }),
+                } else if (soma_pontos_jogador > 7.5) {
+                    ganhou = 0;
+                    deumaximo = 0;
+                    caixa_atual -= aposta;
+                    sessionStorage.CAIXA_SETE = caixa_atual;
+
+                    fetch("/sete/registro", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            idUsuario,
+                            aposta,
+                            ganhou,
+                            deumaximo
+                        }),
+                    })
+                        .then(function (resposta) {
+                            if (resposta.ok) {
+                                console.table(resposta);
+                            }
+                        });
+
+                    fetch("/sete/atualizar_caixa", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            idUsuario,
+                            caixa_atual
+                        }),
+                    })
+                        .then(function (resposta) {
+                            if (resposta.ok) {
+                                Swal.fire({
+                                    title: `ESTOUROU COM ${soma_pontos_jogador} PONTOS!`,
+                                    text: "Tá sem sorte, em?",
+                                    icon: "error",
+                                    background: '#1D1D1D',
+                                    color: '#FFF',
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    soma_pontos_banca = 0;
+                                    soma_pontos_jogador = 0;
+                                    div_jogador.innerHTML = '';
+                                    total_soma.innerHTML = '';
+                                    div_banca.innerHTML = '';
+                                    imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                                    caixa_aposta.innerHTML = `${caixa_atual}£`;
+                                });
+                            }
                         })
-                            .then(function (resposta) {
-                                if (resposta.ok) {
-                                    Swal.fire({
-                                        title: "SETE E MEIO!",
-                                        text: "Será que consegue essa proeza de novo",
-                                        background: '#1D1D1D',
-                                        icon: "success",
-                                        color: '#FFF',
-                                        showCancelButton: false,
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    }).then((result) => {
-                                        soma_pontos_banca = 0;
-                                        soma_pontos_jogador = 0;
-                                        div_jogador.innerHTML = '';
-                                        total_soma.innerHTML = '';
-                                        div_banca.innerHTML = '';
-                                        imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                                        caixa_aposta.innerHTML = `${caixa_atual}£`;
-                                        input_aposta.innerHTML = '0£';
-                                    })
-                                }
-                            })
-
-                    } else if (soma_pontos_jogador > 7.5) {
-                        ganhou = 0;
-                        deumaximo = 0;
-                        caixa_atual -= aposta;
-                        sessionStorage.CAIXA_SETE = caixa_atual;
-
-                        fetch("/sete/registro", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                idUsuario,
-                                aposta,
-                                ganhou,
-                                deumaximo
-                            }),
-                        })
-                            .then(function (resposta) {
-                                if (resposta.ok) {
-                                    console.table(resposta);
-                                }
-                            });
-
-                        fetch("/sete/atualizar_caixa", {
-                            method: "PUT",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                idUsuario,
-                                caixa_atual
-                            }),
-                        })
-                            .then(function (resposta) {
-                                if (resposta.ok) {
-                                    Swal.fire({
-                                        title: `ESTOUROU COM ${soma_pontos_jogador} PONTOS!`,
-                                        text: "Tá sem sorte, em?",
-                                        icon: "error",
-                                        background: '#1D1D1D',
-                                        color: '#FFF',
-                                        showCancelButton: false,
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    }).then((result) => {
-                                        soma_pontos_banca = 0;
-                                        soma_pontos_jogador = 0;
-                                        div_jogador.innerHTML = '';
-                                        total_soma.innerHTML = '';
-                                        div_banca.innerHTML = '';
-                                        imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                                        caixa_aposta.innerHTML = `${caixa_atual}£`;
-                                    });
-                                    input_aposta.value = '0£';
-                                }
-                            })
-                    }
                 }
             }
         } else {
@@ -471,17 +471,22 @@
     }
 
 
+    let ja_tem_banca = false;
     function passar_vez() {
 
-        // while (soma_pontos_banca <= soma_pontos_jogador) {
         while (soma_pontos_banca <= 7.5) {
 
-            let carta_escolhida = (Number((Math.random() * 40).toFixed(0)));
+            let carta_escolhida = (Number((Math.random() * 39).toFixed(0)));
 
             for (cont = 0; cont < cartas_jogadas_banca.length; cont++) {
                 if (carta_escolhida == cartas_jogadas_banca[cont]) {
-                    carta_escolhida = (Number((Math.random() * 52).toFixed(0)));
+                    ja_tem_banca = true;
                 }
+            }
+            if (!ja_tem_banca) {
+                cartas_jogadas_banca.push(carta_escolhida);
+            } else {
+                passar_vez();
             }
 
             soma_pontos_banca += cartas[carta_escolhida].ponto;
@@ -489,8 +494,7 @@
             console.log(soma_pontos_banca);
             div_banca.innerHTML += `<img src="${cartas[carta_escolhida].imagem}">`;
 
-            // if (soma_pontos_banca > soma_pontos_jogador && soma_pontos_banca <= 7.5 && soma_pontos_banca >= 6.5) {
-            if (soma_pontos_banca == 7.5) {
+            if (soma_pontos_banca > soma_pontos_jogador && soma_pontos_banca > 6.5 && soma_pontos_banca <= 7.5 || soma_pontos_banca == 7.5) {
                 ganhou = 0;
                 deumaximo = 0;
                 caixa_atual -= aposta;
@@ -544,9 +548,9 @@
                                     div_banca.innerHTML = '';
                                     cartas_jogadas = [];
                                     cartas_jogadas_banca = [];
+                                    console.clear();
                                 });
                             }, 800);
-                            input_aposta.value = '';
                             imagem_usuario.innerHTML = `<img src ="${avatar}">`;
                             caixa_aposta.innerHTML = `${caixa_atual}£`;
                         }
@@ -608,10 +612,10 @@
                                     div_banca.innerHTML = '';
                                     cartas_jogadas = [];
                                     cartas_jogadas_banca = [];
+                                    console.clear();
                                 });
                             }, 800);
-                            input_aposta.value = '0£';
-                            imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                            // imagem_usuario.innerHTML = `<img src ="${avatar}">`;
                             caixa_aposta.innerHTML = `${caixa_atual}£`;
                         } else {
                             console.log('ERRO');
