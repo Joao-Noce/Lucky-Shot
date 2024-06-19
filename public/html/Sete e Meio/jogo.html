@@ -332,7 +332,7 @@
             if (!ja_tem) {
                 cartas_jogadas.push(carta_escolhida);
             } else {
-                pedir_outra();
+                carta_escolhida = (Number((Math.random() * 39).toFixed(0)));
             }
             if (soma_pontos_jogador <= 7.5) {
 
@@ -486,7 +486,7 @@
             if (!ja_tem_banca) {
                 cartas_jogadas_banca.push(carta_escolhida);
             } else {
-                passar_vez();
+                carta_escolhida = (Number((Math.random() * 39).toFixed(0)));
             }
 
             soma_pontos_banca += cartas[carta_escolhida].ponto;
