@@ -8,333 +8,78 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="./Assets/icone.png" type="image/x-icon">
+    <link rel="stylesheet" href="CSS/index.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        background-image: url(./Assets/ideia2.jpg);
-        background-repeat: no-repeat;
-        background-size: 70vw;
-        background-position: 14vw 1%;
-        overflow: hidden;
-        position: absolute;
-        color: #FFF;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        background-color: rgba(34, 45, 67, 1);
-    }
-
-    .container {
-        display: flex;
-        left: 0;
-        position: relative;
-        transition: 1.5s;
-    }
-
-    .screen {
-        width: 50vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.85);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .container_button_back {
-        padding-right: 90%;
-        padding-top: 3%;
-        margin-bottom: -48px;
-    }
-
-    .div_avatares {
-        display: flex;
-        justify-content: space-evenly;
-        width: 85%;
-
-        button {
-            background-color: transparent;
-            border: transparent;
-        }
-
-        img {
-            width: 50%;
-            border-radius: 10px;
-            border: solid #FFF 1px;
-        }
-    }
-
-    .button_back {
-        background-color: #FFF;
-        width: 40px;
-        height: 40px;
-        border-radius: 100%;
-        border: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: 0.4s;
-    }
-
-    .arrow_left {
-        margin-left: 3px;
-        border: solid #000;
-        border-width: 0 0 2px 2px;
-        padding: 4px;
-        transform: rotate(45deg);
-
-    }
-
-    h1 {
-        font-size: 60px;
-    }
-
-    h2 {
-        margin-top: 15vh;
-        font-size: 40px;
-    }
-
-    .center {
-        margin-top: -8%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 45%;
-    }
-
-    .center_login {
-        margin-top: -1%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 430px;
-    }
-
-    .container_input_login {
-        margin-top: 50px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: start;
-    }
-
-    p {
-        padding-left: 15px;
-        margin-top: 20px;
-        font-size: 18px;
-    }
-
-    .container_input_login input {
-        padding-left: 15px;
-        margin-top: -2.3%;
-        width: 350px;
-        height: 36px;
-        background-color: transparent;
-        border: solid white;
-        border-radius: 5px;
-        font-weight: bold;
-        color: #FFF;
-        outline: none;
-    }
-
-    .button_login {
-        margin-top: 40px;
-        background-color: #B0CDDA;
-        width: 200px;
-        height: 35px;
-        border-radius: 40px;
-        font-size: 20px;
-        border: transparent;
-        transition: 0.8s;
-    }
-
-    ::placeholder {
-        color: #EE675C;
-    }
-
-    button:hover {
-        transform: scale(1.05);
-        cursor: pointer;
-    }
-
-    .span {
-        font-size: 17.5px;
-        margin-top: 25px;
-    }
-
-    .span2 {
-        font-size: 17.5px;
-        margin-top: 25px;
-        margin-right: 8%;
-    }
-
-    .span:hover,
-    .span2:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-
-    .name {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 50vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.45);
-    }
-
-    .name .center {
-        display: flex;
-        justify-content: center;
-        height: 50%;
-    }
-
-    #create .center {
-        height: fit-content;
-        margin-left: 8%;
-    }
-
-    .container_input_create {
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        margin-top: 60px;
-        margin-bottom: 30px;
-    }
-
-    .container_input_create input {
-        padding-left: 15px;
-        margin-top: -2.3%;
-        width: 350px;
-        height: 25px;
-        background-color: transparent;
-        border: solid #FFF;
-        border-radius: 5px;
-        font-weight: bold;
-        color: #FFF;
-        outline: none;
-    }
-
-    .button_create {
-        background-color: #B0CDDA;
-        width: 200px;
-        height: 35px;
-        transition: 0.8s;
-        border: transparent;
-        border-radius: 25px;
-        font-size: 20px;
-        margin-right: 8%;
-    }
-
-    .senhas {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-
-        img {
-            width: 60%;
-            margin-top: 10%;
-        }
-    }
-
-    #botao_ocultar1,
-    #botao_ocultar2,
-    #botao_ocultar3 {
-        border: solid #FFF;
-        border-radius: 0px 5px 5px 0px;
-        cursor: pointer;
-        border-left: none;
-        width: 30px;
-        margin-top: -2.3%;
-    }
-
-    #botao_ocultar1 img {
-        width: 80%;
-        margin-top: 20%;
-    }
-
-    .senhas .input_senhas {
-        width: 320px;
-        background-color: transparent;
-        border-radius: 5px;
-        font-weight: bold;
-        color: #FFF;
-        outline: none;
-        border-right: none;
-        border-radius: 5px 0px 0px 5px;
-        font-size: 13px;
-    }
-</style>
 
 <body>
     <div class="container" id="container">
         <div class="screen" id="login">
-
             <h1>LOGIN</h1>
-            <div class="center_login">
-                <div class="container_input_login">
+            <div class="center">
+                <div class="containerInput">
                     <p>Email:</p>
                     <input type="text" id="input_email_log">
                     <p>Senha:</p>
                     <div class="senhas">
                         <input type="password" id="input_senha_log" class="input_senhas">
-                        <div id="botao_ocultar1" class="olho" onclick="ocultar1()">
-                            <img id="olho_ocultar" src="./Assets/closed_eye.png">
+                        <div class="olho" id="olho1" onclick="ocultarSenha(input_senha_log, olho1)">
+                            <i class="fa-regular fa-eye"></i>
                         </div>
                     </div>
                 </div>
-                <button class="button_login" onclick="login()">Login</button>
-                <span class="span">Esqueci minha senha</span>
-                <span onclick="new_account()" class="span">Não tenho uma conta</span>
+                <button onclick="login()">Login</button>
+                <span>Esqueci minha senha</span>
+                <span onclick="new_account()">Não tenho uma conta</span>
             </div>
         </div>
 
         <div class="name">
             <h1>LUCKY SHOT</h1>
-            <div class="center_login">
+            <div class="center">
                 <h2>TESTE SUA SORTE</h2>
             </div>
         </div>
 
         <div class="screen" id="create">
-            <h1>Criar Conta</h1>
+            <h1>Cadastro</h1>
             <div class="center">
-                <div class="container_input_create">
+                <div class="containerInput">
                     <p>Nome:</p>
                     <input type="text" id="input_name">
                     <p>Email:</p>
                     <input type="text" id="input_email_cadastro">
-
                     <p>Senha:</p>
                     <div class="senhas">
                         <input type="password" id="input_senha_cadastro" class="input_senhas">
-                        <div id="botao_ocultar2" class="olho" onclick="ocultar2()">
-                            <img id="olho_ocultar" src="./Assets/closed_eye.png">
+                        <div class="olho" id="olho2" onclick="ocultarSenha(input_senha_cadastro, olho2)">
+                            <i class="fa-regular fa-eye"></i>
                         </div>
                     </div>
                     <p>Confirmar Senha:</p>
                     <div class="senhas">
                         <input type="password" id="input_confirm_senha" class="input_senhas">
-                        <div id="botao_ocultar3" class="olho" onclick="ocultar3()">
-                            <img id="olho_ocultar" src="./Assets/closed_eye.png">
+                        <div class="olho" id="olho3" onclick="ocultarSenha(input_confirm_senha, olho3)">
+                            <i class="fa-regular fa-eye"></i>
                         </div>
                     </div>
                     <p>Avatar:</p>
-                    <div class="div_avatares">
-                        <button onclick="avatar_espadas()"><img src="./Assets/espadas_icon.png" id="espadas"></button>
-                        <button onclick="avatar_copas()"><img src="./Assets/copas_icon.png" id="copas"></button>
-                        <button onclick="avatar_ouros()"><img src="./Assets/ouros_icon.png" id="ouros"></button>
-                        <button onclick="avatar_paus()"><img src="./Assets/paus_icon.png" id="paus"></button>
-                    </div>
                 </div>
-
-                <button class="button_create" onclick="create_account()">Criar Conta</button>
-                <span onclick="already_have_account()" class="span2">Já tenho uma conta</span>
+                <div class="div_avatares">
+                    <button onclick="escolherAvatar(espadas, `./Assets/espadas_icon.png`)"><img
+                            src="./Assets/espadas_icon.png" name="avatares" id="espadas"></button>
+                    <button onclick="escolherAvatar(copas, `./Assets/copas_icon.png`)"><img
+                            src="./Assets/copas_icon.png" name="avatares" id="copas"></button>
+                    <button onclick="escolherAvatar(ouros, `./Assets/ouros_icon.png`)"><img
+                            src="./Assets/ouros_icon.png" name="avatares" id="ouros"></button>
+                    <button onclick="escolherAvatar(paus, `./Assets/paus_icon.png`)"><img
+                            src="./Assets/paus_icon.png" name="avatares" id="paus"></button>
+                </div>
+                <button onclick="create_account()">Cadastrar</button>
+                <span onclick="already_have_account()">Já tenho uma conta</span>
             </div>
         </div>
     </div>
@@ -342,256 +87,4 @@
 
 </html>
 
-<script>
-    sessionStorage.clear();
-    function ocultar1() {
-        if (input_senha_log.type == "password") {
-            input_senha_log.type = "text";
-            botao_ocultar1.innerHTML = '<img id="img_ocultar" src="./Assets/eye_opened.png">';
-        } else {
-            input_senha_log.type = "password";
-            botao_ocultar1.innerHTML = '<img id="img_ocultar" src="./Assets/closed_eye.png">';
-        }
-    }
-    function ocultar2() {
-        if (input_senha_cadastro.type == "password") {
-            input_senha_cadastro.type = "text";
-            botao_ocultar2.innerHTML = '<img id="img_ocultar" src="./Assets/eye_opened.png">';
-        } else {
-            input_senha_cadastro.type = "password";
-            botao_ocultar2.innerHTML = '<img id="img_ocultar" src="./Assets/closed_eye.png">';
-        }
-    }
-
-    function ocultar3() {
-        if (input_confirm_senha.type == "password") {
-            input_confirm_senha.type = "text";
-            botao_ocultar3.innerHTML = '<img id="img_ocultar" src="./Assets/eye_opened.png">';
-        } else {
-            input_confirm_senha.type = "password";
-            botao_ocultar3.innerHTML = '<img id="img_ocultar" src="./Assets/closed_eye.png">';
-        }
-    }
-    let avatar;
-
-    function avatar_espadas() {
-        avatar = '/Assets/espadas_icon.png'
-        espadas.style = 'transform: scale(1.5);';
-        copas.style = 'transform: scale(1);';
-        ouros.style = 'transform: scale(1);';
-        paus.style = 'transform: scale(1);';
-    }
-
-    function avatar_copas() {
-        avatar = '/Assets/copas_icon.png'
-        espadas.style = 'transform: scale(1);';
-        copas.style = 'transform: scale(1.5);';
-        ouros.style = 'transform: scale(1);';
-        paus.style = 'transform: scale(1);';
-    }
-
-    function avatar_ouros() {
-        avatar = '/Assets/ouros_icon.png'
-        espadas.style = 'transform: scale(1);';
-        copas.style = 'transform: scale(1);';
-        ouros.style = 'transform: scale(1.5);';
-        paus.style = 'transform: scale(1);';
-    }
-
-    function avatar_paus() {
-        avatar = '/Assets/paus_icon.png'
-        espadas.style = 'transform: scale(1);';
-        copas.style = 'transform: scale(1);';
-        ouros.style = 'transform: scale(1);';
-        paus.style = 'transform: scale(1.5);';
-    }
-
-    function new_account() {
-        input_senha_log.type = "password";
-        botao_ocultar1.innerHTML = '<img id="img_ocultar" src="./Assets/closed_eye.png">';
-        document.title = 'Lucky Shot | Cadastro';
-        container.style.left = "-50vw";
-        input_name.value = ``;
-        input_name.placeholder = ``;
-        input_email_cadastro.value = ``;
-        input_email_cadastro.placeholder = ``;
-        input_senha_cadastro.value = ``;
-        input_senha_cadastro.placeholder = ``;
-        input_confirm_senha.value = ``;
-        input_confirm_senha.placeholder = ``;
-        input_email_log.value = ``;
-        input_email_log.placeholder = ``;
-        input_senha_log.value = ``;
-        input_senha_log.placeholder = ``;
-    }
-
-    function already_have_account() {
-        input_senha_cadastro.type = "password";
-        botao_ocultar2.innerHTML = '<img id="img_ocultar" src="/Assets/closed_eye.png">';
-        input_confirm_senha.type = "password";
-        botao_ocultar3.innerHTML = '<img id="img_ocultar" src="/Assets/closed_eye.png">';
-        document.title = 'Lucky Shot | Login';
-        input_name.value = ``;
-        input_name.placeholder = ``;
-        input_email_cadastro.value = ``;
-        input_email_cadastro.placeholder = ``;
-        input_senha_cadastro.value = ``;
-        input_senha_cadastro.placeholder = ``;
-        input_confirm_senha.value = ``;
-        input_confirm_senha.placeholder = ``;
-        input_email_log.value = ``;
-        input_email_log.placeholder = ``;
-        input_senha_log.value = ``;
-        input_senha_log.placeholder = ``;
-        container.style.left = "0";
-    }
-    function create_account() {
-        var name = input_name.value;
-        var email_cadastro = input_email_cadastro.value;
-        var senha_cadastro = input_senha_cadastro.value;
-        var confirm_senha = input_confirm_senha.value;
-
-        var tamanho_email = email_cadastro.length;
-        var arroba = email_cadastro.indexOf("@");
-        var tamanho_senha = senha_cadastro.length;
-
-        if (name == "") {
-            input_name.value = ``;
-            input_name.placeholder = `Your name is necessary.`;
-        } else if (arroba < 0 || tamanho_email < 6) {
-            input_email_cadastro.value = ``;
-            input_email_cadastro.placeholder = `Email inválido.`;
-        } else if (tamanho_senha < 6) {
-            input_senha_cadastro.value = ``;
-            input_confirm_senha.value = ``;
-            input_senha_cadastro.placeholder = `A senha precisa de no mínimo 8 caracteres.`;
-        } else if (senha_cadastro != confirm_senha) {
-            input_senha_cadastro.value = ``;
-            input_confirm_senha.value = ``;
-            input_senha_cadastro.placeholder = `As senhas não são iguais`;
-            input_confirm_senha.placeholder = `As senhas não são iguais`;
-        } else if (avatar == undefined) {
-            alert('Escolha um avatar!');
-        } else {
-            input_name.value = ``;
-            input_name.placeholder = ``;
-            input_email_cadastro.value = ``;
-            input_email_cadastro.placeholder = ``;
-            input_senha_cadastro.value = ``;
-            input_senha_cadastro.placeholder = ``;
-            input_confirm_senha.value = ``;
-            input_confirm_senha.placeholder = ``;
-
-
-            // Chama a função para enviar os dados para a API
-            fetch("/usuarios/cadastrar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    // crie um atributo que recebe o valor recuperado aqui
-                    // Agora vá para o arquivo routes/usuario.js
-                    nomeServer: name,
-                    emailServer: email_cadastro,
-                    senhaServer: senha_cadastro,
-                    avatarServer: avatar
-                }),
-            })
-                .then(function (resposta) {
-                    if (resposta.ok) {
-                        Swal.fire({
-                            position: "bottom-end",
-                            icon: "success",
-                            title: "Conta criada com sucesso",
-                            background: "#1D1D1D",
-                            color: "#FFF",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        setTimeout(() => { already_have_account(); }, "1500");
-
-                    } else {
-                        input_name.placeholder = `Este nome já está sendo usado!`;
-                    }
-                })
-        }
-    }
-
-
-    function login() {
-        var email_log = input_email_log.value;
-        var senha_log = input_senha_log.value;
-
-        if (email_log == "" || senha_log == "") {
-            Swal.fire({
-                title: "FALHA",
-                text: "ERRO AO AUTENTICAR",
-                icon: "error",
-                background: '#1D1D1D',
-                color: '#FFF',
-            });
-        }
-
-        console.log("FORM LOGIN: ", email_log);
-        console.log("FORM SENHA: ", senha_log);
-
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: email_log,
-                senhaServer: senha_log
-            })
-        }).then(function (resposta) {
-
-            if (resposta.ok) {
-                input_email_log.value = ``;
-                input_email_log.placeholder = ``;
-                input_senha_log.value = ``;
-                input_senha_log.placeholder = ``;
-
-                resposta.json().then(json => {
-                    sessionStorage.EMAIL_USUARIO = json.emailUsuario;
-                    sessionStorage.NOME_USUARIO = json.nomeUsuario;
-                    sessionStorage.ID_USUARIO = json.idUsuario;
-                    sessionStorage.AVATAR = json.avatarUsuario;
-                    sessionStorage.CAIXA_SETE = json.caixaSete;
-                    sessionStorage.CAIXA_BLACKJACK = json.caixaBlackjack;
-                    sessionStorage.INICIO = json.inicio;
-                    Swal.fire({
-                        title: "SUCESSO",
-                        text: "AUTENTICADO COM SUCESSO",
-                        icon: "success",
-                        background: '#1D1D1D',
-                        color: '#FFF',
-                        showConfirmButton: false
-                    });
-                    setTimeout(() => { window.location = "../html/menu.html" }, "1500");
-                });
-            } else {
-
-                input_email_log.value = ``;
-                input_email_log.placeholder = ``;
-                input_senha_log.value = ``;
-                input_senha_log.placeholder = ``;
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    Swal.fire({
-                        title: "ERRO",
-                        text: "FALHA AO AUTENTICAR",
-                        icon: "error",
-                        background: '#1D1D1D',
-                        color: '#FFF',
-                    });
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-        return false;
-    }
-</script>
+<script src="JS/index.js"></script>

@@ -9,17 +9,37 @@ function autenticar(email_log, senha_log) {
     return database.executar(instrucaoSql);
 }
 
-function cadastrar(name, email_cadastro, senha_cadastro, avatar) {
+async function cadastrar(name, email_cadastro, senha_cadastro, avatar) {
     console.log("Cadastrando usuário:", name, email_cadastro);
-    var instrucaoSql = `
-        INSERT INTO usuario (nomeUsuario, emailUsuario, senhaUsuario, avatarUsuario, caixaBlackjack, caixaSete) VALUES ('${name}', '${email_cadastro}', '${senha_cadastro}', '${avatar}', 100, 100);
-    `;
-    console.log("Executando a instrução SQL para cadastrar o usuário: \n" + instrucaoSql);
-    return database.executar(instrucaoSql)
-        .catch(erro => {
-            console.error("Erro ao cadastrar usuário:", erro);
-            throw erro;
-        });
+
+    try {
+        const queryUsuario = `
+            INSERT INTO usuario (nomeUsuario, emailUsuario, senhaUsuario, avatarUsuario, caixaBlackjack, caixaSete) 
+            VALUES ('${name}', '${email_cadastro}', '${senha_cadastro}', '${avatar}', 100, 100);
+        `;
+        console.log("Executando instrução SQL para o usuário: \n" + queryUsuario);
+
+        const resultadoUsuario = await database.executar(queryUsuario);
+        const idUsuario = resultadoUsuario.insertId;
+
+        const queryMinefield = `
+            INSERT INTO minefield (fkUsuario, ganhou) VALUES (${idUsuario}, 0);
+        `;
+        const queryGenius = `
+            INSERT INTO genius (fkUsuario, maiorPontuacao) VALUES (${idUsuario}, 0);
+        `;
+
+        console.log("Executando instrução SQL para Minefield: \n" + queryMinefield);
+        await database.executar(queryMinefield);
+
+        console.log("Executando instrução SQL para Genius: \n" + queryGenius);
+        await database.executar(queryGenius);
+
+        console.log("Usuário cadastrado com sucesso!");
+    } catch (erro) {
+        console.error("Erro ao cadastrar usuário:", erro);
+        throw erro;
+    }
 }
 
 module.exports = {

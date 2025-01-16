@@ -1,0 +1,157 @@
+* {
+    font-family: "Josefin Sans";
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+    color: #FFF;
+    background-color: rgba(34, 45, 67, 1);
+}
+
+.container {
+    display: flex;
+    left: 0;
+    position: relative;
+    transition: 1.5s;
+
+    .screen {
+        width: 50vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: -30px;
+
+            .containerInput {
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+
+                p {
+                    padding-left: 15px;
+                    font-size: 18px;
+                }
+
+                input,
+                .senhas input {
+                    padding-left: 15px;
+                    width: 350px;
+                    height: 30px;
+                    background-color: transparent;
+                    border-radius: 15px;
+                    font-weight: bold;
+                    color: #FFF;
+                    outline: none;
+                    border: solid white 2px;
+                }
+
+                .senhas {
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+
+                    .olho {
+                        display: flex;
+                        align-items: center;
+                        cursor: pointer;
+
+                        i {
+                            position: absolute;
+                            right: 10px;
+                        }
+                    }
+                }
+
+            }
+
+            .div_avatares {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 350px;
+
+                button {
+                    margin: 0;
+                    background-color: transparent;
+                    transition: 0.8s;
+                }
+
+                img {
+                    width: 50%;
+                    border-radius: 10px;
+                    border: solid #FFF 1px;
+                }
+            }
+
+            button {
+                margin-top: 40px;
+                background-color: #B0CDDA;
+                width: 200px;
+                height: 35px;
+                border-radius: 40px;
+                font-size: 20px;
+                border: transparent;
+                transition: 0.8s;
+            }
+
+            button:hover {
+                transform: scale(1.05);
+                cursor: pointer;
+            }
+
+            span {
+                font-size: 17.5px;
+                margin-top: 25px;
+            }
+
+            span:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+
+    }
+    #login .center {
+        margin-top: 60px;
+        height: 430px;
+    }
+}
+
+
+
+h1 {
+    font-size: 60px;
+}
+
+h2 {
+    margin-top: 15vh;
+    font-size: 40px;
+}
+
+::placeholder {
+    color: #EE675C;
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50vw;
+    height: 100vh;
+
+    .center {
+        display: flex;
+        justify-content: center;
+        height: 50%;
+    }
+}
