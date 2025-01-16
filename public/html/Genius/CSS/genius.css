@@ -1,0 +1,106 @@
+* {
+    font-family: "Josefin Sans";
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.caixa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50vh;
+
+    button {
+        width: 250px;
+        height: 250px;
+        cursor: pointer;
+    }
+
+
+    #btnGreen {
+        border-top-left-radius: 400px;
+        background-color: #4CAF50;
+    }
+
+    #btnGreen.shine,
+    #btnGreen:active {
+        box-shadow: 0 0 50px 20px rgba(76, 175, 80, 0.8);
+    }
+
+    #btnOrange {
+        border-top-right-radius: 400px;
+        background-color: #FFEB3B;
+    }
+
+    #btnOrange.shine,
+    #btnOrange:active {
+        box-shadow: 0 0 50px 20px rgba(255, 235, 59, 0.8);
+    }
+
+    #btnRed {
+        border-bottom-left-radius: 400px;
+        background-color: #F44336;
+    }
+
+    #btnRed.shine,
+    #btnRed:active {
+        box-shadow: 0 0 50px 20px rgba(244, 67, 54, 0.8);
+    }
+}
+
+#btnBlue {
+    border-bottom-right-radius: 400px;
+    background-color: #2196F3;
+}
+
+#btnBlue.shine,
+#btnBlue:active {
+    box-shadow: 0 0 50px 20px rgba(33, 150, 243, 0.8);
+}
+
+#cima {
+    align-items: end;
+}
+
+#baixo {
+    align-items: start;
+}
+
+.centro {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    color: white;
+}
+
+.tres_barras {
+    position: fixed;
+    top: 15px;
+    left: 0;
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+    width: 5vw;
+
+    i {
+        font-size: 25px;
+        color: white;
+    }
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Shot | GENIUS | Jogar</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+    </style>
+    <link rel="stylesheet" href="CSS/genius.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <button class="tres_barras"><a href="pause.html"><i class="fa-solid fa-bars"></i></a></button>
+    <div class="caixa" id="cima">
+        <button onclick="jogar('btnGreen')" id="btnGreen"></button>
+        <button onclick="jogar('btnOrange')" id="btnOrange"></button>
+    </div>
+    <div class="centro">
+            <h1>GENIUS</h1>
+            <span id="pontuacaoSpan">Pontuação: 0</span>
+    </div>
+    <div class="caixa" id="baixo">
+        <button onclick="jogar('btnRed')" id="btnRed"></button>
+        <button onclick="jogar('btnBlue')" id="btnBlue"></button>
+    </div>
+</body>
+
+</html>
+<script src="JS/genius.js"></script>

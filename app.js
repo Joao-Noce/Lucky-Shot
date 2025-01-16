@@ -16,12 +16,12 @@ var HOST_APP = process.env.APP_HOST;
 var app = express();
 
 var usuarioRouter = require("./src/routes/usuarios");
-var rankingSeteRouter = require("./src/routes/rankingSete");
-var rankingBlackjackRouter = require("./src/routes/rankingBlackjack");
+var rankingRouter = require("./src/routes/ranking");
 var dashBlackjackRouter = require("./src/routes/dashBlackjack");
 var dashSeteRouter = require("./src/routes/dashSete");
 var blackjackRouter = require("./src/routes/blackjack");
 var seteRouter = require("./src/routes/sete");
+var geniusRouter = require("./src/routes/genius");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,12 +30,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/usuarios", usuarioRouter);
-app.use("/rankingSete", rankingSeteRouter);
-app.use("/rankingBlackjack", rankingBlackjackRouter);
+app.use("/ranking", rankingRouter);
 app.use("/dashBlackjack", dashBlackjackRouter);
 app.use("/dashSete", dashSeteRouter);
 app.use("/blackjack", blackjackRouter);
 app.use("/sete", seteRouter);
+app.use("/genius", geniusRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

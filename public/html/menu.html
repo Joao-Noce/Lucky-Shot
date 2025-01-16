@@ -5,74 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Shot | Menu</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+        @import url('https://fonts.googleapis.com/css2?family=B612+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Playwrite+AU+SA:wght@100..400&display=swap');
+    </style>
     <link rel="shortcut icon" href="../Assets/icone.png" type="image/x-icon">
+    <link rel="stylesheet" href="../CSS/menu.css">
 </head>
 
-<style>
-    body {
-        /* background-color: #FFF; */
-        /* background-image: url(../Assets/icone2.png); */
-        /* background-image: url(../Assets/ideia2.jpg); */
-        background-image: url(../Assets/parede.jpg);
-        background-size: cover;
-        background-repeat: no-repeat;
-        /* background-size: 70vw; */
-        /* background-position: 14vw 1%; */
-    }
-
-    h1 {
-        font-size: 60px;
-        color: #FFF;
-        /* color: #1D1D1D; */
-    }
-
-    .jogos {
-        margin-top: 8%;
-        display: flex;
-        justify-content: space-evenly;
-
-        img {
-            width: 300px;
-            border-radius: 25px;
-            transition: 0.8s;
-        }
-        
-        #sete {
-            border: solid #EE675C 8px;
-        }
-
-        #blackjack {
-            border: solid #B0CDDA 8px;
-        }
-
-    }
-
-    button {
-        margin-top: 8%;
-        width: 20%;
-        height: 40px;
-        border-radius: 15px;
-        font-size: 25px;
-        border-color: transparent;
-        transition: 0.8s;
-        cursor: pointer;
-    }
-
-    button:hover,
-    img:hover {
-        transform: scale(1.05);
-    }
-</style>
-
 <body>
+    <button class="tres_barras"><a href="../index.html"><img src="../../Assets/barras.png"></a></button>
     <center>
         <div class="container">
             <h1>Escolha seu jogo!</h1>
             <div class="jogos">
                 <a href="./Sete e Meio/pause.html"><img src="../Assets/sete_capa.jpg" id="sete"></a>
                 <a href="./Vinte e Um/pause.html"><img src="../Assets/blackjack_capa.jpeg" id="blackjack"></a>
+                <a href="./Genius/pause.html"><img src="../Assets/genius.jpeg" id="genius"></a>
             </div>
-            <a href="../index.html"><button>Sair</button></a>
         </div>
     </center>
 </body>
