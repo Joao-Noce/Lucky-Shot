@@ -23,4 +23,8 @@ router.get("/ranking_genius/", function (req, res) {
     rankingController.ranking_genius(req, res);
 });
 
+router.get("/ranking_minefield/", function (req, res) {
+    rankingController.ranking_minefield(req, res);
+});
+
 module.exports = router;

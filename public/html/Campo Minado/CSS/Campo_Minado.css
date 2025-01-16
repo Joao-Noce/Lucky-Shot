@@ -1,0 +1,78 @@
+* {
+    font-family: "Josefin Sans";    
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    background-color: rgba(34, 45, 67, 1);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(50, 50, 50, 0.9);
+    width: 495px;
+    height: 495px;
+}
+
+.linhaFacil, .linhaMedio {
+    display: flex;
+    height: 55px;
+}
+
+.linhaMedio {
+    height: 30.93px;
+}
+
+.colunaFacil, .colunaMedio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.25);
+    border: solid rgba(255, 255, 255, 0.25) 1px;
+    width: 55px;
+    font-size: 25px;
+    color: white;
+}
+
+.colunaMedio {
+    width: 30.93px;
+}
+
+.containerBotao {
+    display: flex;
+    width: 200px;
+    justify-content: center;
+    background-color: rgba(244, 67, 54, 1);
+    border-radius: 30px;
+    margin-top: 15px;
+    padding-inline: 15px;
+    color: white;
+    cursor: pointer;
+}
+
+.containerInfo {
+    font-size: 20px;
+    color: white;
+}
+
+.tres_barras {
+    position: fixed;
+    top: 15px;
+    left: 0;
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+    width: 5vw;
+
+    i {
+        font-size: 25px;
+        color: white;
+    }
+}

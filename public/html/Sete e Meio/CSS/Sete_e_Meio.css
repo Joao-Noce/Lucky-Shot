@@ -38,11 +38,7 @@
 /* SEPARAÇÃO */
 
 body {
-    background-image: url(../../Assets/fundo_vermelho.jpg);
-    background-image: url(../../../Assets/fundo_vermelho.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: #EE675C;
+    background-color: #223043;
 }
 
 ::placeholder {
@@ -212,7 +208,16 @@ img {
 }
 
 .tres_barras {
+    position: fixed;
+    top: 15px;
+    left: 0;
     background-color: transparent;
     border: transparent;
     cursor: pointer;
+    width: 5vw;
+
+    i {
+        font-size: 25px;
+        color: white;
+    }
 }

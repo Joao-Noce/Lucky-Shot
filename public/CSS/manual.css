@@ -50,6 +50,18 @@ button {
         font-size: 23px;
     }
 
+    .h3Vermelho {
+        color: #EE675C;
+    }
+
+    .h3Verde {
+        color: #7FBF60;
+    }
+
+    .h3Amarelo {
+        color: #F8D571;
+    }
+
     p {
         padding-inline: 2%;
         text-align: justify;
@@ -67,6 +79,18 @@ button {
         color: #B0CDDA;
         padding-inline: 2%;
         font-size: 23px;
+    }
+
+    .h3Vermelho {
+        color: #EE675C;
+    }
+
+    .h3Verde {
+        color: #7FBF60;
+    }
+
+    .h3Amarelo {
+        color: #F8D571;
     }
 
     p {

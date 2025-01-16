@@ -22,6 +22,7 @@ var dashSeteRouter = require("./src/routes/dashSete");
 var blackjackRouter = require("./src/routes/blackjack");
 var seteRouter = require("./src/routes/sete");
 var geniusRouter = require("./src/routes/genius");
+var minefieldRouter = require("./src/routes/minefield");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,6 +37,7 @@ app.use("/dashSete", dashSeteRouter);
 app.use("/blackjack", blackjackRouter);
 app.use("/sete", seteRouter);
 app.use("/genius", geniusRouter);
+app.use("/minefield", minefieldRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
