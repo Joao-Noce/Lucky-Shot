@@ -8,15 +8,13 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #B0CDDA;
+    background-color: #D1D1D1;
+    border-radius: 15px;
 }
 
 body {
     margin: 0;
     padding: 0;
-    /* background-size: cover; */
-    /* background-repeat: no-repeat; */
-    /* background-image: url(../../Assets/parede.jpg); */
     background-color: rgba(34, 45, 67, 1);
 }
 
