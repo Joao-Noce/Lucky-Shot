@@ -24,7 +24,9 @@ h1 {
 .jogos {
     margin-top: 8%;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap:nowrap;
+    flex-wrap:wrap-reverse;
+    flex-wrap:wrap;
     justify-content: space-between;
     max-width: 80vw;
 

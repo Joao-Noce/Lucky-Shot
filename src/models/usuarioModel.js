@@ -42,7 +42,27 @@ async function cadastrar(name, email_cadastro, senha_cadastro, avatar) {
     }
 }
 
+function buscarSenha(idUsuario) {
+    console.log("Buscando senha do usuário:", idUsuario);
+    var instrucaoSql = `
+        SELECT senhaUsuario FROM usuario WHERE idUsuario = ${idUsuario};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function atualizarPerfil(idUsuario, nome, email, senha, avatar) {
+    console.log("Atualizando usuário:", idUsuario);
+    var instrucaoSql = `
+        UPDATE usuario SET nomeUsuario = "${nome}", emailusuario = "${email}", senhaUsuario = "${senha}", avatarUsuario = "${avatar}" WHERE idUsuario = ${idUsuario};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
+    buscarSenha,
+    atualizarPerfil
 };

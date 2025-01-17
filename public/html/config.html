@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Shot | Config</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
     </style>
@@ -47,7 +49,7 @@
             <button onclick="escolherAvatar(paus, 'paus')"><img src="/Assets/paus_icon.png"
                     name="avatares" id="paus"></button>
         </div>
-        <button onclick="create_account()">Enviar modificações</button>
+        <button onclick="criarConta(inputNome, inputEmail, inputSenha, inputConfirmar)">Enviar modificações</button>
     </div>
 </body>
 
