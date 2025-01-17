@@ -27,7 +27,7 @@ h1 {
     flex-wrap:nowrap;
     flex-wrap:wrap-reverse;
     flex-wrap:wrap;
-    justify-content: space-between;
+    justify-content:space-around;
     max-width: 80vw;
 
     img {
@@ -51,6 +51,10 @@ h1 {
 
     #campoMinado {
         border: solid #F8D571 8px;
+    }
+
+    #termo {
+        border: solid #A990D6 8px;
     }
 
     img:hover {

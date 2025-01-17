@@ -22,18 +22,25 @@ async function cadastrar(name, email_cadastro, senha_cadastro, avatar) {
         const resultadoUsuario = await database.executar(queryUsuario);
         const idUsuario = resultadoUsuario.insertId;
 
-        const queryMinefield = `
-            INSERT INTO minefield (fkUsuario, ganhou) VALUES (${idUsuario}, 0);
-        `;
+        // const queryMinefield = `
+        //     INSERT INTO minefield (fkUsuario, ganhou) VALUES (${idUsuario}, 0);
+        // `;
         const queryGenius = `
             INSERT INTO genius (fkUsuario, maiorPontuacao) VALUES (${idUsuario}, 0);
         `;
 
-        console.log("Executando instrução SQL para Minefield: \n" + queryMinefield);
-        await database.executar(queryMinefield);
+        // const queryTermo = `
+        //     INSERT INTO termo (fkUsuario, ganhou) VALUES (${idUsuario}, 0);
+        // `;
+
+        // console.log("Executando instrução SQL para Minefield: \n" + queryMinefield);
+        // await database.executar(queryMinefield);
 
         console.log("Executando instrução SQL para Genius: \n" + queryGenius);
         await database.executar(queryGenius);
+
+        // console.log("Executando instrução SQL para Termo: \n" + queryTermo);
+        // await database.executar(queryTermo);
 
         console.log("Usuário cadastrado com sucesso!");
     } catch (erro) {

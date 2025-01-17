@@ -64,6 +64,10 @@ button {
         color: #F8D571;
     }
 
+    .h3Roxo {
+        color: #A990D6;
+    }
+
     p {
         padding-inline: 2%;
         text-align: justify;
@@ -93,6 +97,10 @@ button {
 
     .h3Amarelo {
         color: #F8D571;
+    }
+
+    .h3Roxo {
+        color: #A990D6;
     }
 
     p {

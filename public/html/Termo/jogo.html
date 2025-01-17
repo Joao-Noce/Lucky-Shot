@@ -4,25 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Shot | MineField</title>
+    <title>Lucky Shot | Termo</title>
+    <link rel="shortcut icon" href="../../Assets/icone.png" type="image/x-icon">
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
     </style>
-    <link rel="shortcut icon" href="../../Assets/icone.png" type="image/x-icon">
-    <link rel="stylesheet" href="./CSS/Campo_Minado.css">
+    <link rel="stylesheet" href="./CSS/Termo.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head> 
+</head>
 
 <body>
     <button class="tres_barras"><a href="pause.html"><i class="fa-solid fa-circle-pause"></i></a></button>
-    <div class="containerInfo" id="containerInfo"></div>
     <div class="container" id="container"></div>
-    <div class="containerBotao" id="containerBotao" onclick="statusMarcarBomba()">
-        <p id="statusMostrarBomba">Marcando caixa</p>
+    <div class="containerInput">
+        <input type="text" id="input">
+        <button id="botao" onclick="validarSeEPalavra(input.value)"><i class="fa-solid fa-circle-arrow-right"></i></button>
     </div>
 </body>
 
 </html>
 
-<script src="./JS/Campo_Minado.js"></script>
+<script src="./JS/Termo.js"></script>

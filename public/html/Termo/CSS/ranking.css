@@ -1,0 +1,81 @@
+* {
+    font-family: "Josefin Sans";
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    color: #FFF;
+    background-color: rgba(34, 45, 67, 1);
+    overflow-x: hidden;
+}
+
+.Cartao_pai {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .Cartao_filho {
+        padding: 1%;
+        width: 60vw;
+        background-color: #1D1D1D;
+        border-radius: 25px;
+        display: flex;
+    }
+    .line_column {
+        width: 100%;
+        border: solid #FFF 1px;
+        margin-bottom: 15px;
+    }
+    .painel_caixa {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .painel_vitoria {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.resultado {
+    display: flex;
+    justify-content: space-between;
+}
+
+.coluna {
+    text-align: center;
+    width: 33.3%;
+
+    p {
+        font-weight: bold;
+        color: #A990D6;
+    }
+}
+
+.legenda {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.tres_barras {
+    position: fixed;
+    top: 15px;
+    left: 0;
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+    width: 5vw;
+
+    i {
+        font-size: 25px;
+        color: white;
+    }
+}
+
+center p {
+    font-size: 30px;
+}

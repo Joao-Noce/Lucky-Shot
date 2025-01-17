@@ -6,7 +6,8 @@ function ranking_caixa_sete() {
     SELECT nomeUsuario,
     caixaSete
     FROM usuario
-    ORDER BY caixaSete DESC;`;
+    ORDER BY caixaSete DESC
+    LIMIT 10;`;
 
     console.log("Executando as instrução SQL: \n" + instrucaoSql1);
     return database.executar(instrucaoSql1);
@@ -21,7 +22,8 @@ function ranking_vitoria_sete() {
     JOIN sete ON idUsuario = fkUsuario
     WHERE ganhou = 1
     GROUP BY nomeUsuario
-    ORDER BY Quantidade DESC;`;
+    ORDER BY Quantidade DESC
+    LIMIT 10;`;
 
     console.log("Executando as instrução SQL: \n" + instrucaoSql1);
     return database.executar(instrucaoSql1);
@@ -33,7 +35,8 @@ function ranking_caixa_blackjack() {
     SELECT nomeUsuario,
     caixaBlackjack
     FROM usuario
-    ORDER BY caixaBlackjack DESC;`;
+    ORDER BY caixaBlackjack DESC
+    LIMIT 10;`;
 
     console.log("Executando as instrução SQL: \n" + instrucaoSql1);
     return database.executar(instrucaoSql1);
@@ -48,7 +51,8 @@ function ranking_vitoria_blackjack() {
     JOIN blackjack ON idUsuario = fkUsuario
     WHERE ganhou = 1
     GROUP BY nomeUsuario
-    ORDER BY Quantidade DESC;`;
+    ORDER BY Quantidade DESC
+    LIMIT 10;`;
 
     console.log("Executando as instrução SQL: \n" + instrucaoSql1);
     return database.executar(instrucaoSql1);
@@ -62,7 +66,8 @@ function ranking_genius() {
     FROM usuario
     JOIN genius ON idUsuario = fkUsuario
     GROUP BY nomeUsuario
-    ORDER BY maiorPontuacao DESC;`;
+    ORDER BY maiorPontuacao DESC
+    LIMIT 10;`;
 
     console.log("Executando as instrução SQL: \n" + instrucaoSql1);
     return database.executar(instrucaoSql1);
@@ -77,7 +82,24 @@ function ranking_minefield() {
     JOIN minefield ON idUsuario = fkUsuario
     WHERE ganhou = 1
     GROUP BY nomeUsuario
-    ORDER BY Quantidade DESC;`;
+    ORDER BY Quantidade DESC
+    LIMIT 10;`;
+
+    console.log("Executando as instrução SQL: \n" + instrucaoSql1);
+    return database.executar(instrucaoSql1);
+}
+
+function ranking_termo() {
+    console.log("ACESSEI O DASH MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pergunta1()");
+    var instrucaoSql1 = `
+    SELECT nomeUsuario,
+    COUNT(ganhou) AS Quantidade
+    FROM usuario
+    JOIN termo ON idUsuario = fkUsuario
+    WHERE ganhou = 1
+    GROUP BY nomeUsuario
+    ORDER BY Quantidade DESC
+    LIMIT 10;`;
 
     console.log("Executando as instrução SQL: \n" + instrucaoSql1);
     return database.executar(instrucaoSql1);
@@ -89,5 +111,6 @@ module.exports = {
  ranking_caixa_blackjack,
  ranking_vitoria_blackjack,
  ranking_genius,
- ranking_minefield
+ ranking_minefield,
+ ranking_termo
 }

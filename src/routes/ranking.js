@@ -27,4 +27,8 @@ router.get("/ranking_minefield/", function (req, res) {
     rankingController.ranking_minefield(req, res);
 });
 
+router.get("/ranking_termo/", function (req, res) {
+    rankingController.ranking_termo(req, res);
+});
+
 module.exports = router;
