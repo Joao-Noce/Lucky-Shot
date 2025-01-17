@@ -1,4 +1,11 @@
 sessionStorage.clear();
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        login();
+    }
+});
+
 function ocultarSenha(input, div) {
     if (input.type == "password") {
         div.innerHTML = `<i class="fa-regular fa-eye-slash"></i>`;
@@ -38,6 +45,7 @@ function new_account() {
     input_email_log.placeholder = ``;
     input_senha_log.value = ``;
     input_senha_log.placeholder = ``;
+    document.body.style = "background-position-x: 20%;";
 }
 
 function already_have_account() {
@@ -59,6 +67,7 @@ function already_have_account() {
     input_senha_log.value = ``;
     input_senha_log.placeholder = ``;
     container.style.left = "0";
+    document.body.style = "background-position-x: 86%;";
 }
 function create_account() {
     var name = input_name.value;

@@ -120,8 +120,6 @@ let cartas_jogadas_banca = [];
 let ja_tem = false;
 let tem_as_jogador = false;
 
-// video();
-
 function pedir_outra() {
     if ((soma_pontos_jogador > 10)) {
         cartas[0].ponto = 1;
