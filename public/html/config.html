@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Shot | Config</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+    </style>
+    <link rel="shortcut icon" href="../Assets/icone.png" type="image/x-icon">
+    <link rel="stylesheet" href="../CSS/config.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <button class="tres_barras"><a href="menu.html"><i class="fa-solid fa-bars"></i></a></button>
+    <div class="center">
+        <div class="containerInput">
+            <p>Nome:</p>
+            <input type="text" id="inputNome">
+            <p>Email:</p>
+            <input type="text" id="inputEmail">
+            <p>Senha:</p>
+            <div class="senhas">
+                <input type="password" id="inputSenha" class="input_senhas">
+                <div class="olho" id="olho1" onclick="ocultarSenha(inputSenha, olho1)">
+                    <i class="fa-regular fa-eye"></i>
+                </div>
+            </div>
+            <p>Confirmar Senha:</p>
+            <div class="senhas">
+                <input type="password" id="inputConfirmar" class="input_senhas">
+                <div class="olho" id="olho2" onclick="ocultarSenha(inputConfirmar, olho2)">
+                    <i class="fa-regular fa-eye"></i>
+                </div>
+            </div>
+            <p>Avatar:</p>
+        </div>
+        <div class="div_avatares">
+            <button onclick="escolherAvatar(espadas, 'espadas')"><img src="/Assets/espadas_icon.png"
+                    name="avatares" id="espadas"></button>
+            <button onclick="escolherAvatar(copas, 'copas')"><img src="/Assets/copas_icon.png"
+                    name="avatares" id="copas"></button>
+            <button onclick="escolherAvatar(ouros, 'ouros')"><img src="/Assets/ouros_icon.png"
+                    name="avatares" id="ouros"></button>
+            <button onclick="escolherAvatar(paus, 'paus')"><img src="/Assets/paus_icon.png"
+                    name="avatares" id="paus"></button>
+        </div>
+        <button onclick="create_account()">Enviar modificações</button>
+    </div>
+</body>
+
+</html>
+
+<script src="../JS/config.js"></script>

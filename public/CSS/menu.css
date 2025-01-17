@@ -56,16 +56,21 @@ h1 {
     }
 }
 
-.tres_barras {
+.tres_barras,
+.config {
     position: fixed;
-    top: 15px;
-    left: 0;
+    top: 30px;
     background-color: transparent;
     border: transparent;
     cursor: pointer;
     width: 5vw;
 
-    img {
-        width: 50%;
+    i {
+        font-size: 25px;
+        color: white;
     }
+}
+
+.config {
+    right: 0;
 }

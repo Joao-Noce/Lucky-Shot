@@ -40,9 +40,6 @@
 body {
     padding: 0;
     margin: 0;
-    /* background-image: url(../../Assets/fundo_azul.jpg); */
-    /* background-size: cover; */
-    /* background-repeat: no-repeat; */
     background-color: rgba(34, 45, 67, 1);
 }
 
@@ -208,9 +205,18 @@ img {
 }
 
 .tres_barras {
+    position: fixed;
+    top: 15px;
+    left: 0;
     background-color: transparent;
     border: transparent;
     cursor: pointer;
+    width: 5vw;
+
+    i {
+        font-size: 25px;
+        color: white;
+    }
 }
 
 #alerta {

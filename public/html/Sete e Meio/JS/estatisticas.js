@@ -3,6 +3,24 @@ avatar.innerHTML = `<img src="../..${sessionStorage.AVATAR}">`;
 Nome.innerHTML = `${sessionStorage.NOME_USUARIO}`;
 Caixa.innerHTML = `R$${sessionStorage.CAIXA_SETE}`;
 Dia.innerHTML = `${sessionStorage.INICIO}`;
+
+let avatarValue = sessionStorage.AVATAR;
+
+switch (avatarValue) {
+    case "copas":
+        avatar.innerHTML = `<img src = "../../Assets/copas_icon.png">`;
+        break;
+    case "espadas":
+        avatar.innerHTML = `<img src = "../../Assets/espadas_icon.png">`;
+        break;
+    case "ouros":
+        avatar.innerHTML = `<img src = "../../Assets/ouros_icon.png">`;
+        break;
+    case "paus":
+        avatar.innerHTML = `<img src = "../../Assets/paus_icon.png">`;
+        break;
+}
+
 obterDadosGrafico();
 
 function obterDadosGrafico() {

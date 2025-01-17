@@ -12,12 +12,12 @@ function ocultarSenha(input, div) {
 
 let avatar;
 
-function escolherAvatar(id, imagem) {
+function escolherAvatar(id, idValue) {
     let avatares = document.getElementsByName("avatares");
     avatares.forEach(avatar => {
         avatar.style = "transform: scale(1);";
     });
-    avatar = imagem;
+    avatar = idValue;
     id.style = "transform: scale(1.5);";
 }
 

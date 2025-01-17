@@ -81,8 +81,25 @@ let deumaximo;
 let caixa_atual = Number(sessionStorage.CAIXA_SETE);
 let idUsuario = sessionStorage.ID_USUARIO;
 let nomeUsuario = sessionStorage.NOME_USUARIO;
+
 let avatar = sessionStorage.AVATAR;
-imagem_usuario.innerHTML = `<img src = "../..${avatar}">`;
+
+switch (avatar) {
+    case "copas":
+        console.log(avatar);
+        imagem_usuario.innerHTML = `<img src = "../../Assets/copas_icon.png">`;
+        break;
+        case "espadas":
+        imagem_usuario.innerHTML = `<img src = "../../Assets/espadas_icon.png">`;
+        break;
+    case "ouros":
+        imagem_usuario.innerHTML = `<img src = "../../Assets/ouros_icon.png">`;
+        break;
+    case "paus":
+        imagem_usuario.innerHTML = `<img src = "../../Assets/paus_icon.png">`;
+        break;
+}
+
 caixa_aposta.innerHTML = `${caixa_atual}£`;
 nomeUsuarioH2.innerHTML = nomeUsuario;
 let cartas_jogadas = [];

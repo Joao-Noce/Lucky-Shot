@@ -9,6 +9,12 @@ body {
     position: absolute;
     color: #FFF;
     background-color: rgba(34, 45, 67, 1);
+    background-image: url(../Assets/cartas3.png);
+    background-attachment:local;
+    background-position-x: 90%;
+    background-position-y: -50%;
+    background-repeat:repeat-y;
+    background-size: 500px;
 }
 
 .container {
