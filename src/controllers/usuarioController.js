@@ -36,21 +36,18 @@ function autenticar(req, res) {
 }
 
 function cadastrar(req, res) {
-    var nome = req.body.nomeServer;
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
-    var avatar = req.body.avatarServer;
+    let {nomeValue, emailValue, senhaValue, avatarUsuario} = req.body;
 
-    if (nome == undefined) {
+    if (nomeValue == undefined) {
         res.status(400).send("Seu nome está undefined!");
-    } else if (email == undefined) {
+    } else if (emailValue == undefined) {
         res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
+    } else if (senhaValue == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (avatar == undefined) {
+    } else if (avatarUsuario == undefined) {
         res.status(400).send("Seu avatar está undefined!");
     } else {
-        usuarioModel.cadastrar(nome, email, senha, avatar)
+        usuarioModel.cadastrar(nomeValue, emailValue, senhaValue, avatarUsuario)
             .then(
                 function (resultado) {
                     res.json(resultado);

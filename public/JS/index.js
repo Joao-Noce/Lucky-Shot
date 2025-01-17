@@ -1,6 +1,5 @@
 sessionStorage.clear();
-
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         login();
     }
@@ -18,6 +17,7 @@ function ocultarSenha(input, div) {
 }
 
 let avatar;
+const inputs = document.getElementsByName("inputs");
 
 function escolherAvatar(id, idValue) {
     let avatares = document.getElementsByName("avatares");
@@ -25,119 +25,122 @@ function escolherAvatar(id, idValue) {
         avatar.style = "transform: scale(1);";
     });
     avatar = idValue;
+    console.log(avatar);
+    
     id.style = "transform: scale(1.5);";
 }
 
-function new_account() {
+function irParaCadastro() {
     olho1.innerHTML = `<i class="fa-regular fa-eye"></i>`;
     input_senha_log.type = "password";
     document.title = 'Lucky Shot | Cadastro';
     container.style.left = "-50vw";
-    input_name.value = ``;
-    input_name.placeholder = ``;
-    input_email_cadastro.value = ``;
-    input_email_cadastro.placeholder = ``;
-    input_senha_cadastro.value = ``;
-    input_senha_cadastro.placeholder = ``;
-    input_confirm_senha.value = ``;
-    input_confirm_senha.placeholder = ``;
-    input_email_log.value = ``;
-    input_email_log.placeholder = ``;
-    input_senha_log.value = ``;
-    input_senha_log.placeholder = ``;
+    apagarInputs();
     document.body.style = "background-position-x: 20%;";
 }
 
-function already_have_account() {
+function jaTenhoConta() {
     olho2.innerHTML = `<i class="fa-regular fa-eye"></i>`;
-    input_senha_cadastro.type = "password";
+    inputSenhaCadastro.type = "password";
     olho3.innerHTML = `<i class="fa-regular fa-eye"></i>`;
-    input_confirm_senha.type = "password";
+    inputConfirmar.type = "password";
     document.title = 'Lucky Shot | Login';
-    input_name.value = ``;
-    input_name.placeholder = ``;
-    input_email_cadastro.value = ``;
-    input_email_cadastro.placeholder = ``;
-    input_senha_cadastro.value = ``;
-    input_senha_cadastro.placeholder = ``;
-    input_confirm_senha.value = ``;
-    input_confirm_senha.placeholder = ``;
-    input_email_log.value = ``;
-    input_email_log.placeholder = ``;
-    input_senha_log.value = ``;
-    input_senha_log.placeholder = ``;
+    apagarInputs();
     container.style.left = "0";
     document.body.style = "background-position-x: 86%;";
 }
-function create_account() {
-    var name = input_name.value;
-    var email_cadastro = input_email_cadastro.value;
-    var senha_cadastro = input_senha_cadastro.value;
-    var confirm_senha = input_confirm_senha.value;
 
-    var tamanho_email = email_cadastro.length;
-    var arroba = email_cadastro.indexOf("@");
-    var tamanho_senha = senha_cadastro.length;
+function cadastrar(nome, email, senha, confirmarSenha) {
+    if (validacaoUsuarioCadastro(nome, email, senha, confirmarSenha, avatar)) {
+        let nomeValue = nome.value;
+        let emailValue = email.value;
+        let senhaValue = senha.value;
 
-    if (name == "") {
-        input_name.value = ``;
-        input_name.placeholder = `Your name is necessary.`;
-    } else if (arroba < 0 || tamanho_email < 6) {
-        input_email_cadastro.value = ``;
-        input_email_cadastro.placeholder = `Email inválido.`;
-    } else if (tamanho_senha < 6) {
-        input_senha_cadastro.value = ``;
-        input_confirm_senha.value = ``;
-        input_senha_cadastro.placeholder = `A senha precisa de no mínimo 8 caracteres.`;
-    } else if (senha_cadastro != confirm_senha) {
-        input_senha_cadastro.value = ``;
-        input_confirm_senha.value = ``;
-        input_senha_cadastro.placeholder = `As senhas não são iguais`;
-        input_confirm_senha.placeholder = `As senhas não são iguais`;
-    } else if (avatar == undefined) {
-        alert('Escolha um avatar!');
-    } else {
-        input_name.value = ``;
-        input_name.placeholder = ``;
-        input_email_cadastro.value = ``;
-        input_email_cadastro.placeholder = ``;
-        input_senha_cadastro.value = ``;
-        input_senha_cadastro.placeholder = ``;
-        input_confirm_senha.value = ``;
-        input_confirm_senha.placeholder = ``;
-
-        fetch("/usuarios/cadastrar", {
+        fetch("/usuarios/cadastrar/", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                nomeServer: name,
-                emailServer: email_cadastro,
-                senhaServer: senha_cadastro,
-                avatarServer: avatar
-            }),
-        })
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    Swal.fire({
-                        position: "bottom-end",
-                        icon: "success",
-                        title: "Conta criada com sucesso",
-                        background: "#1D1D1D",
-                        color: "#FFF",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    setTimeout(() => { already_have_account(); }, "1500");
-
-                } else {
-                    input_name.placeholder = `Este nome já está sendo usado!`;
-                }
+                nomeValue: nomeValue,
+                emailValue: emailValue,
+                senhaValue: senhaValue,
+                avatarUsuario: avatar
             })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                Swal.fire({
+                    text: "Perfil atualizado com sucesso!",
+                    icon: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                setTimeout(() => {
+                    jaTenhoConta();
+                }, 2000);
+            } else {
+                Swal.fire({
+                    title: "Erro ao atualizar perfil",
+                    text: `Status: ${resposta.statusText}`,
+                    icon: "warning",
+                    timer: 2000
+                });
+            }
+        })
     }
 }
 
+function validacaoUsuarioCadastro(nome, email, senha, confSenha, avatarUsuario) {
+    const caracteresEspeciais = "#@!$%&";
+    let temCaractereEspecial = false;
+
+    for (let i = 0; i < caracteresEspeciais.length; i++) {
+        if (senha.value.indexOf(caracteresEspeciais[i]) !== -1) {
+            temCaractereEspecial = true;
+            break;
+        }
+    }
+
+    if (nome.value.length < 2) setFieldError(nome, "Nome inválido.");
+    else setFieldSpecificSuccess(nome);
+    if (email.value.indexOf("@") == -1 || email.value.length < 6) setFieldError(email, "Email precisa conter @ e ter no mínimo 8 caracteres.");
+    else setFieldSpecificSuccess(email);
+    if (senha.value.length < 6) setFieldError(senha, "Necessário no mínimo 8 caracteres.");
+    else if (!temCaractereEspecial) setFieldError(senha, "Necessário pelo menos um caractere especial.");
+    else setFieldSpecificSuccess(senha);
+    if (confSenha.value !== senha.value) setFieldError(confSenha, "As senhas precisam ser iguais.");
+    else setFieldSpecificSuccess(confSenha);
+    if (avatarUsuario == "" || avatarUsuario == undefined) {
+        Swal.fire({
+            title: "E a fotinha?",
+            text: "Você precisa escolher um avatar!",
+            icon: "error"
+        });
+    }
+    if (nome.value.length >= 2 && confSenha.value == senha.value && temCaractereEspecial && senha.value.length >= 6 && email.value.indexOf("@") != -1 && email.value.length >= 6 && avatarUsuario != "" && avatarUsuario != undefined) {
+        setFieldAllSuccess(nome);
+        setFieldAllSuccess(senha);
+        setFieldAllSuccess(confSenha);
+        setFieldAllSuccess(email);
+        return true;
+    } else return false;
+}
+
+function setFieldError(input, message) {
+    input.value = "";
+    input.placeholder = message;
+    input.style.border = "solid red 2px";
+}
+
+function setFieldSpecificSuccess(input) {
+    input.placeholder = "";
+    input.style.border = "solid white 2px";
+}
+
+function setFieldAllSuccess(input) {
+    input.placeholder = "";
+    input.style.border = "solid white 2px";
+}
 
 function login() {
     var email_log = input_email_log.value;
@@ -148,8 +151,6 @@ function login() {
             title: "FALHA",
             text: "ERRO AO AUTENTICAR",
             icon: "error",
-            background: '#1D1D1D',
-            color: '#FFF',
         });
     }
 
@@ -185,8 +186,6 @@ function login() {
                     title: "SUCESSO",
                     text: "AUTENTICADO COM SUCESSO",
                     icon: "success",
-                    background: '#1D1D1D',
-                    color: '#FFF',
                     showConfirmButton: false
                 });
                 setTimeout(() => { window.location = "../html/menu.html" }, "1500");
@@ -202,9 +201,7 @@ function login() {
                 Swal.fire({
                     title: "ERRO",
                     text: "FALHA AO AUTENTICAR",
-                    icon: "error",
-                    background: '#1D1D1D',
-                    color: '#FFF',
+                    icon: "error"
                 });
             });
         }
@@ -213,4 +210,11 @@ function login() {
         console.log(erro);
     })
     return false;
+}
+
+function apagarInputs() {
+    inputs.forEach(input => {
+        input.value = "";
+        input.placeholder = "";
+    });
 }

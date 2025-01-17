@@ -101,11 +101,11 @@ function validacaoUsuario(nome, email, senha, confSenha, avatarUsuario) {
         }
     }
 
-    if (nome.value.length < 2) setFieldError(nome, "Nome inválido.");
+    if (nome.value.length < 2) setFieldError(nome, "Necessário no mínimo 2 caracteres.");
     else setFieldSpecificSuccess(nome);
-    if (email.value.indexOf("@") == -1 || email.value.length < 6) setFieldError(email, "Email precisa conter @ e ter no mínimo 8 caracteres.");
+    if (email.value.indexOf("@") == -1 || email.value.length < 6) setFieldError(email, "Email precisa conter @ e ter no mínimo 6 caracteres.");
     else setFieldSpecificSuccess(email);
-    if (senha.value.length < 6) setFieldError(senha, "Necessário no mínimo 8 caracteres.");
+    if (senha.value.length < 6) setFieldError(senha, "Necessário no mínimo 6 caracteres.");
     else if (!temCaractereEspecial) setFieldError(senha, "Necessário pelo menos um caractere especial.");
     else setFieldSpecificSuccess(senha);
     if (confSenha.value !== senha.value) setFieldError(confSenha, "As senhas precisam ser iguais.");
@@ -140,7 +140,6 @@ function setFieldSpecificSuccess(input) {
 }
 
 function setFieldAllSuccess(input) {
-    // input.value = "";
     input.placeholder = "";
     input.style.border = "solid white 2px";
 }

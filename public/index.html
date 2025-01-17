@@ -22,10 +22,10 @@
             <div class="center">
                 <div class="containerInput">
                     <p>Email:</p>
-                    <input type="text" id="input_email_log">
+                    <input type="text" id="input_email_log" name="inputs">
                     <p>Senha:</p>
                     <div class="senhas">
-                        <input type="password" id="input_senha_log" class="input_senhas">
+                        <input type="password" id="input_senha_log" class="input_senhas" name="inputs">
                         <div class="olho" id="olho1" onclick="ocultarSenha(input_senha_log, olho1)">
                             <i class="fa-regular fa-eye"></i>
                         </div>
@@ -33,7 +33,7 @@
                 </div>
                 <button onclick="login()">Login</button>
                 <span>Esqueci minha senha</span>
-                <span onclick="new_account()">Não tenho uma conta</span>
+                <span onclick="irParaCadastro()">Não tenho uma conta</span>
             </div>
         </div>
 
@@ -49,20 +49,20 @@
             <div class="center">
                 <div class="containerInput">
                     <p>Nome:</p>
-                    <input type="text" id="input_name">
+                    <input type="text" id="inputNome" name="inputs">
                     <p>Email:</p>
-                    <input type="text" id="input_email_cadastro">
+                    <input type="text" id="inputEmailCadastro" name="inputs">
                     <p>Senha:</p>
                     <div class="senhas">
-                        <input type="password" id="input_senha_cadastro" class="input_senhas">
-                        <div class="olho" id="olho2" onclick="ocultarSenha(input_senha_cadastro, olho2)">
+                        <input type="password" id="inputSenhaCadastro" class="input_senhas" name="inputs">
+                        <div class="olho" id="olho2" onclick="ocultarSenha(inputSenhaCadastro, olho2)">
                             <i class="fa-regular fa-eye"></i>
                         </div>
                     </div>
                     <p>Confirmar Senha:</p>
                     <div class="senhas">
-                        <input type="password" id="input_confirm_senha" class="input_senhas">
-                        <div class="olho" id="olho3" onclick="ocultarSenha(input_confirm_senha, olho3)">
+                        <input type="password" id="inputConfirmar" class="input_senhas" name="inputs">
+                        <div class="olho" id="olho3" onclick="ocultarSenha(inputConfirmar, olho3)">
                             <i class="fa-regular fa-eye"></i>
                         </div>
                     </div>
@@ -78,8 +78,8 @@
                     <button onclick="escolherAvatar(paus, 'paus')"><img
                             src="./Assets/paus_icon.png" name="avatares" id="paus"></button>
                 </div>
-                <button onclick="create_account()">Cadastrar</button>
-                <span onclick="already_have_account()">Já tenho uma conta</span>
+                <button onclick="cadastrar(inputNome, inputEmailCadastro, inputSenhaCadastro, inputConfirmar)">Cadastrar</button>
+                <span onclick="jaTenhoConta()">Já tenho uma conta</span>
             </div>
         </div>
     </div>
