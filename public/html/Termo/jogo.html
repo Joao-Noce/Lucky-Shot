@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Shot | Termo</title>
-    <link rel="shortcut icon" href="../../Assets/icone.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../Assets/cartas3.png" type="image/x-icon">
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
     </style>
@@ -17,9 +17,43 @@
 <body>
     <button class="tres_barras"><a href="pause.html"><i class="fa-solid fa-circle-pause"></i></a></button>
     <div class="container" id="container"></div>
-    <div class="containerInput">
-        <input type="text" id="input">
-        <button id="botao" onclick="validarSeEPalavra(input.value)"><i class="fa-solid fa-circle-arrow-right"></i></button>
+    <div class="teclado">
+        <div class="linhaTeclado" id="linhaTeclado1">
+            <button name="tecla" onclick="digitar('Q')" id="teclaQ">Q</button>
+            <button name="tecla" onclick="digitar('W')" id="teclaW">W</button>
+            <button name="tecla" onclick="digitar('E')" id="teclaE">E</button>
+            <button name="tecla" onclick="digitar('R')" id="teclaR">R</button>
+            <button name="tecla" onclick="digitar('T')" id="teclaT">T</button>
+            <button name="tecla" onclick="digitar('Y')" id="teclaY">Y</button>
+            <button name="tecla" onclick="digitar('U')" id="teclaU">U</button>
+            <button name="tecla" onclick="digitar('I')" id="teclaI">I</button>
+            <button name="tecla" onclick="digitar('O')" id="teclaO">O</button>
+            <button name="tecla" onclick="digitar('P')" id="teclaP">P</button>
+        </div>
+
+        <div class="linhaTeclado">
+            <button name="tecla" onclick="digitar('A')" id="teclaA">A</button>
+            <button name="tecla" onclick="digitar('S')" id="teclaS">S</button>
+            <button name="tecla" onclick="digitar('D')" id="teclaD">D</button>
+            <button name="tecla" onclick="digitar('F')" id="teclaF">F</button>
+            <button name="tecla" onclick="digitar('G')" id="teclaG">G</button>
+            <button name="tecla" onclick="digitar('H')" id="teclaH">H</button>
+            <button name="tecla" onclick="digitar('J')" id="teclaJ">J</button>
+            <button name="tecla" onclick="digitar('K')" id="teclaK">K</button>
+            <button name="tecla" onclick="digitar('L')" id="teclaL">L</button>
+            <button class="special" name="tecla" onclick="digitar('Backspace')"><i class="fa-solid fa-delete-left"></i></button>
+        </div>
+
+        <div class="linhaTeclado">
+            <button name="tecla" onclick="digitar('Z')" id="teclaZ">Z</button>
+            <button name="tecla" onclick="digitar('X')" id="teclaX">X</button>
+            <button name="tecla" onclick="digitar('C')" id="teclaC">C</button>
+            <button name="tecla" onclick="digitar('V')" id="teclaV">V</button>
+            <button name="tecla" onclick="digitar('B')" id="teclaB">B</button>
+            <button name="tecla" onclick="digitar('N')" id="teclaN">N</button>
+            <button name="tecla" onclick="digitar('M')" id="teclaM">M</button>
+            <button class="special" name="tecla" onclick="digitar('Enter')">ENTER</button>
+        </div>
     </div>
 </body>
 

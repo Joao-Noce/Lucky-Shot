@@ -22,7 +22,7 @@ h1 {
 }
 
 .jogos {
-    margin-top: 8%;
+    margin-top: 6%;
     display: flex;
     flex-wrap:nowrap;
     flex-wrap:wrap-reverse;

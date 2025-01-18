@@ -35,8 +35,10 @@ async function palavraAleatoria(req, res) {
 }
 
 async function validarSeEPalavra(req, res) {
-    const palavra = req.params.palavra;
-    if (dicionario.checkValid(palavra, 5, true, false)) res.json(true);
+    let palavra = req.params.palavra;
+    let minuscula = palavra.toLowerCase();
+    
+    if (dicionario.checkValid(minuscula, 5, true, false)) res.json(true);
     else res.json(false);
 }
 

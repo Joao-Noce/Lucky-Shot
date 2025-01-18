@@ -1,21 +1,19 @@
 const idUsuario = sessionStorage.ID_USUARIO;
 
 let palavraGlobal;
-let totalLinhas = 5;
+let totalLinhas = 6;
 buscarPalavraAleatoria();
-let linha = 1;
+let linhaValue = 1;
 
 async function buscarPalavraAleatoria() {
     try {
         const resposta = await fetch("/termo/palavraAleatoria");
         const dado = await resposta.json();
         palavraGlobal = dado;
-        // console.log('Palavra aleatória recebida:', palavraGlobal);
     } catch (erro) {
         console.error('Erro ao buscar palavra aleatória:', erro);
     }
-    input.value = "";
-    linha = 1;
+    linhaValue = 1;
     criarTabuleiro();
 }
 
@@ -24,14 +22,24 @@ function criarTabuleiro() {
     container.innerHTML = "";
     for (let i = 0; i < totalLinhas; i++) container.innerHTML += `<div class="linha" name="linha"></div>`;
     const linhas = document.getElementsByName("linha");
-    let i = 1;
+    let numeroLinha = 1;
     linhas.forEach(linha => {
-        for (let coluna = 0; coluna < totalLinhas; coluna++) linha.innerHTML += `<div class="caixa" name="caixa${i}"></div>`;
-        i++;
+        for (let coluna = 1; coluna <= 5; coluna++) {
+            if (numeroLinha == linhaValue) linha.innerHTML += `<input type="text" maxlength="1" class="caixa" name="caixa${numeroLinha}" id="caixa${numeroLinha}${coluna}" onkeydown="voltarFoco(event, ${numeroLinha}${coluna})" oninput="moverFoco(${numeroLinha}${coluna})" onfocus="sobrepor('caixa${numeroLinha}${coluna}')" onclick="sobrepor('caixa${numeroLinha}${coluna}')">`;
+            else linha.innerHTML += `<input type="text" maxlength="1" class="caixa" name="caixa${numeroLinha}" id="caixa${numeroLinha}${coluna}" disabled onkeydown="voltarFoco(event, ${numeroLinha}${coluna})" oninput="moverFoco(${numeroLinha}${coluna})" onfocus="sobrepor('caixa${numeroLinha}${coluna}')" onclick="sobrepor('caixa${numeroLinha}${coluna}')">`;
+        }
+        numeroLinha++;
     });
+    document.getElementById("caixa11").focus();
 }
 
-async function validarSeEPalavra(palavra) {
+async function validarSeEPalavra() {
+    const caixas = document.getElementsByName(`caixa${linhaValue}`);
+    let palavra = "";
+    caixas.forEach(caixa => {
+        palavra += caixa.value;
+    });
+
     try {
         const envio = await fetch(`/termo/validarSeEPalavra/${palavra}`);
         const result = await envio.json();
@@ -44,35 +52,53 @@ async function validarSeEPalavra(palavra) {
 
 
 async function enviar(valor) {
+    console.log(valor);
+    
     let i = 0;
-    const caixas = document.getElementsByName(`caixa${linha}`);
+    let minusculo = valor.toLowerCase();
+    let maiusculo = valor.toUpperCase();
+
+    const caixas = document.getElementsByName(`caixa${linhaValue}`);
     caixas.forEach(caixa => {
-        if (palavraGlobal[i] === valor[i]) {
+        if (palavraGlobal[i] === minusculo[i]) {
             caixa.style = "background-color: #7FBF60";
-        } else if (palavraGlobal.includes(valor[i])) {
+            document.getElementById(`tecla${maiusculo[i]}`).style = "background-color: #7FBF60";
+        } else if (palavraGlobal.includes(minusculo[i])) {
             caixa.style = "background-color: #F8D571";
-        }
-        caixa.innerHTML = valor[i].toUpperCase();
+            document.getElementById(`tecla${maiusculo[i]}`).style = "background-color: #F8D571";
+        } else document.getElementById(`tecla${maiusculo[i]}`).style = "background-color: transparent  ; color: transparent";
         i++;
     });
-    if (palavraGlobal == valor) ganhou();
+    if (palavraGlobal == minusculo) ganhou();
     validarLinha();
 }
 
 function validarLinha() {
-    if (linha == totalLinhas) {
+    if (linhaValue > totalLinhas) {
         registrar(false);
         Swal.fire({
             title: "Perdeeeu",
             text: `A palavra era '${palavraGlobal}'!`,
             icon: "error"
         });
-    } else linha++;
+    } else {
+        let caixas = document.getElementsByName(`caixa${linhaValue}`);
+        caixas.forEach(caixa => {
+            caixa.disabled = true;
+            caixa.style.border = "none;";
+        });
+        linhaValue++;
+        caixas = document.getElementsByName(`caixa${linhaValue}`);
+        caixas.forEach(caixa => {
+            caixa.disabled = false;
+        });
+        caixas[0].focus();
+    }
 }
 
 function ganhou() {
     registrar(true);
-    const caixas = document.getElementsByName(`caixa${linha}`);
+    const caixas = document.getElementsByName(`caixa${linhaValue}`);
     caixas.forEach(caixa => {
         caixa.style = "background-color: #7FBF60";
     });
@@ -85,8 +111,13 @@ function ganhou() {
         });
     }, 1500);
 }
+const teclas = document.getElementsByName("tecla");
 
 function registrar(ganhou) {
+    teclas.forEach(tecla => {
+        tecla.style = "background-color: rgba(0, 0, 0, 0.5); color: #F1F1F1;";
+    });
+    
     fetch("/termo/registro", {
         method: "POST",
         headers: {
@@ -104,3 +135,100 @@ function registrar(ganhou) {
     }, 2000);
 }
 
+function sobrepor(id) {
+    const caixaId = document.getElementById(id);
+    const caixas = document.getElementsByName(`caixa${linhaValue}`);
+
+    caixas.forEach(caixa => { caixa.style = "border: none"; });
+
+    caixaId.style = "border-bottom: solid white 2px";
+}
+
+function moverFoco(colunaAtual) {
+    const proximoInput = document.getElementById(`caixa${colunaAtual + 1}`);
+    if (proximoInput && !proximoInput.disabled) proximoInput.focus();
+}
+
+function voltarFoco(event, colunaAtual) {
+    const inputSucessor = document.getElementById(`caixa${colunaAtual + 1}`);
+    const inputAtual = document.getElementById(`caixa${colunaAtual}`);
+    const inputAnterior = document.getElementById(`caixa${colunaAtual - 1}`);
+
+    if (event.key === "Backspace") {
+        if (inputAtual.value !== "") inputAtual.value = "";
+        else if (inputAnterior && !inputAnterior.disabled) {
+            inputAnterior.value = "";
+            setTimeout(() => {
+                if (inputAnterior && !inputAnterior.disabled) inputAnterior.focus();
+            }, 10);
+        }
+    }
+    else if (event.key === "ArrowRight") inputSucessor.focus();
+    else if (event.key === "ArrowLeft") inputAnterior.focus();
+}
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        validarSeEPalavra();
+    }
+});
+
+function digitar(key) {
+    const caixas = document.getElementsByName(`caixa${linhaValue}`);
+    let indiceAtual = -1;
+
+    caixas.forEach((caixa, index) => {
+        if (caixa === ultimaCaixaComFoco) {
+            indiceAtual = index;
+        }
+    });
+
+    if (indiceAtual === -1) {
+        console.warn("Nenhuma caixa ativa encontrada.");
+        return;
+    }
+
+    const inputAnterior = caixas[indiceAtual - 1];
+    const inputAtual = caixas[indiceAtual];
+    const inputSucessor = caixas[indiceAtual + 1];
+
+    if (key === "Backspace") {
+        if (inputAtual.value !== "") inputAtual.value = "";
+        else if (inputAnterior && !inputAnterior.disabled) {
+            inputAnterior.value = "";
+            setTimeout(() => {
+                if (inputAnterior && !inputAnterior.disabled) inputAnterior.focus();
+            }, 10);
+        }
+    } else if (key === "Enter") {
+        validarSeEPalavra();
+    } else {
+        inputAtual.value = key;
+        if (inputSucessor && !inputSucessor.disabled) {
+            setTimeout(() => {
+                inputSucessor.focus();
+            }, 10);
+        }
+    }
+}
+
+let ultimaCaixaComFoco = null;
+
+document.addEventListener("focusin", (event) => {
+    const input = event.target;
+    if (input.tagName === "INPUT" && !input.disabled) {
+        ultimaCaixaComFoco = input;
+    }
+});
+
+document.addEventListener("click", (event) => {
+    const alvo = event.target;
+
+    if (
+        !alvo.matches('input[type="text"]:not([disabled])')
+    ) {
+        if (ultimaCaixaComFoco) {
+            ultimaCaixaComFoco.focus();
+        }
+    }
+});
