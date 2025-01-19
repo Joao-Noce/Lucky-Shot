@@ -2,6 +2,25 @@
     font-family: "Josefin Sans";
 }
 
+i[name="icon"] {
+    position: absolute;
+    font-size: 50px;
+    color: rgba(255, 255, 255, 0.2);
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -70,7 +89,6 @@ body {
                 }
             }
         }
-
     }
 
     .div_avatares {
@@ -93,66 +111,37 @@ body {
     }
 
     button {
-        margin-top: 40px;
-        background-color: #B0CDDA;
-        width: 200px;
-        height: 35px;
-        border-radius: 40px;
-        font-size: 20px;
-        border: transparent;
+        border: none;
+        cursor: pointer;
         transition: 0.8s;
     }
 
+    .botoes {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+
+        button {
+            margin-top: 40px;
+            background-color: #2C6B91;
+            width: 200px;
+            height: 50px;
+            border-radius: 40px;
+            font-size: 20px;
+            color: white;
+        }
+
+        #btnExcluir {
+            width: 100px;
+            background-color: #EE675C;
+            font-size: 25px;
+        }
+
+    }
     button:hover {
         transform: scale(1.05);
-        cursor: pointer;
     }
 
-    span {
-        font-size: 17.5px;
-        margin-top: 25px;
-    }
-
-    span:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-}
-
-
-#login .center {
-    margin-top: 60px;
-    height: 430px;
-}
-
-
-
-
-h1 {
-    font-size: 60px;
-}
-
-h2 {
-    margin-top: 15vh;
-    font-size: 40px;
-}
-
-::placeholder {
-    color: #EE675C;
-}
-
-.name {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50vw;
-    height: 100vh;
-
-    .center {
-        display: flex;
-        justify-content: center;
-        height: 50%;
-    }
 }
 
 .tres_barras {

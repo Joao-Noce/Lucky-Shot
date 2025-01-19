@@ -57,7 +57,7 @@ function criarConta(nome, email, senha, confirmarSenha) {
         let nomeValue = nome.value;
         let emailValue = email.value;
         let senhaValue = senha.value;
-        
+
         fetch("/usuarios/atualizarPerfil/", {
             method: "PUT",
             headers: {
@@ -142,4 +142,40 @@ function setFieldSpecificSuccess(input) {
 function setFieldAllSuccess(input) {
     input.placeholder = "";
     input.style.border = "solid white 2px";
+}
+
+function encerrarConta() {
+    Swal.fire({
+        icon: "warning",
+        text: "Ao confirmar, você excluirá permanentemente todos os seus dados.",
+        confirmButtonText: "Excluir",
+        confirmButtonColor: "#EE675C",
+        denyButtonColor: "#2C6B91",
+        showDenyButton: true,
+        denyButtonText: "Voltar"
+    }).then(function (resposta) {
+        if (resposta.isConfirmed) {
+            fetch("/usuarios/encerrarConta", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idUsuario
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    Swal.fire({
+                        icon: "success",
+                        text: "Sua conta foi finalizada!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    setTimeout(() => {
+                        window.location.href = "../index.html";
+                    }, 2000);
+                }
+            })
+        }
+    })
 }

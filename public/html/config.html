@@ -16,6 +16,13 @@
 </head>
 
 <body>
+<i name="icon" class="fa-regular fa-chess-knight"></i>
+    <i name="icon" class="fa-solid fa-chess-rook"></i>
+    <i name="icon" class="fa-solid fa-gamepad"></i>
+    <i name="icon" class="fa-solid fa-music"></i>
+    <i name="icon" class="fa-brands fa-old-republic"></i>
+    <i name="icon" class="fa-brands fa-galactic-republic"></i>
+    <i name="icon" class="fa-solid fa-jedi"></i>
     <button class="tres_barras"><a href="menu.html"><i class="fa-solid fa-bars"></i></a></button>
     <div class="center">
         <div class="containerInput">
@@ -49,10 +56,14 @@
             <button onclick="escolherAvatar(paus, 'paus')"><img src="/Assets/paus_icon.png"
                     name="avatares" id="paus"></button>
         </div>
-        <button onclick="criarConta(inputNome, inputEmail, inputSenha, inputConfirmar)">Enviar modificações</button>
+        <div class="botoes">
+            <button onclick="criarConta(inputNome, inputEmail, inputSenha, inputConfirmar)">Editar</button>
+            <button id="btnExcluir" onclick="encerrarConta()"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
     </div>
 </body>
 
 </html>
 
 <script src="../JS/config.js"></script>
+<script src="../JS/global.js"></script>

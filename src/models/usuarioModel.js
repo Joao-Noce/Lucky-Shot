@@ -22,25 +22,12 @@ async function cadastrar(name, email_cadastro, senha_cadastro, avatar) {
         const resultadoUsuario = await database.executar(queryUsuario);
         const idUsuario = resultadoUsuario.insertId;
 
-        // const queryMinefield = `
-        //     INSERT INTO minefield (fkUsuario, ganhou) VALUES (${idUsuario}, 0);
-        // `;
         const queryGenius = `
             INSERT INTO genius (fkUsuario, maiorPontuacao) VALUES (${idUsuario}, 0);
         `;
 
-        // const queryTermo = `
-        //     INSERT INTO termo (fkUsuario, ganhou) VALUES (${idUsuario}, 0);
-        // `;
-
-        // console.log("Executando instrução SQL para Minefield: \n" + queryMinefield);
-        // await database.executar(queryMinefield);
-
         console.log("Executando instrução SQL para Genius: \n" + queryGenius);
         await database.executar(queryGenius);
-
-        // console.log("Executando instrução SQL para Termo: \n" + queryTermo);
-        // await database.executar(queryTermo);
 
         console.log("Usuário cadastrado com sucesso!");
     } catch (erro) {
@@ -67,9 +54,46 @@ function atualizarPerfil(idUsuario, nome, email, senha, avatar) {
     return database.executar(instrucaoSql);
 }
 
+async function encerrarConta(idUsuario) {
+    console.log("Excluindo usuário: " + idUsuario);
+    try { 
+        const queryTermo = `
+            DELETE FROM termo WHERE fkUsuario = ${idUsuario};
+        `;
+        console.log("Executando instrução SQL para Termo: \n" + queryTermo);
+        await database.executar(queryTermo);
+        console.log("Dados de Termo apagado com sucesso!");
+
+        const queryMinefield = `
+            DELETE FROM minefield WHERE fkUsuario = ${idUsuario};
+        `;
+        console.log("Executando instrução SQL para Minefield: \n" + queryMinefield);
+        await database.executar(queryMinefield);
+        console.log("Dados de Minefield apagado com sucesso!");
+
+        const queryGenius = `
+            DELETE FROM genius WHERE fkUsuario = ${idUsuario};
+        `;
+        console.log("Executando instrução SQL para Genius: \n" + queryGenius);
+        await database.executar(queryGenius);
+        console.log("Dados de genius apagado com sucesso!");
+
+        const queryUsuario = `
+            DELETE FROM usuario WHERE fkUsuario = ${idUsuario};
+        `;
+        console.log("Executando instrução SQL para Usuario: \n" + queryUsuario);
+        await database.executar(queryUsuario);
+        console.log("Dados de Usuario apagado com sucesso!");
+    } catch (erro) {
+        console.error("Erro ao cadastrar usuário:", erro);
+        throw erro;
+    }
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     buscarSenha,
-    atualizarPerfil
+    atualizarPerfil,
+    encerrarConta
 };

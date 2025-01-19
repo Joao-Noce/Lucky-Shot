@@ -1,172 +1,255 @@
 * {
     font-family: "Josefin Sans";
+    scroll-behavior: smooth;
 }
+
+::-webkit-scrollbar {
+    display: flex;
+    background-color: #1D1D1D;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #D1D1D1;
+    border-radius: 15px;
+}
+
 
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    position: absolute;
-    color: #FFF;
     background-color: rgba(34, 45, 67, 1);
-    background-image: url(../Assets/cartas3.png);
-    background-position-x: 86%;
-    background-position-y: -37%;
-    background-repeat:no-repeat;
-    background-size: 400px;
-    transition: 1.5s;
-}
-
-.container {
-    display: flex;
-    left: 0;
+    color: white;
+    line-height: 1.6;
+    padding: 50px 50px 0 50px;
+    overflow-x: hidden;
     position: relative;
-    transition: 1.5s;
+}
 
-    .screen {
-        width: 50vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+i[name="icon"] {
+    position: absolute;
+    font-size: 50px;
+    color: rgba(255, 255, 255, 0.2);
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+header {
+    background-color: rgba(34, 45, 67, 1);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1% auto;
+    z-index: 5;
+
+    i {
+        position:absolute;
+        font-size: 20px;
+        color: white;
+    }
+
+    #star1 {
+        top: 60%;
+        left: 15px;
+        transform: rotate(190deg);
+    }
+
+    #star2 {
+        top: 20%;
+        right: 15px;
+    }
+
+    a {
+        width: 20%;
+        text-decoration: none;
+        color: white;
         text-align: center;
+        transition: 0.2s;
+        outline: none;
+        font-size: 20px;
+    }
 
-        .center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: -30px;
+    a:hover {
+        transform: scale(1.15);
+    }
 
-            .containerInput {
-                display: flex;
-                flex-direction: column;
-                align-items: start;
+    #title {
+        font-size: 30px;
+    }
+}
 
-                p {
-                    padding-left: 15px;
-                    font-size: 18px;
-                }
+.intro {
+    text-align: center;
+    margin-bottom: 40px;
+    background-image: url(../Assets/cartas3.png);
+    background-size: 500px;
+    background-repeat: no-repeat;
+    background-position-x: 99%;
+    background-position-y: 100%;
+    height: 85vh;
+    display: flex;
 
-                input,
-                .senhas input {
-                    padding-left: 15px;
-                    width: 350px;
-                    height: 30px;
-                    background-color: transparent;
-                    border-radius: 15px;
-                    font-weight: bold;
-                    color: #FFF;
-                    outline: none;
-                    border: solid white 2px;
-                }
+    div {
+        display: flex;
+        width: 50%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
 
-                .senhas {
-                    display: flex;
-                    align-items: center;
-                    position: relative;
+        text-align: justify;
 
-                    .olho {
-                        display: flex;
-                        align-items: center;
-                        cursor: pointer;
-
-                        i {
-                            position: absolute;
-                            right: 10px;
-                        }
-                    }
-                }
-
-            }
-
-            .div_avatares {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 350px;
-
-                button {
-                    margin: 0;
-                    background-color: transparent;
-                    transition: 0.8s;
-                }
-
-                img {
-                    width: 50%;
-                    border-radius: 10px;
-                    border: solid #FFF 1px;
-                }
-            }
-
-            button {
-                margin-top: 40px;
-                background-color: #B0CDDA;
-                width: 200px;
-                height: 35px;
-                border-radius: 40px;
-                font-size: 20px;
-                border: transparent;
-                transition: 0.8s;
-            }
-
-            button:hover {
-                transform: scale(1.05);
-                cursor: pointer;
-            }
-
-            span {
-                font-size: 17.5px;
-                margin-top: 25px;
-            }
-
-            span:hover {
-                text-decoration: underline;
-                cursor: pointer;
-            }
+        h1 {
+            padding-top: 50px;
+            font-size: 100px;
+            color: #B0CDDA;
+            margin-bottom: -80px;
         }
 
-    }
-    #login .center {
-        margin-top: 60px;
-        height: 430px;
-    }
+        h2 {
+            font-size: 60px;
+            color: #EE675C;
+            margin-bottom: 0;
+        }
 
-    #create .center {
-        margin-top: -40px;
-
-        span {
-            margin-top: 15px;
+        p {
+            font-size: 18px;
+            padding-bottom: 50px;
+            border-bottom: solid white 2px;
         }
     }
 }
 
 
-
-h1 {
-    margin-top: 10vh;
-    font-size: 60px;
+section {
+    margin-bottom: 40px;
 }
 
-h2 {
-    margin-top: 55vh;
-    font-size: 40px;
+.games {
+    text-align: center;
+
+
+    p {
+        font-size: 20px;
+    }
+
+    div {
+        background-color: rgba(45, 56, 78, 0.8);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: space-evenly;
+        overflow-x: auto;
+        gap: 50px;
+
+        img {
+            width: 200px;
+            height: 80%;
+            border-radius: 25px;
+            transition: 0.8s;
+        }
+
+        #sete {
+            border: solid #EE675C 8px;
+        }
+
+        #blackjack {
+            border: solid #B0CDDA 8px;
+        }
+
+        #genius {
+            border: solid #7FBF60 8px;
+        }
+
+        #campoMinado {
+            border: solid #F8D571 8px;
+        }
+
+        #termo {
+            border: solid #A990D6 8px;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+    }
 }
 
-::placeholder {
-    color: #EE675C;
+.tech,
+.author,
+.motivation {
+    background-color: rgba(45, 56, 78, 0.8);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-.name {
+.author,
+.tech {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+        width: 60%;
+
+        #motivacao {
+            margin-top: 40px;
+        }
+    }
+
+    img {
+        width: 20%;
+        border-radius: 15px;
+        filter: brightness(1.2) sepia(0.0) contrast(1.3);
+    }
+
+    i {
+        color: white;
+        margin-right: 50px;
+        font-size: 150px;
+    }
+}
+
+.contribute {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50vw;
-    height: 100vh;
+    text-align: center;
+    margin-top: 30px;
 
-    .center {
+    div {
         display: flex;
-        justify-content: center;
-        height: 50%;
+        justify-content: space-evenly;
+        width: 30%;
+
+        i {
+            font-size: 50px;
+            color: white;
+            transition: 0.2s ease;
+        }
+
+        i:hover {
+            font-size: 55px;
+        }
     }
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #CCC;
 }

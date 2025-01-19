@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Shot | Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="./Assets/cartas3.png" type="image/x-icon">
+    <link rel="stylesheet" href="CSS/login.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <button class="tres_barras"><a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i></a></button>
+    <i name="icon" class="fa-regular fa-chess-knight"></i>
+    <i name="icon" class="fa-solid fa-chess-rook"></i>
+    <i name="icon" class="fa-solid fa-gamepad"></i>
+    <i name="icon" class="fa-solid fa-music"></i>
+    <i name="icon" class="fa-brands fa-old-republic"></i>
+    <i name="icon" class="fa-brands fa-galactic-republic"></i>
+    <i name="icon" class="fa-solid fa-jedi"></i>
+    <div class="container" id="container">
+        <div class="screen" id="login">
+            <h1>LOGIN</h1>
+            <div class="center">
+                <div class="containerInput">
+                    <p>Email:</p>
+                    <input type="text" id="input_email_log" name="inputs">
+                    <p>Senha:</p>
+                    <div class="senhas">
+                        <input type="password" id="input_senha_log" class="input_senhas" name="inputs">
+                        <div class="olho" id="olho1" onclick="ocultarSenha(input_senha_log, olho1)">
+                            <i class="fa-regular fa-eye"></i>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="login()">Login</button>
+                <span>Esqueci minha senha</span>
+                <span onclick="irParaCadastro()">Não tenho uma conta</span>
+            </div>
+        </div>
+
+        <div class="name">
+            <h1>LUCKY SHOT</h1>
+            <div class="center">
+                <h2>TESTE SUA SORTE</h2>
+            </div>
+        </div>
+
+        <div class="screen" id="create">
+            <h1>Cadastro</h1>
+            <div class="center">
+                <div class="containerInput">
+                    <p>Nome:</p>
+                    <input type="text" id="inputNome" name="inputs">
+                    <p>Email:</p>
+                    <input type="text" id="inputEmailCadastro" name="inputs">
+                    <p>Senha:</p>
+                    <div class="senhas">
+                        <input type="password" id="inputSenhaCadastro" class="input_senhas" name="inputs">
+                        <div class="olho" id="olho2" onclick="ocultarSenha(inputSenhaCadastro, olho2)">
+                            <i class="fa-regular fa-eye"></i>
+                        </div>
+                    </div>
+                    <p>Confirmar Senha:</p>
+                    <div class="senhas">
+                        <input type="password" id="inputConfirmar" class="input_senhas" name="inputs">
+                        <div class="olho" id="olho3" onclick="ocultarSenha(inputConfirmar, olho3)">
+                            <i class="fa-regular fa-eye"></i>
+                        </div>
+                    </div>
+                    <p>Avatar:</p>
+                </div>
+                <div class="div_avatares">
+                    <button onclick="escolherAvatar(espadas, 'espadas')"><img src="./Assets/espadas_icon.png"
+                            name="avatares" id="espadas"></button>
+                    <button onclick="escolherAvatar(copas, 'copas')"><img src="./Assets/copas_icon.png" name="avatares"
+                            id="copas"></button>
+                    <button onclick="escolherAvatar(ouros, 'ouros')"><img src="./Assets/ouros_icon.png" name="avatares"
+                            id="ouros"></button>
+                    <button onclick="escolherAvatar(paus, 'paus')"><img src="./Assets/paus_icon.png" name="avatares"
+                            id="paus"></button>
+                </div>
+                <button
+                    onclick="cadastrar(inputNome, inputEmailCadastro, inputSenhaCadastro, inputConfirmar)">Cadastrar</button>
+                <span onclick="jaTenhoConta()">Já tenho uma conta</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="JS/login.js"></script>
+<script src="JS/global.js"></script>

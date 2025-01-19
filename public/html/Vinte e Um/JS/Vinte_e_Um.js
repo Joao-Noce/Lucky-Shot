@@ -102,7 +102,7 @@ switch (avatar) {
     case "copas":
         imagem_usuario.innerHTML = `<img src = "../../Assets/copas_icon.png">`;
         break;
-        case "espadas":
+    case "espadas":
         imagem_usuario.innerHTML = `<img src = "../../Assets/espadas_icon.png">`;
         break;
     case "ouros":

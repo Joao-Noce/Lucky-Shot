@@ -2,6 +2,25 @@
     font-family: "Josefin Sans";
 }
 
+i[name="icon"] {
+    position: absolute;
+    font-size: 50px;
+    color: rgba(255, 255, 255, 0.2);
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 body {
     background-color: rgba(34, 45, 67, 1);
     display: flex;
@@ -35,6 +54,12 @@ body {
             border: none;
             cursor: default;
             text-transform: uppercase;
+            font-weight: 1000;
+            z-index: 5;
+        }
+
+        .caixa:focus {
+            caret-color: transparent;
         }
     }
 }
@@ -47,6 +72,7 @@ body {
         margin: 20px auto;
 
         button {
+            z-index: 5;
             padding: 15px 20px;
             font-size: 20px;
             cursor: pointer;
@@ -57,12 +83,14 @@ body {
             background-color: rgba(0, 0, 0, 0.5);
             color: #F1F1F1;
             border-radius: 4px;
+            font-weight: 1000;
         }
 
         .special {
             margin-left: 30px;
         }
     }
+
     #linhaTeclado1 {
         padding-right: 60px;
     }
@@ -80,5 +108,31 @@ body {
     i {
         font-size: 25px;
         color: white;
+    }
+}
+
+.balancar {
+    animation: balancar 1s ease-in-out;
+}
+
+@keyframes balancar {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(15deg);
+    }
+
+    50% {
+        transform: rotate(-15deg);
+    }
+
+    75% {
+        transform: rotate(15deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
     }
 }

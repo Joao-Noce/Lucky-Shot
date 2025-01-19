@@ -6,6 +6,28 @@ buscarPalavraAleatoria();
 let linhaValue = 1;
 
 async function buscarPalavraAleatoria() {
+    if (sessionStorage.ID_USUARIO == undefined && sessionStorage.JOGOU_TERMO == undefined) sessionStorage.JOGOU_TERMO = true;
+    else if (sessionStorage.ID_USUARIO == undefined && sessionStorage.JOGOU_TERMO != undefined) {
+        Swal.fire({
+            position: "center",
+            icon: "question",
+            title: "E aí, gostou?",
+            text: `Para jogar mais, basta se cadastrar!`,
+            confirmButtonText: "Cadastrar",
+            confirmButtonColor: "#2C6B91",
+            denyButtonColor: "#EE675C",
+            showDenyButton: true,
+            denyButtonText: "Sair"
+        }).then(function (resposta) {
+            let destino;
+            if (resposta.isConfirmed) destino = "../../../login.html";
+            else destino = "../../../index.html"
+            setTimeout(() => {
+                window.location.href = destino;
+            }, 1000);
+
+        })
+    }
     try {
         const resposta = await fetch("/termo/palavraAleatoria");
         const dado = await resposta.json();
@@ -44,16 +66,23 @@ async function validarSeEPalavra() {
         const envio = await fetch(`/termo/validarSeEPalavra/${palavra}`);
         const result = await envio.json();
         if (result) enviar(palavra);
-        else alert("Não é uma palavra válida");
+        else balancar(caixas);
     } catch (erro) {
         console.error('Erro ao validar palavra:', erro);
     }
 }
 
+function balancar(caixas) {
+
+    caixas.forEach(caixa => {
+        caixa.classList.add('balancar');
+        caixa.addEventListener('animationend', () => {
+            caixa.classList.remove('balancar');
+        }, { once: true });
+    });
+}
 
 async function enviar(valor) {
-    console.log(valor);
-    
     let i = 0;
     let minusculo = valor.toLowerCase();
     let maiusculo = valor.toUpperCase();
@@ -74,7 +103,7 @@ async function enviar(valor) {
 }
 
 function validarLinha() {
-    if (linhaValue > totalLinhas) {
+    if (linhaValue == totalLinhas) {
         registrar(false);
         Swal.fire({
             title: "Perdeeeu",
@@ -117,19 +146,21 @@ function registrar(ganhou) {
     teclas.forEach(tecla => {
         tecla.style = "background-color: rgba(0, 0, 0, 0.5); color: #F1F1F1;";
     });
-    
-    fetch("/termo/registro", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            idUsuario, ganhou
-        })
-    }).then(function (resposta) {
-        if (!resposta.ok) console.log("Não foi possível enviar o registro para o banco de dados.");
-        else console.log("Registro enviado com sucesso!");
-    });
+
+    if (sessionStorage.ID_USUARIO != undefined) {
+        fetch("/termo/registro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idUsuario, ganhou
+            })
+        }).then(function (resposta) {
+            if (!resposta.ok) console.log("Não foi possível enviar o registro para o banco de dados.");
+            else console.log("Registro enviado com sucesso!");
+        });
+    }
     setTimeout(() => {
         buscarPalavraAleatoria();
     }, 2000);

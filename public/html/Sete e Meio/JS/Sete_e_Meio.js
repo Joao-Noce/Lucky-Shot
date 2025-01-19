@@ -106,7 +106,6 @@ let cartas_jogadas = [];
 let cartas_jogadas_banca = [];
 let ja_tem = false;
 function pedir_outra() {
-
     if (aposta <= caixa_atual && aposta > 0) {
         let carta_escolhida = (Number((Math.random() * 39).toFixed(0)));
         for (cont = 0; cont < cartas_jogadas.length; cont++) {
@@ -428,7 +427,6 @@ function passar_vez() {
                                 input_aposta.innerHTML = '0£';
                             });
                         }, 800);
-                        // imagem_usuario.innerHTML = `<img src ="${avatar}">`;
                         caixa_aposta.innerHTML = `${caixa_atual}£`;
                     } else {
                         console.log('ERRO');

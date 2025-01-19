@@ -2,6 +2,25 @@
     font-family: "Josefin Sans";    
 }
 
+i[name="icon"] {
+    position: absolute;
+    font-size: 50px;
+    color: rgba(255, 255, 255, 0.2);
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -19,6 +38,7 @@ body {
     background-color: rgba(50, 50, 50, 0.9);
     width: 495px;
     height: 495px;
+    z-index: 5;
 }
 
 .linhaFacil, .linhaMedio {

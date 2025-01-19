@@ -36,7 +36,7 @@ function autenticar(req, res) {
 }
 
 function cadastrar(req, res) {
-    let {nomeValue, emailValue, senhaValue, avatarUsuario} = req.body;
+    let { nomeValue, emailValue, senhaValue, avatarUsuario } = req.body;
 
     if (nomeValue == undefined) {
         res.status(400).send("Seu nome está undefined!");
@@ -88,7 +88,7 @@ function buscarSenha(req, res) {
 }
 
 function atualizarPerfil(req, res) {
-    let {idUsuario, nomeValue, emailValue, senhaValue, avatarUsuario} = req.body;
+    let { idUsuario, nomeValue, emailValue, senhaValue, avatarUsuario } = req.body;
 
     if (!idUsuario) {
         res.status(400).send("ID do usuário não foi fornecido.");
@@ -117,9 +117,32 @@ function atualizarPerfil(req, res) {
     }
 }
 
+function encerrarConta(req, res) {
+    let idUsuario = req.body;
+
+    if (!idUsuario) {
+        res.status(400).send("ID do usuário não foi fornecido.");
+    } else {
+        usuarioModel.encerrarConta(idUsuario)
+            .then(resultado => {
+                if (resultado) {
+                    console.log(resultado);
+                    res.status(200).json(resultado);
+                } else {
+                    res.status(404).send("Error.");
+                }
+            })
+            .catch(erro => {
+                console.error("Erro ao atualizar perfil:", erro);
+                res.status(500).send("Erro interno ao atualizar perfil.");
+            });
+    }
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     buscarSenha,
-    atualizarPerfil
+    atualizarPerfil,
+    encerrarConta
 }

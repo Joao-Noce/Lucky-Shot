@@ -13,26 +13,68 @@ const idUsuario = sessionStorage.ID_USUARIO;
 
 const dificuldades = [{ dificuldade: "facil", qtdColunas: 9, qtdBombas: 10 }, { dificuldade: "media", qtdColunas: 16, qtdBombas: 40 }];
 abrirJogo();
-Swal.showValidationMessage("Escolha uma opção para mais detalhes");
 
 function abrirJogo() {
-    Swal.fire({
-        title: 'Escolha a Dificuldade',
-        html:
-            '<button id="facil" style="width: 100px; margin: 10px;">Fácil</button>' +
-            '<button id="medio" style="width: 100px; margin: 10px;">Médio</button>',
-        width: 300,
-        showCloseButton: true,
-        showCancelButton: true,
-        confirmButtonText: 'Jogar',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            montarTabuleiro(dificuldadeEscolhida);
-        }
-    });
+    if (sessionStorage.ID_USUARIO == undefined && sessionStorage.JOGOU_MINEFIELD == undefined) {
+        sessionStorage.JOGOU_MINEFIELD = true;
+        Swal.fire({
+            title: 'Escolha a Dificuldade',
+            html:
+                '<button id="facil" style="width: 100px; margin: 10px;">Fácil</button>' +
+                '<button id="medio" style="width: 100px; margin: 10px;">Médio</button>',
+            width: 300,
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Jogar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                montarTabuleiro(dificuldadeEscolhida);
+            }
+        });
 
-    document.getElementById('facil').addEventListener('click', () => mudarSwal('facil'));
-    document.getElementById('medio').addEventListener('click', () => mudarSwal('medio'));
+        document.getElementById('facil').addEventListener('click', () => mudarSwal('facil'));
+        document.getElementById('medio').addEventListener('click', () => mudarSwal('medio'));
+    } else if (sessionStorage.ID_USUARIO == undefined && sessionStorage.JOGOU_MINEFIELD != undefined) {
+        Swal.fire({
+            position: "center",
+            icon: "question",
+            title: "E aí, gostou?",
+            text: `Para jogar mais, basta se cadastrar!`,
+            confirmButtonText: "Cadastrar",
+            confirmButtonColor: "#2C6B91",
+            denyButtonColor: "#EE675C",
+            showDenyButton: true,
+            denyButtonText: "Sair"
+        }).then(function (resposta) {
+            let destino;
+            if (resposta.isConfirmed) destino = "../../../login.html";
+            else destino = "../../../index.html"
+            setTimeout(() => {
+                window.location.href = destino;
+            }, 1000);
+
+        })
+    }
+
+    if (sessionStorage.ID_USUARIO != undefined) {
+        Swal.fire({
+            title: 'Escolha a Dificuldade',
+            html:
+                '<button id="facil" style="width: 100px; margin: 10px;">Fácil</button>' +
+                '<button id="medio" style="width: 100px; margin: 10px;">Médio</button>',
+            width: 300,
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Jogar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                montarTabuleiro(dificuldadeEscolhida);
+            }
+        });
+
+        document.getElementById('facil').addEventListener('click', () => mudarSwal('facil'));
+        document.getElementById('medio').addEventListener('click', () => mudarSwal('medio'));
+    }
 }
 
 function mudarSwal(dificuldade) {
@@ -183,61 +225,29 @@ function reiniciar(ganhou) {
     if (ganhou) {
         Swal.fire({
             title: "Parabéns!",
-            text: "Deseja continuar?",
             icon: "sucess",
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: "Jogar",
-            denyButtonText: `Parar`
-        }).then((result) => {
-            if (result.isConfirmed) {
-                colunas = [];
-                bombas = [];
-                qtdColunas;
-                qtdBombas;
-                marcarBomba = false;
-                tamanhoTabuleiro;
-                qtdColunasSemBomba;
-                dificuldadeEscolhida;
-                qtdBombasValidadas = 0;
-                qtdCaixasValidadas = 0;
-                container.innerHTML = "";
-                Swal.showValidationMessage("Escolha uma opção para mais detalhes");
-                abrirJogo();
-            } else if (result.isDenied) {
-                Swal.fire("Adeus!");
-            }
-        });
+            showConfirmButton: false,
+        })
     } else {
         Swal.fire({
             title: "Você perdeeeu!",
-            text: "Deseja continuar?",
             icon: "error",
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: "Jogar",
-            denyButtonText: `Parar`
-        }).then((result) => {
-            if (result.isConfirmed) {
-                colunas = [];
-                bombas = [];
-                qtdColunas;
-                qtdBombas;
-                marcarBomba = false;
-                tamanhoTabuleiro;
-                qtdColunasSemBomba;
-                dificuldadeEscolhida;
-                qtdBombasValidadas = 0;
-                qtdCaixasValidadas = 0;
-                container.innerHTML = "";
-                Swal.showValidationMessage("Escolha uma opção para mais detalhes");
-                abrirJogo();
-
-            } else if (result.isDenied) {
-                Swal.fire("Adeus!");
-            }
-        });
+            showConfirmButton: false,
+            timer: 1500
+        })
     }
+    colunas = [];
+    bombas = [];
+    qtdColunas;
+    qtdBombas;
+    marcarBomba = false;
+    tamanhoTabuleiro;
+    qtdColunasSemBomba;
+    dificuldadeEscolhida;
+    qtdBombasValidadas = 0;
+    qtdCaixasValidadas = 0;
+    container.innerHTML = "";
+    abrirJogo();
 }
 
 function mostrarTodasAsBombas(caixa) {
@@ -249,17 +259,19 @@ function mostrarTodasAsBombas(caixa) {
 }
 
 function enviarVitoriaOuDerrota(ganhou) {
-    fetch("/minefield/registro/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            idUsuario,
-            ganhou
+    if (sessionStorage.ID_USUARIO != undefined) {
+        fetch("/minefield/registro/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idUsuario,
+                ganhou
+            })
+        }).then(function (resposta) {
+            if (!resposta.ok) console.log("Não foi possível enviar a pontuação para o banco de dados.");
+            else console.log("Pontuação enviada com sucesso!");
         })
-    }).then(function (resposta) {
-        if (!resposta.ok) console.log("Não foi possível enviar a pontuação para o banco de dados.");
-        else console.log("Pontuação enviada com sucesso!");
-    })
+    }
 }

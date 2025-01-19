@@ -2,6 +2,25 @@
     font-family: "Josefin Sans";
 }
 
+i[name="icon"] {
+    position: absolute;
+    font-size: 50px;
+    color: rgba(255, 255, 255, 0.2);
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 ::-webkit-scrollbar {
     display: flex;
     background-color: #1D1D1D;
@@ -29,7 +48,8 @@ h1 {
     flex-wrap:wrap;
     justify-content:space-around;
     max-width: 80vw;
-
+    z-index: 7;
+    
     img {
         width: 300px;
         height: 80%;

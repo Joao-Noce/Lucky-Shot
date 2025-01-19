@@ -19,4 +19,8 @@ router.put("/atualizarPerfil", function (req, res) {
     usuarioController.atualizarPerfil(req, res);
 });
 
+router.delete("/encerrarConta", function (req, res) {
+    usuarioController.encerrarConta(req, res);
+});
+
 module.exports = router;

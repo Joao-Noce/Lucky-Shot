@@ -2,6 +2,25 @@
     font-family: "Josefin Sans";
 }
 
+i[name="icon"] {
+    position: absolute;
+    font-size: 50px;
+    color: rgba(255, 255, 255, 0.2);
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 ::-webkit-scrollbar {
     display: flex;
     background-color: #1D1D1D;
@@ -16,11 +35,7 @@ body {
     margin: 0;
     padding: 1.5%;
     background-color: rgba(34, 45, 67, 1);
-}
-
-button {
-    background-color: transparent;
-    border: transparent;
+    overflow-x: hidden;
 }
 
 .container_pai {
@@ -45,6 +60,7 @@ button {
     color: #FFF;
     border-radius: 15px;
     margin-block: 1%;
+    z-index: 6;
 
     h3 {
         color: #B0CDDA;
@@ -80,6 +96,7 @@ button {
     background-color: #1D1D1D;
     border-radius: 15px;
     color: #FFF;
+    z-index: 6;
 
     h3 {
         color: #B0CDDA;

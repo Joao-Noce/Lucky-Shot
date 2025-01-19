@@ -2,6 +2,25 @@
     font-family: "Josefin Sans";
 }
 
+i[name="icon"] {
+    position: absolute;
+    font-size: 50px;
+    color: rgba(255, 255, 255, 0.2);
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -18,6 +37,7 @@ body {
     align-items: center;
 
     .Cartao_filho {
+        z-index: 5;
         padding: 1%;
         width: 60vw;
         background-color: #1D1D1D;

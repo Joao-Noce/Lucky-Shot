@@ -11,8 +11,6 @@ CREATE TABLE usuario (
     inicio DATETIME DEFAULT CURRENT_TIMESTAMP,
     caixaBlackjack INT,
     caixaSete INT);
-    
-select * from usuario;
 
 CREATE TABLE blackjack (
 idBlackjack INT PRIMARY KEY AUTO_INCREMENT,
@@ -21,8 +19,6 @@ aposta INT,
 ganhou BOOLEAN,
 deu_maximo BOOLEAN);
 
-select * from blackjack;
-
 CREATE TABLE sete (
 idSete INT PRIMARY KEY AUTO_INCREMENT,
 fkUsuario INT, FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
@@ -30,7 +26,20 @@ aposta INT,
 ganhou BOOLEAN,
 deu_maximo BOOLEAN);
 
-select * from sete;
+CREATE TABLE genius (
+idGenius INT PRIMARY KEY AUTO_INCREMENT,
+fkUsuario INT, FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+maiorPontuacao INT);
+
+CREATE TABLE TERMO (
+idTermo INT PRIMARY KEY AUTO_INCREMENT,
+fkUsuario INT, FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+ganhou BOOLEAN);
+
+CREATE TABLE minefield (
+idMinefield INT PRIMARY KEY AUTO_INCREMENT,
+fkUsuario INT, FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+ganhou BOOLEAN);
 
 -- Total de vitórias e derrotas do 7.5
 select COUNT(CASE WHEN ganhou = 0 THEN 1 END) AS 'Derrotas',
@@ -76,3 +85,11 @@ SELECT nomeUsuario, COUNT(ganhou) AS Quantidade FROM usuario JOIN sete ON idUsua
 
 -- ranking por vitórias no blackjack
 SELECT nomeUsuario, COUNT(ganhou) AS Quantidade FROM usuario JOIN blackjack ON idUsuario = fkUsuario WHERE ganhou = 1 GROUP BY nomeUsuario ORDER BY Quantidade DESC;
+
+-- ranking por maior pontuação no genius
+SELECT nomeUsuario,
+    MAX(maiorPontuacao) as maiorPontuacao
+    FROM usuario
+    JOIN genius ON idUsuario = fkUsuario
+    GROUP BY nomeUsuario
+    ORDER BY maiorPontuacao DESC;

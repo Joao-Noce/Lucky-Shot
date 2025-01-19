@@ -7,23 +7,40 @@ let pontuacao;
 const idUsuario = sessionStorage.ID_USUARIO;
 
 function iniciarJogo() {
-    Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "Bem vindo ao GENIUS!",
-        text: "Está pronto para testar seu foco?",
-        background: "#1D1D1D",
-        color: "#FFF",
-        confirmButtonText: "Vamos nessa!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            partida = [cores[Math.floor(Math.random() * 4)]];
-            jogadas = [];
-            rodada = 0;
-            pontuacao = 0;
-            mostrarSequencia(partida);
-        }
-    });
+    if (sessionStorage.ID_USUARIO == undefined && sessionStorage.JOGOU_GENIUS == undefined) {
+        sessionStorage.JOGOU_GENIUS = true;
+        partida = [cores[Math.floor(Math.random() * 4)]];
+        jogadas = [];
+        rodada = 0;
+        pontuacao = 0;
+        mostrarSequencia(partida);
+    } else if (sessionStorage.ID_USUARIO == undefined && sessionStorage.JOGOU_GENIUS != undefined) {
+        Swal.fire({
+            position: "center",
+            icon: "question",
+            title: "E aí, gostou?",
+            text: `Para jogar mais, basta se cadastrar!`,
+            confirmButtonText: "Cadastrar",
+            confirmButtonColor: "#2C6B91",
+            denyButtonColor: "#EE675C",
+            showDenyButton: true,
+            denyButtonText: "Sair"
+        }).then(function (resposta) {
+            let destino;
+            if (resposta.isConfirmed) destino = "../../../login.html";
+            else destino = "../../../index.html"
+            setTimeout(() => {
+                window.location.href = destino;
+            }, 1000);
+        })
+    }
+    if (sessionStorage.ID_USUARIO != undefined) {
+        partida = [cores[Math.floor(Math.random() * 4)]];
+        jogadas = [];
+        rodada = 0;
+        pontuacao = 0;
+        mostrarSequencia(partida);
+    }
 }
 
 function jogar(escolha) {
@@ -48,33 +65,32 @@ function jogar(escolha) {
             pontuacaoSpan.innerHTML = `Pontuação: ${pontuacao}`;
             mostrarSequencia(partida);
         } else {
-            fetch("/genius/registro", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    idUsuario,
-                    pontuacao
-                }),
-            }).then(function (resposta) {
-                if (!resposta.ok) console.log("Não foi possível enviar a pontuação para o banco de dados.");
-                else console.log("Pontuação enviada com sucesso!");
-            });
+            if (sessionStorage.ID_USUARIO != undefined) {
+                fetch("/genius/registro", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        idUsuario,
+                        pontuacao
+                    }),
+                }).then(function (resposta) {
+                    if (!resposta.ok) console.log("Não foi possível enviar a pontuação para o banco de dados.");
+                    else console.log("Pontuação enviada com sucesso!");
+                });
+            }
             Swal.fire({
                 position: "center",
                 icon: "error",
                 title: "Perdeeeu!",
-                text: `Você obteve uma pontuação de ${pontuacao}!\nDeseja jogar novamente?`,
-                background: "#1D1D1D",
-                color: "#FFF",
-                confirmButtonText: "Vamos nessa!",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    pontuacaoSpan.innerHTML = `Pontuação: ${pontuacao}`;
-                    iniciarJogo();
-                }
-            });
+                text: `Você obteve uma pontuação de ${pontuacao}!`,
+                showConfirmButton: false,
+                timer: 2000
+            })
+            setTimeout(() => {
+                iniciarJogo();
+            }, 2500);
         }
     }
 }
