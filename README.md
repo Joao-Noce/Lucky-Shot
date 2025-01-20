@@ -15,38 +15,31 @@ O **Lucky Shot** é uma plataforma de jogos voltada para imersão e competição
 - **Termo**: Jogo de palavras onde o objetivo é adivinhar a palavra correta com base em dicas.
 - **Campo Minado**: Jogo clássico de estratégia onde o objetivo é desativar bombas sem detoná-las.
 - **Tela de Configuração de Usuário**: Permite personalizar o perfil do usuário e ajustes de preferências.
+<img src="./public/Assets/cartas3.png" align="right"/>
 
-![Lucky Shot](./public/Assets/cartas3.png)
 
 ## Tecnologias Utilizadas
+<div style="display: inline_block"><br>
+  <img align="center" height="50" width="60" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg">
 
-- HTML – Estruturação básica e formatação das páginas.
-- JavaScript – Lógica do jogo, interatividade e manipulação de DOM.
-- CSS – Estilização para garantir uma experiência visual atrativa.
-- Chart.js – Geração de gráficos das estatísticas de desempenho.
-- Node.js – Backend e lógica de servidor.
-- MySQL – Banco de dados para armazenar dados dos usuários e registros de jogo.
-
----
-
-## Autor
-
-**Joao-Noce**  
-Análise e Desenvolvimento de Sistemas – São Paulo Tech School, São Paulo, 2024
-
----
+  <img align="center" height="50" width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
+  
+  <img align="center" height="50" width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" />
+  
+  <img align="center" height="50" width="60" src="https://github.com/devicons/devicon/blob/v2.16.0/icons/sqldeveloper/sqldeveloper-original.svg" />  
+  
+  <img align="center" height="50" width="60" src="https://github.com/devicons/devicon/blob/v2.16.0/icons/nodejs/nodejs-plain-wordmark.svg" />  
+</div>
 
 ## Motivação
 
-Este projeto foi desenvolvido com o objetivo de oferecer uma plataforma que une diversão, estratégia e aprendizado, proporcionando aos usuários a possibilidade de aprimorar suas habilidades enquanto competem com outros jogadores globalmente. Com um design focado na usabilidade, o Lucky Shot busca criar uma interação imersiva, com elementos visuais atraentes e uma experiência de jogo personalizada.
+<p>Este projeto foi desenvolvido primeiramente como um desafio de lógica do primeiro semestre da faculdade, desenvolver o jogo <strong>Sete e Meio</strong>. Porém, com motivação e criatividade, experimentei criar uma plataforma com diversos jogos, rankings dinâmicos entre os jogadores e gerenciamento de usuários. Isso me fez evoluir muito como desenvolvedor e profissional, podendo aperfeiçoar diversos ambitos técnicos.</p>
 
 ---
 
 ## Como Contribuir
 
 Se deseja contribuir para o desenvolvimento do Lucky Shot, sinta-se à vontade para abrir uma issue ou enviar um pull request com novas funcionalidades, correções de bugs ou melhorias no design. Qualquer sugestão é bem-vinda!
-
-[Contribuir no GitHub](https://github.com/Joao-Noce/Lucky-Shot)
 
 ---
 
