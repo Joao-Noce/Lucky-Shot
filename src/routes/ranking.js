@@ -31,4 +31,8 @@ router.get("/ranking_termo/", function (req, res) {
     rankingController.ranking_termo(req, res);
 });
 
+router.get("/ranking_sudoku/", function (req, res) {
+    rankingController.ranking_sudoku(req, res);
+});
+
 module.exports = router;

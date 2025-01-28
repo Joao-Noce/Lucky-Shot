@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Shot | MineField</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+    </style>
+    <link rel="shortcut icon" href="../../Assets/cartas3.png" type="image/x-icon">
+    <link rel="stylesheet" href="./CSS/Sudoku.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <i name="icon" class="fa-regular fa-chess-knight"></i>
+    <i name="icon" class="fa-solid fa-chess-rook"></i>
+    <i name="icon" class="fa-solid fa-gamepad"></i>
+    <i name="icon" class="fa-solid fa-music"></i>
+    <i name="icon" class="fa-brands fa-old-republic"></i>
+    <i name="icon" class="fa-brands fa-galactic-republic"></i>
+    <i name="icon" class="fa-solid fa-jedi"></i>
+    <button id="tres_barras" class="tres_barras"><a href="pause.html"><i class="fa-solid fa-circle-pause"></i></a></button>
+    <div class="container" id="container"></div>
+    <div class="containerBotao">
+
+        <button id="btn1" onclick="selecionarNumero(1)">1 <div id="opcao1">9</div></button>
+        <button id="btn2" onclick="selecionarNumero(2)">2 <div id="opcao2">9</div></button>
+        <button id="btn3" onclick="selecionarNumero(3)">3 <div id="opcao3">9</div></button>
+        <button id="btn4" onclick="selecionarNumero(4)">4 <div id="opcao4">9</div></button>
+        <button id="btn5" onclick="selecionarNumero(5)">5 <div id="opcao5">9</div></button>
+        <button id="btn6" onclick="selecionarNumero(6)">6 <div id="opcao6">9</div></button>
+        <button id="btn7" onclick="selecionarNumero(7)">7 <div id="opcao7">9</div></button>
+        <button id="btn8" onclick="selecionarNumero(8)">8 <div id="opcao8">9</div></button>
+        <button id="btn9" onclick="selecionarNumero(9)">9 <div id="opcao9">9</div></button>
+    </div>
+    <div id="error">Erros: 0/3</div>
+</body>
+
+</html>
+
+<script src="./JS/Sudoku.js"></script>
+<script src="../../JS/global.js"></script>

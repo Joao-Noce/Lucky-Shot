@@ -25,7 +25,6 @@ async function buscarPalavraAleatoria() {
             setTimeout(() => {
                 window.location.href = destino;
             }, 1000);
-
         })
     }
     try {

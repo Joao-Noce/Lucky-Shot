@@ -24,6 +24,7 @@ var seteRouter = require("./src/routes/sete");
 var geniusRouter = require("./src/routes/genius");
 var minefieldRouter = require("./src/routes/minefield");
 var termoRouter = require("./src/routes/termo");
+var sudokuRouter = require("./src/routes/sudoku");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,6 +41,7 @@ app.use("/sete", seteRouter);
 app.use("/genius", geniusRouter);
 app.use("/minefield", minefieldRouter);
 app.use("/termo", termoRouter);
+app.use("/sudoku", sudokuRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

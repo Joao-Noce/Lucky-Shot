@@ -41,6 +41,11 @@ idMinefield INT PRIMARY KEY AUTO_INCREMENT,
 fkUsuario INT, FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
 ganhou BOOLEAN);
 
+CREATE TABLE sudoku (
+idSudoku INT PRIMARY KEY AUTO_INCREMENT,
+fkUsuario INT, FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+ganhou BOOLEAN);
+
 -- Total de vitórias e derrotas do 7.5
 select COUNT(CASE WHEN ganhou = 0 THEN 1 END) AS 'Derrotas',
 COUNT(CASE WHEN ganhou = 1 THEN 1 END) AS 'Vitórias'

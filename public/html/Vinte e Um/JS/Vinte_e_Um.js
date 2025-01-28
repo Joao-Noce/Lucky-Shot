@@ -97,6 +97,11 @@ let caixa_atual = Number(sessionStorage.CAIXA_BLACKJACK);
 let idUsuario = sessionStorage.ID_USUARIO;
 let nomeUsuario = sessionStorage.NOME_USUARIO;
 let avatar = sessionStorage.AVATAR;
+if (sessionStorage.ID_USUARIO == undefined) {
+    caixa_atual = 100;
+    nomeUsuario = "usuário";
+    avatar = "copas";
+}
 
 switch (avatar) {
     case "copas":
@@ -150,6 +155,27 @@ function pedir_outra() {
         }
     }
 
+    if (caixa_atual <= 0 && sessionStorage.ID_USUARIO == undefined) {
+        Swal.fire({
+            position: "center",
+            icon: "question",
+            title: "E aí, gostou?",
+            text: `Para jogar mais, basta se cadastrar!`,
+            confirmButtonText: "Cadastrar",
+            confirmButtonColor: "#2C6B91",
+            denyButtonColor: "#EE675C",
+            showDenyButton: true,
+            denyButtonText: "Sair"
+        }).then(function (resposta) {
+            let destino;
+            if (resposta.isConfirmed) destino = "../../../login.html";
+            else destino = "../../../index.html"
+            setTimeout(() => {
+                window.location.href = destino;
+            }, 1000);
+        })
+    }
+
     if (aposta <= caixa_atual && aposta > 0) {
 
         if (soma_pontos_jogador <= 21) {
@@ -183,122 +209,174 @@ function pedir_outra() {
                     caixa_atual += aposta;
                     sessionStorage.CAIXA_BLACKJACK = caixa_atual;
 
-                    fetch("/blackjack/registro", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            idUsuario,
-                            aposta,
-                            ganhou,
-                            deumaximo
-                        }),
-                    })
-                        .then(function (resposta) {
-                            if (resposta.ok) {
-                                console.table(resposta);
-                            }
-                        });
-
-                    fetch("/blackjack/atualizar_caixa", {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            idUsuario,
-                            caixa_atual
-                        }),
-                    })
-                        .then(function (resposta) {
-                            if (resposta.ok) {
-                                Swal.fire({
-                                    title: "BLACKJACK!",
-                                    text: "Será que consegue essa proeza de novo",
-                                    background: '#1D1D1D',
-                                    icon: "success",
-                                    color: '#FFF',
-                                    showCancelButton: false,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                }).then((result) => {
-                                    soma_pontos_banca = 0;
-                                    soma_pontos_jogador = 0;
-                                    div_jogador.innerHTML = '';
-                                    total_soma.innerHTML = '';
-                                    div_banca.innerHTML = '';
-                                    imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                                    caixa_aposta.innerHTML = `${caixa_atual}£`;
-                                    cartas_jogadas = [];
-                                    cartas_jogadas_banca = [];
-                                    console.clear();
-                                    aposta = 0;
-                                    input_aposta.innerHTML = '0£'
-                                })
-                            }
+                    if (sessionStorage.ID_USUARIO != undefined) {
+                        fetch("/blackjack/registro", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                idUsuario,
+                                aposta,
+                                ganhou,
+                                deumaximo
+                            }),
                         })
+                            .then(function (resposta) {
+                                if (resposta.ok) {
+                                    console.table(resposta);
+                                }
+                            });
+
+                        fetch("/blackjack/atualizar_caixa", {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                idUsuario,
+                                caixa_atual
+                            }),
+                        })
+                            .then(function (resposta) {
+                                if (resposta.ok) {
+                                    Swal.fire({
+                                        title: "BLACKJACK!",
+                                        text: "Será que consegue essa proeza de novo",
+                                        background: '#1D1D1D',
+                                        icon: "success",
+                                        color: '#FFF',
+                                        showCancelButton: false,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then((result) => {
+                                        soma_pontos_banca = 0;
+                                        soma_pontos_jogador = 0;
+                                        div_jogador.innerHTML = '';
+                                        total_soma.innerHTML = '';
+                                        div_banca.innerHTML = '';
+                                        imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                                        caixa_aposta.innerHTML = `${caixa_atual}£`;
+                                        cartas_jogadas = [];
+                                        cartas_jogadas_banca = [];
+                                        console.clear();
+                                        aposta = 0;
+                                        input_aposta.innerHTML = '0£'
+                                    })
+                                }
+                            })
+                    } else {
+                        Swal.fire({
+                            title: "BLACKJACK!",
+                            text: "Será que consegue essa proeza de novo",
+                            background: '#1D1D1D',
+                            icon: "success",
+                            color: '#FFF',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            soma_pontos_banca = 0;
+                            soma_pontos_jogador = 0;
+                            div_jogador.innerHTML = '';
+                            total_soma.innerHTML = '';
+                            div_banca.innerHTML = '';
+                            imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                            caixa_aposta.innerHTML = `${caixa_atual}£`;
+                            cartas_jogadas = [];
+                            cartas_jogadas_banca = [];
+                            console.clear();
+                            aposta = 0;
+                            input_aposta.innerHTML = '0£'
+                        })
+                    }
                 } else if (soma_pontos_jogador > 21) {
                     ganhou = 0;
                     deumaximo = 0;
                     caixa_atual -= aposta;
                     sessionStorage.CAIXA_BLACKJACK = caixa_atual;
 
-                    fetch("/blackjack/registro", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            idUsuario,
-                            aposta,
-                            ganhou,
-                            deumaximo
-                        }),
-                    })
-                        .then(function (resposta) {
-                            if (resposta.ok) {
-                                console.table(resposta);
-                            }
-                        });
-
-                    fetch("/blackjack/atualizar_caixa", {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            idUsuario,
-                            caixa_atual
-                        }),
-                    })
-                        .then(function (resposta) {
-                            if (resposta.ok) {
-                                Swal.fire({
-                                    title: `ESTOUROU COM ${soma_pontos_jogador} PONTOS!`,
-                                    text: "Tá sem sorte, em?",
-                                    icon: "error",
-                                    background: '#1D1D1D',
-                                    color: '#FFF',
-                                    showCancelButton: false,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                }).then((result) => {
-                                    soma_pontos_banca = 0;
-                                    soma_pontos_jogador = 0;
-                                    div_jogador.innerHTML = '';
-                                    total_soma.innerHTML = '';
-                                    div_banca.innerHTML = '';
-                                    imagem_usuario.innerHTML = `<img src ="${avatar}">`;
-                                    caixa_aposta.innerHTML = `${caixa_atual}£`;
-                                    cartas_jogadas = [];
-                                    cartas_jogadas_banca = [];
-                                    console.clear();
-                                    aposta = 0;
-                                    input_aposta.innerHTML = '0£'
-                                });
-                            }
+                    if (sessionStorage.ID_USUARIO != undefined) {
+                        fetch("/blackjack/registro", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                idUsuario,
+                                aposta,
+                                ganhou,
+                                deumaximo
+                            }),
                         })
+                            .then(function (resposta) {
+                                if (resposta.ok) {
+                                    console.table(resposta);
+                                }
+                            });
+
+                        fetch("/blackjack/atualizar_caixa", {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                idUsuario,
+                                caixa_atual
+                            }),
+                        })
+                            .then(function (resposta) {
+                                if (resposta.ok) {
+                                    Swal.fire({
+                                        title: `ESTOUROU COM ${soma_pontos_jogador} PONTOS!`,
+                                        text: "Tá sem sorte, em?",
+                                        icon: "error",
+                                        background: '#1D1D1D',
+                                        color: '#FFF',
+                                        showCancelButton: false,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then((result) => {
+                                        soma_pontos_banca = 0;
+                                        soma_pontos_jogador = 0;
+                                        div_jogador.innerHTML = '';
+                                        total_soma.innerHTML = '';
+                                        div_banca.innerHTML = '';
+                                        imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                                        caixa_aposta.innerHTML = `${caixa_atual}£`;
+                                        cartas_jogadas = [];
+                                        cartas_jogadas_banca = [];
+                                        console.clear();
+                                        aposta = 0;
+                                        input_aposta.innerHTML = '0£'
+                                    });
+                                }
+                            })
+                    }
+                } else {
+                    Swal.fire({
+                        title: `ESTOUROU COM ${soma_pontos_jogador} PONTOS!`,
+                        text: "Tá sem sorte, em?",
+                        icon: "error",
+                        background: '#1D1D1D',
+                        color: '#FFF',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        soma_pontos_banca = 0;
+                        soma_pontos_jogador = 0;
+                        div_jogador.innerHTML = '';
+                        total_soma.innerHTML = '';
+                        div_banca.innerHTML = '';
+                        imagem_usuario.innerHTML = `<img src ="${avatar}">`;
+                        caixa_aposta.innerHTML = `${caixa_atual}£`;
+                        cartas_jogadas = [];
+                        cartas_jogadas_banca = [];
+                        console.clear();
+                        aposta = 0;
+                        input_aposta.innerHTML = '0£'
+                    })
                 }
             }, 1000)
         }
