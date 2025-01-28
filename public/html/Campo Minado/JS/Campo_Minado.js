@@ -99,7 +99,7 @@ function montarTabuleiro(dificuldade) {
         container.innerHTML += `<div class="linha${dificuldade}" id="linha${linha}">`;
         for (let coluna = 1; coluna <= qtdColunas; coluna++) {
             let linhaAtual = document.getElementById(`linha${linha}`);
-            linhaAtual.innerHTML += `<button class="coluna${dificuldade}" id="coluna${linha}${coluna}" onclick="validar(coluna${linha}${coluna})"></button>`;
+            linhaAtual.innerHTML += `<button class="coluna${dificuldade}" id="coluna_${linha}_${coluna}" onclick="validar(coluna_${linha}_${coluna})"></button>`;
         }
     }
     criarColunas();
@@ -108,9 +108,8 @@ function montarTabuleiro(dificuldade) {
 function criarColunas() {
     for (let linha = 1; linha <= qtdColunas; linha++) {
         for (let coluna = 1; coluna <= qtdColunas; coluna++) {
-            let caixaAtual = document.getElementById(`coluna${linha}${coluna}`);
-
-            colunas.push({ caixa: caixaAtual, linha: linha, coluna: coluna, numero: 0 });
+            let caixaAtual = document.getElementById(`coluna_${linha}_${coluna}`);
+            colunas.push({ caixa: caixaAtual, linha: linha, coluna: coluna, numero: 0, flag: false });
         }
     }
     criarBombas();
@@ -151,39 +150,43 @@ function aplicarFuncao(linha, coluna) {
     });
 }
 
+containerInfo.innerHTML = `<p>Total de bombas: ${qtdBombas}</p>`;
 function validar(caixa) {
     for (let i = 0; i < colunas.length; i++) {
         const caixaAtual = colunas[i];
         if (caixaAtual.caixa == caixa) {
             if (marcarBomba) {
-                if (caixaAtual.numero === "bomba") {
-                    caixa.innerHTML = `<i class="fa-solid fa-bomb" style="color: #FFC107"></i>`;
+                if (caixaAtual.numero == "bomba") {
                     qtdBombasValidadas++;
-                    containerInfo.innerHTML = `<p>Bombas restantes: ${qtdBombas - qtdBombasValidadas}</p>`;
                 }
-                else {
-                    caixa.innerHTML = `<i class="fa-solid fa-explosion" style="color: #dc3232;"></i>`;
-                    mostrarTodasAsBombas(caixa);
-                    setTimeout(() => {
-                        reiniciar(false);
-                    }, 2000);
+                console.log(caixaAtual.flag);
+
+                if (caixaAtual.flag) {
+                    caixa.innerHTML = "";
+                    caixaAtual.flag = false;
+                } else {
+                    caixa.innerHTML = `<i class="fa-regular fa-font-awesome" style="color: #7FBF60"></i>`;
+                    caixaAtual.flag = true;
                 }
+
             } else {
                 if (caixaAtual.numero === "bomba") {
-                    caixa.innerHTML = `<i class="fa-solid fa-explosion" style="color: #dc3232;"></i>`;
                     mostrarTodasAsBombas(caixa);
                     setTimeout(() => {
                         reiniciar(false);
                     }, 2000);
                 }
-                else if (caixaAtual.numero === 0) abrirEspacos(caixaAtual.linha, caixaAtual.coluna);
-                else {
+                else if (caixaAtual.numero === 0) {
+                    caixa.disabled = true;
+                    caixaAtual.caixa.style = "background-color: rgba(50, 50, 50, 0)";
+                    abrirEspacos(caixaAtual.linha, caixaAtual.coluna);
+                } else {
                     qtdCaixasValidadas++;
                     caixa.innerHTML = caixaAtual.numero;
                     caixaAtual.caixa.style = "background-color: rgba(50, 50, 50, 0)";
+                    caixa.disabled = true;
                 }
             }
-            caixa.disabled = true;
             if (qtdBombasValidadas == qtdBombas || qtdCaixasValidadas == qtdColunasSemBomba) reiniciar(true);
         }
     }
@@ -201,11 +204,14 @@ function abrirEspacos(linha, coluna) {
             caixaAtual.caixa.disabled = true;
             caixaAtual.caixa.style = "background-color: rgba(50, 50, 50, 0)";
             qtdCaixasValidadas++;
-
-            if (caixaAtual.numero === 0) abrirEspacos(caixaAtual.linha, caixaAtual.coluna);
+           
+            if (caixaAtual.numero === 0) {
+                abrirEspacos(caixaAtual.linha, caixaAtual.coluna);
+            }
         }
     });
 }
+
 
 function statusMarcarBomba() {
     if (marcarBomba) {
@@ -251,7 +257,6 @@ function reiniciar(ganhou) {
 }
 
 function mostrarTodasAsBombas(caixa) {
-    console.log(caixa);
     colunas.forEach(colunaAtual => {
         if (colunaAtual.numero == "bomba") colunaAtual.caixa.innerHTML = `<i class="fa-solid fa-bomb" style="color: #FFC107"></i>`;
     });

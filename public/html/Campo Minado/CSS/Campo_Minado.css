@@ -75,11 +75,13 @@ body {
     padding-inline: 15px;
     color: white;
     cursor: pointer;
+    z-index: 5;
 }
 
 .containerInfo {
     font-size: 20px;
     color: white;
+    z-index: 5;
 }
 
 .tres_barras {

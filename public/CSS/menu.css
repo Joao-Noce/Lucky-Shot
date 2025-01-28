@@ -43,41 +43,60 @@ h1 {
 .jogos {
     margin-top: 6%;
     display: flex;
-    flex-wrap:nowrap;
-    flex-wrap:wrap-reverse;
-    flex-wrap:wrap;
-    justify-content:space-around;
+    flex-wrap: wrap;
+    justify-content: space-around;
     max-width: 80vw;
     z-index: 7;
-    
-    img {
+    gap: 40px;
+
+    a {
         width: 300px;
-        height: 80%;
+        height: 200px;
         border-radius: 25px;
         transition: 0.8s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1D1D1D;
+        background-color: #000;
+        text-decoration: none;
+        font-family: 'Cinzel Decorative', fantasy;
+        font-family: 'Pacifico', cursive;
+        font-size: 40px;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
     }
 
     #sete {
         border: solid #EE675C 8px;
+        color: #EE675C;
     }
 
     #blackjack {
         border: solid #B0CDDA 8px;
+        color: #B0CDDA;
     }
 
     #genius {
         border: solid #7FBF60 8px;
+        color: #7FBF60;
     }
 
     #campoMinado {
         border: solid #F8D571 8px;
+        color: #F8D571;
     }
 
     #termo {
         border: solid #A990D6 8px;
+        color: #A990D6;
     }
 
     img:hover {
+        transform: scale(1.05);
+    }
+
+    a:hover {
         transform: scale(1.05);
     }
 }
