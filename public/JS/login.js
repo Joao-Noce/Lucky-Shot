@@ -25,7 +25,7 @@ function escolherAvatar(id, idValue) {
     });
     avatar = idValue;
     console.log(avatar);
-    
+
     id.style = "transform: scale(1.5);";
 }
 
@@ -188,8 +188,6 @@ function login() {
                 setTimeout(() => { window.location = "../html/menu.html" }, "1500");
             });
         } else {
-
-            input_email_log.value = ``;
             input_email_log.placeholder = ``;
             input_senha_log.value = ``;
             input_senha_log.placeholder = ``;
