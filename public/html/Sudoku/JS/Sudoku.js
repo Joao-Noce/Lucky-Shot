@@ -53,7 +53,6 @@ function preencherTabuleiro(indice) {
     }
 
     let celula = celulas[indice];
-    // celula.disabled = false;
     const numerosEmbaralhados = embaralharNumeros();
 
     for (let numero of numerosEmbaralhados) {
@@ -93,7 +92,6 @@ function mostrarNumeros() {
     }
     numerosMostrados.forEach(indice => {
         celulas[indice].validada = true;
-        // document.getElementById(`coluna${celulas[indice].linha}${celulas[indice].coluna}`).disabled = true;
         document.getElementById(`coluna${celulas[indice].linha}${celulas[indice].coluna}`).innerHTML = celulas[indice].valor;
 
         opcoes[celulas[indice].valor - 1].qtd = opcoes[celulas[indice].valor - 1].qtd - 1;

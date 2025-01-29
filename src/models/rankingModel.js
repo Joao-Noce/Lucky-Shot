@@ -125,13 +125,26 @@ function totais() {
     console.log("ACESSEI O DASH MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function ranking_maior_pontuacao()");
     
     var instrucaoSql = `
-    SELECT 
+    SELECT
+    (SELECT COUNT(idUsuario) FROM usuario) AS totalUsuarios,
     (SELECT MAX(maiorPontuacao) FROM genius) AS totalGenius,
+    (SELECT COUNT(idGenius) FROM genius) AS totalJogadasGenius,
+    (SELECT COUNT(DISTINCT(fkUsuario)) FROM genius where maiorPontuacao != 0) AS totalJogadoresGenius,
     (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM blackjack WHERE ganhou = 1 GROUP BY fkUsuario) AS subqueryBlackjack) AS totalBlackjack,
+    (SELECT COUNT(idBlackjack) FROM blackjack) AS totalJogadasBlackjack,
+    (SELECT COUNT(DISTINCT(fkUsuario)) FROM blackjack) AS totalJogadoresBlackjack,
     (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM sete WHERE ganhou = 1 GROUP BY fkUsuario) AS subquerySete) AS totalSete,
+    (SELECT COUNT(idSete) FROM sete) AS totalJogadasSete,
+    (SELECT COUNT(DISTINCT(fkUsuario)) FROM sete) AS totalJogadoresSete,
     (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM termo WHERE ganhou = 1 GROUP BY fkUsuario) AS subqueryTermo) AS totalTermo,
+    (SELECT COUNT(idTermo) FROM termo) AS totalJogadasTermo,
+    (SELECT COUNT(DISTINCT(fkUsuario)) FROM termo) AS totalJogadoresTermo,
     (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM minefield WHERE ganhou = 1 GROUP BY fkUsuario) AS subqueryMinefield) AS totalCampoMinado,
-    (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM sudoku WHERE ganhou = 1 GROUP BY fkUsuario) AS subquerySudoku) AS totalSudoku;`
+    (SELECT COUNT(idMinefield) FROM minefield) AS totalJogadasCampo,
+    (SELECT COUNT(DISTINCT(fkUsuario)) FROM minefield) AS totalJogadoresCampo,
+    (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM sudoku WHERE ganhou = 1 GROUP BY fkUsuario) AS subquerySudoku) AS totalSudoku,
+    (SELECT COUNT(idSudoku) FROM sudoku) AS totalJogadasSudoku,
+    (SELECT COUNT(DISTINCT(fkUsuario)) FROM sudoku) AS totalJogadoresSudoku;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -29,7 +29,7 @@ body {
 }
 
 .div_container {
-    background-color: #B0CDDA;
+    background-color: #2C6B91;
     width: 30vw;
     height: 100vh;
     display: flex;
@@ -76,6 +76,6 @@ body {
 
     p {
         margin-block: 10px;
-        border-bottom: solid #B0CDDA 2px;
+        border-bottom: solid #2C6B91 2px;
     }
 }

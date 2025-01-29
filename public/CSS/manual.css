@@ -83,6 +83,14 @@ body {
     .h3Roxo {
         color: #A990D6;
     }
+    
+    .h3Roxo {
+        color: #A990D6;
+    }
+
+    .h3AzulEscuro {
+        color: #2C6B91;
+    }
 
     p {
         padding-inline: 2%;
@@ -118,6 +126,10 @@ body {
 
     .h3Roxo {
         color: #A990D6;
+    }
+    
+    .h3AzulEscuro {
+        color: #2C6B91;
     }
 
     p {

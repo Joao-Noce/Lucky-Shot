@@ -72,6 +72,11 @@ h1 {
         color: #EE675C;
     }
 
+    #sudoku {
+        border: solid #2C6B91 8px;
+        color: #2C6B91;
+    }
+
     #blackjack {
         border: solid #B0CDDA 8px;
         color: #B0CDDA;

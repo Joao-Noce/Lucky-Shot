@@ -178,6 +178,11 @@ section {
             color: #EE675C;
         }
 
+        #sudoku {
+            border: solid #2C6B91 8px;
+            color: #2C6B91;
+        }
+
         #blackjack {
             border: solid #B0CDDA 8px;
             color: #B0CDDA;
@@ -210,7 +215,8 @@ section {
 
 .tech,
 .author,
-.motivation {
+.motivation,
+.stats {
     background-color: rgba(45, 56, 78, 0.8);
     padding: 30px;
     border-radius: 15px;
@@ -275,10 +281,7 @@ footer {
 }
 
 .stats {
-    padding: 30px;
-    padding: 15px;
-    text-align: center;
-    margin-bottom: 40px;
+    padding: 0;
 
     .stats-container {
         display: flex;
@@ -287,8 +290,9 @@ footer {
     }
 
     canvas {
-        width: 400px;
-        height: 400px;
+        max-width: 500px;
+        max-height: 500px;
+        display: flex;
     }
 
     #default,
@@ -321,7 +325,10 @@ footer {
         border: solid #A990D6 5px;
     }
 
-    #SudokuDiv,
+    #SudokuDiv {
+        border: solid #2C6B91 5px;
+    }
+
     #BlackjackDiv {
         border: solid #B0CDDA 5px;
     }

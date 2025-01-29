@@ -15,25 +15,39 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-let gameStats = {
-    "Sete e Meio": 1,
-    "Blackjack": 1,
-    "Genius": 1,
-    "Campo Minado": 1,
-    "Termo": 1,
-    "Sudoku": 1
-};
-const respostaFetch = ["totalGenius", "totalBlackjack", "totalSete", "totalTermo", "totalCampoMinado", "totalSudoku"]
+let gameStats = [
+    { nome: "Sete e Meio", maiorPontuacao: 1, qtdJogadores: 1, qtdPartidas: 1 },
+    { nome: "Blackjack", maiorPontuacao: 1, qtdJogadores: 1, qtdPartidas: 1 },
+    { nome: "Genius", maiorPontuacao: 1, qtdJogadores: 1, qtdPartidas: 1 },
+    { nome: "Campo Minado", maiorPontuacao: 1, qtdJogadores: 1, qtdPartidas: 1 },
+    { nome: "Termo", maiorPontuacao: 1, qtdJogadores: 1, qtdPartidas: 1 },
+    { nome: "Sudoku", maiorPontuacao: 1, qtdJogadores: 1, qtdPartidas: 1 },
+];
 
 fetch("/ranking/totais").then(function (resposta) {
     if (resposta.ok) {
         resposta.json().then(function (dados) {
-            gameStats["Genius"] = dados[0].totalGenius;
-            gameStats["Blackjack"] = dados[0].totalBlackjack;
-            gameStats["Sete e Meio"] = dados[0].totalSete;
-            gameStats["Termo"] = dados[0].totalTermo;
-            gameStats["Campo Minado"] = dados[0].totalCampoMinado;
-            gameStats["Sudoku"] = dados[0].totalSudoku;
+            console.log(dados);
+
+            gameStats[0].maiorPontuacao = dados[0].totalSete;
+            gameStats[1].maiorPontuacao = dados[0].totalBlackjack;
+            gameStats[2].maiorPontuacao = dados[0].totalGenius;
+            gameStats[3].maiorPontuacao = dados[0].totalCampoMinado;
+            gameStats[4].maiorPontuacao = dados[0].totalTermo;
+            gameStats[5].maiorPontuacao = dados[0].totalSudoku;
+            gameStats[0].qtdJogadores = dados[0].totalJogadoresSete;
+            gameStats[1].qtdJogadores = dados[0].totalJogadoresBlackjack;
+            gameStats[2].qtdJogadores = dados[0].totalJogadoresGenius;
+            gameStats[3].qtdJogadores = dados[0].totalJogadoresCampo;
+            gameStats[4].qtdJogadores = dados[0].totalJogadoresTermo;
+            gameStats[5].qtdJogadores = dados[0].totalJogadoresSudoku;
+            gameStats[0].qtdPartidas = dados[0].totalJogadasSete;
+            gameStats[1].qtdPartidas = dados[0].totalJogadasBlackjack;
+            gameStats[2].qtdPartidas = dados[0].totalJogadasGenius;
+            gameStats[3].qtdPartidas = dados[0].totalJogadasCampo;
+            gameStats[4].qtdPartidas = dados[0].totalJogadasTermo;
+            gameStats[5].qtdPartidas = dados[0].totalJogadasSudoku;
+
             criarChart();
         })
     } else {
@@ -53,24 +67,25 @@ function formatGameId(gameName) {
 
 function criarChart() {
     const ctx = document.getElementById('statsChart').getContext('2d');
+    const nomeJogo = gameStats.map(game => game.nome);
+    const maiorPontuacao = gameStats.map(game => game.maiorPontuacao);
     const chart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: Object.keys(gameStats),
+            labels: nomeJogo,
             datasets: [{
                 label: 'Maior Pontuação',
-                data: Object.values(gameStats),
-                backgroundColor: ['#EE675C', '#B0CDDA', '#7FBF60', '#F8D571', '#A990D6', '#B0CDDA']
+                data: maiorPontuacao,
+                backgroundColor: ['#EE675C', '#B0CDDA', '#7FBF60', '#F8D571', '#A990D6', '#2C6B91']
             }]
         },
         options: {
-            responsive: false,
-            maintainAspectRatio: true,
+            responsive: true,
             plugins: {
                 legend: {
                     position: 'none',
-                    position: 'bottom',
-                    // position: 'right',
+                    // position: 'bottom',
+                    position: 'right',
                     labels: {
                         color: 'white',
                         font: {
@@ -89,7 +104,11 @@ function criarChart() {
                     const selectedDiv = document.getElementById(gameId);
                     if (selectedDiv) {
                         selectedDiv.style.display = 'flex';
-                        selectedDiv.querySelector('p').textContent = `${gameStats[selectedGame]} pontos no ${selectedGame}!`;
+                        const qtdJogadores = gameStats.find(game => game.nome === selectedGame).qtdJogadores;
+                        const qtdPartidas = gameStats.find(game => game.nome === selectedGame).qtdPartidas;
+                        console.log(gameStats);
+
+                        selectedDiv.querySelector('p').textContent = `${selectedGame} já foi jogado ${qtdPartidas} vezes por ${qtdJogadores} jogadores!`;
                     }
                 }
             }
