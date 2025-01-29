@@ -14,6 +14,7 @@ O **Lucky Shot** é uma plataforma de jogos voltada para imersão e competição
 - **Genius**: Jogo de memória que desafia o jogador a seguir sequências de cores.
 - **Termo**: Jogo de palavras onde o objetivo é adivinhar a palavra correta com base em dicas.
 - **Campo Minado**: Jogo clássico de estratégia onde o objetivo é desativar bombas sem detoná-las.
+- **Sudoku**: Jogo de quebra-cabeça numérico onde o objetivo é preencher uma grade 9x9 com números de 1 a 9 sem repetir nenhum número na mesma linha, coluna ou nas regiões 3x3.
 - **Tela de Configuração de Usuário**: Permite personalizar o perfil do usuário e ajustes de preferências.
 <img src="./public/Assets/cartas3.png" align="right"/>
 
@@ -34,6 +35,12 @@ O **Lucky Shot** é uma plataforma de jogos voltada para imersão e competição
 ## Motivação
 
 <p>Este projeto foi desenvolvido primeiramente como um desafio de lógica do primeiro semestre da faculdade, desenvolver o jogo <strong>Sete e Meio</strong>. Porém, com motivação e criatividade, experimentei criar uma plataforma com diversos jogos, rankings dinâmicos entre os jogadores e gerenciamento de usuários. Isso me fez evoluir muito como desenvolvedor e profissional, podendo aperfeiçoar diversos ambitos técnicos.</p>
+
+---
+
+## Atualização Futura
+
+Estou preparando a próxima grande atualização para o Lucky Shot! Em breve, o jogo **Ludo** será adicionado à plataforma, trazendo ainda mais diversão e competitividade para os jogadores.
 
 ---
 
