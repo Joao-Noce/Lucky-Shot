@@ -27,8 +27,6 @@ let gameStats = [
 fetch("/ranking/totais").then(function (resposta) {
     if (resposta.ok) {
         resposta.json().then(function (dados) {
-            console.log(dados);
-
             gameStats[0].maiorPontuacao = dados[0].totalSete;
             gameStats[1].maiorPontuacao = dados[0].totalBlackjack;
             gameStats[2].maiorPontuacao = dados[0].totalGenius;
@@ -83,8 +81,6 @@ function criarChart() {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'none',
-                    // position: 'bottom',
                     position: 'right',
                     labels: {
                         color: 'white',
@@ -106,8 +102,6 @@ function criarChart() {
                         selectedDiv.style.display = 'flex';
                         const qtdJogadores = gameStats.find(game => game.nome === selectedGame).qtdJogadores;
                         const qtdPartidas = gameStats.find(game => game.nome === selectedGame).qtdPartidas;
-                        console.log(gameStats);
-
                         selectedDiv.querySelector('p').textContent = `${selectedGame} já foi jogado ${qtdPartidas} vezes por ${qtdJogadores} jogadores!`;
                     }
                 }
