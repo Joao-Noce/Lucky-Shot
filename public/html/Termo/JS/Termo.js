@@ -46,8 +46,8 @@ function criarTabuleiro() {
     let numeroLinha = 1;
     linhas.forEach(linha => {
         for (let coluna = 1; coluna <= 5; coluna++) {
-            if (numeroLinha == linhaValue) linha.innerHTML += `<input type="text" maxlength="1" class="caixa" name="caixa${numeroLinha}" id="caixa${numeroLinha}${coluna}" onkeydown="voltarFoco(event, ${numeroLinha}${coluna})" oninput="moverFoco(${numeroLinha}${coluna})" onfocus="sobrepor('caixa${numeroLinha}${coluna}')" onclick="sobrepor('caixa${numeroLinha}${coluna}')">`;
-            else linha.innerHTML += `<input type="text" maxlength="1" class="caixa" name="caixa${numeroLinha}" id="caixa${numeroLinha}${coluna}" disabled onkeydown="voltarFoco(event, ${numeroLinha}${coluna})" oninput="moverFoco(${numeroLinha}${coluna})" onfocus="sobrepor('caixa${numeroLinha}${coluna}')" onclick="sobrepor('caixa${numeroLinha}${coluna}')">`;
+            if (numeroLinha == linhaValue) linha.innerHTML += `<input autocomplete="off" type="text" maxlength="1" class="caixa" name="caixa${numeroLinha}" id="caixa${numeroLinha}${coluna}" onkeydown="voltarFoco(event, ${numeroLinha}${coluna})" oninput="moverFoco(${numeroLinha}${coluna})" onfocus="sobrepor('caixa${numeroLinha}${coluna}')" onclick="sobrepor('caixa${numeroLinha}${coluna}')">`;
+            else linha.innerHTML += `<input autocomplete="off" type="text" maxlength="1" class="caixa" name="caixa${numeroLinha}" id="caixa${numeroLinha}${coluna}" disabled onkeydown="voltarFoco(event, ${numeroLinha}${coluna})" oninput="moverFoco(${numeroLinha}${coluna})" onfocus="sobrepor('caixa${numeroLinha}${coluna}')" onclick="sobrepor('caixa${numeroLinha}${coluna}')">`;
         }
         numeroLinha++;
     });

@@ -18,7 +18,11 @@ let botaoPressionado = null;
 let numeroSelecionado = null;
 let botoesValidados = {};
 
-criarTabuleiro();
+if (sessionStorage.JOGOU_SUDOKU != undefined && sessionStorage.ID_USUARIO == undefined) visitante();
+if (sessionStorage.JOGOU_SUDOKU == undefined || sessionStorage.ID_USUARIO != undefined) {
+    if (sessionStorage.JOGOU_SUDOKU == undefined) sessionStorage.JOGOU_SUDOKU = true;
+    criarTabuleiro();
+}
 
 function criarTabuleiro() {
     for (let linha = 1; linha <= qtdColunas; linha++) {
@@ -49,7 +53,7 @@ function preencherTabuleiro(indice) {
     }
 
     let celula = celulas[indice];
-    celula.disable = false;
+    // celula.disabled = false;
     const numerosEmbaralhados = embaralharNumeros();
 
     for (let numero of numerosEmbaralhados) {
@@ -89,7 +93,7 @@ function mostrarNumeros() {
     }
     numerosMostrados.forEach(indice => {
         celulas[indice].validada = true;
-        document.getElementById(`coluna${celulas[indice].linha}${celulas[indice].coluna}`).disabled = true;
+        // document.getElementById(`coluna${celulas[indice].linha}${celulas[indice].coluna}`).disabled = true;
         document.getElementById(`coluna${celulas[indice].linha}${celulas[indice].coluna}`).innerHTML = celulas[indice].valor;
 
         opcoes[celulas[indice].valor - 1].qtd = opcoes[celulas[indice].valor - 1].qtd - 1;
@@ -162,7 +166,8 @@ function validar() {
     if (numeroSelecionado != null && botaoPressionado) {
         celulas.forEach(celula => {
             let qtdValidadas = 0;
-            if (celula.id == botaoPressionado.id) {
+            if (celula.id == botaoPressionado.id && celula.validada == false) {
+
                 if (celula.valor == numeroSelecionado) {
                     botaoPressionado.style.color = "rgba(127, 191, 96, 1)";
                     botoesValidados[botaoPressionado.id] = 'acertou';
@@ -182,7 +187,7 @@ function validar() {
                         if (sessionStorage.ID_USUARIO != undefined) {
                             enviarDados(true);
                             finalizar(true);
-                        }
+                        } else visitante();
                     }
                 } else {
                     botaoPressionado.style.color = "rgba(238, 103, 92, 1)";
@@ -194,10 +199,11 @@ function validar() {
                         if (sessionStorage.ID_USUARIO != undefined) {
                             enviarDados(false);
                             finalizar(false);
-                        }
+                        } else visitante();
                     }
                 }
             }
+            if (celula.id == botaoPressionado.id && celula.validada == true) botaoPressionado.innerHTML = celula.valor;
         });
     }
     numeroSelecionado = null;
@@ -318,5 +324,27 @@ function enviarDados(ganhou) {
     }).then(function (resposta) {
         if (!resposta.ok) console.log("Não foi possível enviar a pontuação para o banco de dados.");
         else console.log("Pontuação enviada com sucesso!");
+    })
+}
+
+function visitante() {
+    Swal.fire({
+        position: "center",
+        icon: "question",
+        title: "E aí, gostou?",
+        text: `Para jogar mais, basta se cadastrar!`,
+        confirmButtonText: "Cadastrar",
+        confirmButtonColor: "#2C6B91",
+        denyButtonColor: "#EE675C",
+        showDenyButton: true,
+        denyButtonText: "Sair"
+    }).then(function (resposta) {
+        let destino;
+        if (resposta.isConfirmed) destino = "../../../login.html";
+        else destino = "../../../index.html"
+        setTimeout(() => {
+            window.location.href = destino;
+        }, 1000);
+
     })
 }

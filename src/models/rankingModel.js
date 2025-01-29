@@ -121,6 +121,22 @@ function ranking_termo() {
     return database.executar(instrucaoSql1);
 }
 
+function totais() {
+    console.log("ACESSEI O DASH MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function ranking_maior_pontuacao()");
+    
+    var instrucaoSql = `
+    SELECT 
+    (SELECT MAX(maiorPontuacao) FROM genius) AS totalGenius,
+    (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM blackjack WHERE ganhou = 1 GROUP BY fkUsuario) AS subqueryBlackjack) AS totalBlackjack,
+    (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM sete WHERE ganhou = 1 GROUP BY fkUsuario) AS subquerySete) AS totalSete,
+    (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM termo WHERE ganhou = 1 GROUP BY fkUsuario) AS subqueryTermo) AS totalTermo,
+    (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM minefield WHERE ganhou = 1 GROUP BY fkUsuario) AS subqueryMinefield) AS totalCampoMinado,
+    (SELECT MAX(vitoria_count) FROM (SELECT COUNT(ganhou) AS vitoria_count FROM sudoku WHERE ganhou = 1 GROUP BY fkUsuario) AS subquerySudoku) AS totalSudoku;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
  ranking_caixa_sete,
  ranking_vitoria_sete,
@@ -129,5 +145,6 @@ module.exports = {
  ranking_genius,
  ranking_minefield,
  ranking_termo,
- ranking_sudoku
+ ranking_sudoku,
+ totais
 }

@@ -35,4 +35,8 @@ router.get("/ranking_sudoku/", function (req, res) {
     rankingController.ranking_sudoku(req, res);
 });
 
+router.get("/totais/", function (req, res) {
+    rankingController.totais(req, res);
+});
+
 module.exports = router;

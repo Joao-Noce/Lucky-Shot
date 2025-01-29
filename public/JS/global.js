@@ -12,3 +12,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 if (sessionStorage.ID_USUARIO == undefined) tres_barras.innerHTML = '<a href="../../../index.html"><i class="fa-solid fa-right-from-bracket"></i></a>';
+else tres_barras.innerHTML = '<a href="pause.html"><i class="fa-solid fa-circle-pause"></i></a>';

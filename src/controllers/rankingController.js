@@ -125,6 +125,21 @@ function ranking_termo(req, res) {
         });
 }
 
+function totais(req, res) {
+    rankingModel.totais()
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado da segunda pergunta!")
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar as respostas: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     ranking_caixa_blackjack,
     ranking_vitoria_blackjack,
@@ -133,5 +148,6 @@ module.exports = {
     ranking_genius,
     ranking_minefield,
     ranking_sudoku,
-    ranking_termo
+    ranking_termo,
+    totais
 }
