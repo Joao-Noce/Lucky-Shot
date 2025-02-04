@@ -185,7 +185,7 @@ function login() {
                     icon: "success",
                     showConfirmButton: false
                 });
-                setTimeout(() => { window.location = "../html/menu.html" }, "1500");
+                setTimeout(() => { window.location = "../Games/menu.html" }, "1500");
             });
         } else {
             input_email_log.placeholder = ``;
